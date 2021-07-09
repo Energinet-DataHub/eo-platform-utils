@@ -17,4 +17,3 @@ kafka-python = "*"
 
 [requires]
 python_version = "3.8"
-s
