@@ -2,7 +2,7 @@ import json
 import dataclasses
 from google.protobuf.any_pb2 import Any
 
-from energytt.messages import Message
+from energytt_platform.messages import Message
 
 
 __message_serializers = {}
