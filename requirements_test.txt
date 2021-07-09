@@ -1,0 +1,6 @@
+pytest
+flake8
+pytest-cov
+pytest-order
+pytest-depends
+mypy

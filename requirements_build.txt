@@ -1,0 +1,6 @@
+twine==3.2.0
+keyring==21.4.0
+artifacts-keyring==0.2.9
+setuptools==50.3.0
+wheel==0.35.1
+GitPython==3.1.9

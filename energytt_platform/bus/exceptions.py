@@ -1,0 +1,3 @@
+
+class PublishError(Exception):
+    pass

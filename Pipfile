@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+pytest-order = "*"
+pytest-depends = "*"
+
+[packages]
+protobuf3 = "*"
+betterproto = "*"
+#betterproto = {extras = ["compiler"], version = "*"}
+kafka-python = "*"
+
+[requires]
+python_version = "3.8"
+s
