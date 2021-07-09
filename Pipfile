@@ -12,7 +12,6 @@ pytest-depends = "*"
 [packages]
 protobuf3 = "*"
 betterproto = "*"
-#betterproto = {extras = ["compiler"], version = "*"}
 kafka-python = "*"
 
 [requires]
