@@ -13,6 +13,10 @@ pytest-depends = "*"
 protobuf3 = "*"
 betterproto = "*"
 kafka-python = "*"
+gunicorn = "*"
+Flask = "2.0.1"
+serpyco = "*"
+rapidjson = "*"
 
 [requires]
 python_version = "3.8"

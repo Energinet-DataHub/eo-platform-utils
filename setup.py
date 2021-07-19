@@ -65,7 +65,7 @@ setuptools.setup(
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
     version=version,
-    description="Energy Track&Trace Platform Utils",
+    description="Energy Track and Trace Platform Utils",
     author="TODO",
     author_email="mcs@energinet.dk, xjakk@energinet.dk",
     # Choose your license
@@ -109,6 +109,10 @@ setuptools.setup(
         'protobuf3',
         'betterproto',
         'kafka-python',
+        'gunicorn',
+        'Flask',
+        'serpyco',
+        'rapidjson',
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,

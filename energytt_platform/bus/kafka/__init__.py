@@ -1,1 +1,1 @@
-from .brokers import KafkaMessageBroker
+from .broker import KafkaMessageBroker
