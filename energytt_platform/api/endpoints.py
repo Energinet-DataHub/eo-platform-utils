@@ -18,8 +18,8 @@ class Endpoint(object):
         """
         raise NotImplementedError
 
-    async def handle_request_async(self, **kwargs) -> Optional[Response]:
-        """
-        Handle the HTTP request. Overwritten by subclassing.
-        """
-        return self.handle_request(**kwargs)
+    # async def handle_request_async(self, **kwargs) -> Optional[Response]:
+    #     """
+    #     Handle the HTTP request. Overwritten by subclassing.
+    #     """
+    #     return self.handle_request(**kwargs)

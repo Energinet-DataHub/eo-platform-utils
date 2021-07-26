@@ -1,5 +1,6 @@
 from typing import List
 
+from .utils import dispatch
 from .broker import MessageBroker
 from .kafka import KafkaMessageBroker
 from .serialize import MessageSerializer

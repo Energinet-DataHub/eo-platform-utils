@@ -1,15 +1,12 @@
 from datetime import datetime
 from dataclasses import dataclass
 
+from energytt_platform.serialize import Serializable
+
 
 @dataclass
-class Measurement:
+class Measurement(Serializable):
     gsrn: str
     amount: int
     begin: datetime
     end: datetime
-
-
-@dataclass
-class NewMeasurementMessage:
-    measurement: Measurement
