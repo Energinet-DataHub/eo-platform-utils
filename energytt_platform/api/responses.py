@@ -18,10 +18,10 @@ class HttpError(Exception):
         self.status_code = status_code
 
     @classmethod
-    def build(cls, status_code: int) -> partial['HttpError']:
+    def build(cls, status_code: int):
         return partial(cls, status_code=status_code)
 
 
-BadRequest = HttpError.build(400, 'Bad Request')
-Unauthorized = HttpError.build(401, 'Unauthorized')
-InternalServerError = HttpError.build(401, 'Internal Server Error')
+BadRequest = HttpError.build(400)
+Unauthorized = HttpError.build(401)
+InternalServerError = HttpError.build(500)

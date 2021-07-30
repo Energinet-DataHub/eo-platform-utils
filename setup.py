@@ -65,9 +65,9 @@ setuptools.setup(
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
     version=version,
-    description="Energy Track and Trace Platform Utils",
+    description="Test project",
     author="TODO",
-    author_email="mcs@energinet.dk, xjakk@energinet.dk",
+    author_email="jakob@jakobk.dk",
     # Choose your license
     license="Apache Software License 2.0",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers

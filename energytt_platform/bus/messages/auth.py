@@ -26,3 +26,11 @@ class UserConcentGiven(Serializable):
 @dataclass
 class UserConcentRevoked(Serializable):
     pass
+
+@dataclass
+class UserOnboarded(Serializable):
+    """
+    A new user has been onboarded to the system.
+    """
+    subject: str
+    name: str

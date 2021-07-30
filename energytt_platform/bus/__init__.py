@@ -1,9 +1,9 @@
 from typing import List
 
-from .utils import dispatch
 from .broker import MessageBroker
 from .kafka import KafkaMessageBroker
 from .serialize import MessageSerializer
+from .dispatcher import MessageDispatcher
 
 
 def get_default_broker(servers: List[str]) -> MessageBroker:

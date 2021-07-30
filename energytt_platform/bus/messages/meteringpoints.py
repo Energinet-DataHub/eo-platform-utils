@@ -5,8 +5,18 @@ from energytt_platform.models.meteringpoints import MeteringPoint
 
 
 @dataclass
-class NewMeteringPoint(Serializable):
+class MeteringPointAdded(Serializable):
     """
     A new MeteringPoint has been added to the system.
     """
+    subject: str
     meteringpoint: MeteringPoint
+
+
+@dataclass
+class MeteringPointRemoved(Serializable):
+    """
+    A MeteringPoint has been remove from the system.
+    """
+    subject: str
+    gsrn: str

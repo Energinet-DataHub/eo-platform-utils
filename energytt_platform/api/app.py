@@ -1,30 +1,40 @@
 import flask
 import logging
-from typing import List
 from functools import cached_property
+from typing import List, Iterable, Tuple
 
 from .endpoints import Endpoint
 from .guards import EndpointGuard
-from .requests import GetHandler, PostHandler
+from .orchestration import \
+    RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
 
 class Application(object):
     """
     TODO
     """
-    def __init__(self, name: str, debug: bool = False):
+    def __init__(self, name: str):
         self.name = name
-        self.debug = debug
+
+    @classmethod
+    def create(cls, *args, endpoints: Iterable[Tuple[str, str, Endpoint]], **kwargs):
+        app = cls(*args, **kwargs)
+
+        for method, path, endpoint in endpoints:
+            app.add_endpoint(
+                method=method,
+                path=path,
+                endpoint=endpoint,
+            )
+
+        return app
 
     @cached_property
     def _flask_app(self) -> flask.Flask:
         """
         TODO
         """
-        app = flask.Flask(self.name)
-        if self.debug:
-            app.logger.setLevel(logging.DEBUG)
-        return app
+        return flask.Flask(self.name)
 
     @property
     def wsgi_app(self) -> flask.Flask:
@@ -44,9 +54,9 @@ class Application(object):
         TODO
         """
         if method == 'GET':
-            handler_cls = GetHandler
+            data_provider = QueryStringProvider()
         elif method == 'POST':
-            handler_cls = PostHandler
+            data_provider = JsonBodyProvider()
         else:
             raise RuntimeError('Unsupported HTTP method for endpoints: %s' % method)
 
@@ -54,8 +64,9 @@ class Application(object):
             rule=path,
             endpoint=path,
             methods=[method],
-            view_func=handler_cls(
+            view_func=RequestOrchestrator(
                 endpoint=endpoint,
+                data=data_provider,
                 guards=guards,
             ),
         )
@@ -64,6 +75,7 @@ class Application(object):
         """
         TODO
         """
+        self._flask_app.logger.setLevel(logging.DEBUG)
         self._flask_app.run(
             host=host,
             port=port,
