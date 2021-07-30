@@ -1,6 +1,6 @@
-from typing import Optional
 from abc import abstractmethod
 from serpyco import Serializer
+from typing import Optional, Any
 from inspect import getfullargspec
 from functools import cached_property
 
@@ -69,7 +69,7 @@ class Endpoint(object):
         return self.Response is not None
 
     @abstractmethod
-    def handle_request(self, **kwargs) -> Optional[Response]:
+    def handle_request(self, **kwargs) -> Optional[Any]:
         """
         Handle a HTTP request.
         """

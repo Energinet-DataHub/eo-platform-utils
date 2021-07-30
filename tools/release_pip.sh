@@ -10,7 +10,8 @@ echo $ROOT_PATH
 
 rm -rf "$DIST_PATH/*"
 python $ROOT/setup.py sdist --dev
-python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+
 
 
 python setup.py sdist --dev
+python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
