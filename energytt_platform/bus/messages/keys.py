@@ -5,9 +5,8 @@ from energytt_platform.models.measurements import Measurement
 
 
 @dataclass
-class MeasurementAdded(Serializable):
+class PublicKeysUpdates(Serializable):
     """
-    A new Measurement has been added to the system.
+    PublicKey to verify internal tokens has been updated.
     """
-    subject: str
     measurement: Measurement

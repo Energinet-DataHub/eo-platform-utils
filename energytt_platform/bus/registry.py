@@ -1,9 +1,9 @@
-from typing import Union, Type
+from typing import Dict, Union, Type
 
 from energytt_platform.serialize import Serializable
 
 
-class MessageRegistry(dict):
+class MessageRegistry(Dict[str, Type[Serializable]]):
     """
     A registry of all messages that the bus knows of.
 
@@ -19,6 +19,14 @@ class MessageRegistry(dict):
         return cls({c.__name__: c for c in message_types})
 
     def __contains__(self, item: Union[str, Serializable, Type[Serializable]]) -> bool:
+        """
+        Check whether an item is known by the registry.
+
+        Item can be either of the following:
+            - A string (name of the message type)
+            - A class type (the message type itself)
+            - An instance of a class (an instance of a message type)
+        """
         if isinstance(item, str):
             return item in self.keys()
         elif issubclass(item, Serializable):
