@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from energytt_platform.serialize import Serializable
 
@@ -20,13 +20,10 @@ class MeteringPoint(Serializable):
     TODO Add physical address
     """
     gsrn: str
-    type: MeteringPointType
     sector: str
-    type: Optional[MeteringPointType]
-    technology: Optional[Technology]
-    address: Optional[Address]
-    # technology_code: Optional[str]
-    # fuel_code: Optional[str]
+    type: Optional[MeteringPointType] = field(default=None)
+    technology: Optional[Technology] = field(default=None)
+    address: Optional[Address] = field(default=None)
 
 
 @dataclass
@@ -37,6 +34,6 @@ class MeteringPointMetaData(Serializable):
     TODO Add physical address
     """
     gsrn: str
-    type: Optional[MeteringPointType]
-    technology: Optional[Technology]
-    address: Optional[Address]
+    type: Optional[MeteringPointType] = field(default=None)
+    technology: Optional[Technology] = field(default=None)
+    address: Optional[Address] = field(default=None)

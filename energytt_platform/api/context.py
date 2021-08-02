@@ -9,6 +9,7 @@ class Context(object):
     Context for a single incoming HTTP request.
     """
 
+    TOKEN_HEADER = 'Authorization'
     TOKEN_PATTERN = compile(r'^Bearer:\s*(.+)$')
 
     @property
@@ -24,7 +25,7 @@ class Context(object):
         """
         Returns request Bearer token.
         """
-        if 'Authorization' in self.headers:
-            matches = self.TOKEN_PATTERN.findall(self.headers['Authorization'])
+        if self.TOKEN_HEADER in self.headers:
+            matches = self.TOKEN_PATTERN.findall(self.headers[self.TOKEN_HEADER])
             if matches:
                 return matches[0]
