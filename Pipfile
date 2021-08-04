@@ -10,10 +10,10 @@ pytest-order = "*"
 pytest-depends = "*"
 
 [packages]
-protobuf3 = "*"
-betterproto = "*"
+#protobuf3 = "*"
+#betterproto = "*"
+pyjwt = "*"
 kafka-python = "*"
-gunicorn = "*"
 Flask = "2.0.1"
 serpyco = "*"
 rapidjson = "*"

@@ -15,14 +15,14 @@ class MessageSerializer(object):
         self.serializer = JsonSerializer()
 
     def serialize(self, msg: Serializable) -> bytes:
-        if msg.object_name not in registry:
+        if msg.type_name not in registry:
             raise RuntimeError((
                 'Can not send message of type "%s": '
                 'Type is not known by the bus.'
-            ) % msg.object_name)
+            ) % msg.type_name)
 
         return b'%b%b%b' % (
-            msg.object_name.encode(),
+            msg.type_name.encode(),
             self.KEY_VALUE_SEPARATOR,
             self.serializer.serialize(msg),
         )

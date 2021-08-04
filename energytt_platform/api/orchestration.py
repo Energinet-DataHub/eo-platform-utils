@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional
 from .context import Context
 from .flask import FlaskContext
 from .endpoints import Endpoint
-from .guards import EndpointGuard
+from .guards import EndpointGuard, bouncer
 from .responses import HttpError, BadRequest
 
 
@@ -62,7 +62,7 @@ class RequestOrchestrator(object):
     ):
         self.endpoint = endpoint
         self.data = data
-        self.guards = guards or []
+        self.guards = guards
 
     def __call__(self) -> flask.Response:
         """
@@ -86,19 +86,25 @@ class RequestOrchestrator(object):
         """
         TODO
         """
-        kwargs = {}
+        context = self.build_context()
+
+        if self.guards:
+            bouncer.validate(context, self.guards)
+
+        # kwargs passed to Endpoint.handle_request()
+        handler_kwargs = {}
 
         if self.endpoint.requires_context:
-            kwargs['context'] = self.build_context()
+            handler_kwargs['context'] = self.build_context()
 
         # Deserialize request data (if necessary)
         if self.endpoint.should_parse_request_data:
             # Defaulting to an empty dictionary makes it possible to omit
             # request data for models where all fields are optional
-            kwargs['request'] = self.parse_request_data(self.data.get() or {})
+            handler_kwargs['request'] = self.parse_request_data(self.data.get() or {})
 
         # Invoke endpoint
-        response_body = self.endpoint.handle_request(**kwargs)
+        response_body = self.endpoint.handle_request(**handler_kwargs)
 
         # Serialize response object (if necessary)
         if self.endpoint.should_parse_response_object:

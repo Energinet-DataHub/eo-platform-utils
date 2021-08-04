@@ -1,7 +1,15 @@
-from re import compile
+import re
+import jwt
 from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
+
+from energytt_platform.serialize import json_serializer
+from energytt_platform.auth import (
+    OpaqueToken,
+    encode_opaque_token,
+    decode_opaque_token,
+)
 
 
 class Context(object):
@@ -10,7 +18,7 @@ class Context(object):
     """
 
     TOKEN_HEADER = 'Authorization'
-    TOKEN_PATTERN = compile(r'^Bearer:\s*(.+)$')
+    TOKEN_PATTERN = re.compile(r'^Bearer:\s*(.+)$')
 
     @property
     @abstractmethod
@@ -21,7 +29,7 @@ class Context(object):
         raise NotImplementedError
 
     @cached_property
-    def token(self) -> Optional[str]:
+    def raw_token(self) -> Optional[str]:
         """
         Returns request Bearer token.
         """
@@ -29,3 +37,11 @@ class Context(object):
             matches = self.TOKEN_PATTERN.findall(self.headers[self.TOKEN_HEADER])
             if matches:
                 return matches[0]
+
+    @cached_property
+    def token(self) -> Optional[OpaqueToken]:
+        """
+        Parses token into an OpaqueToken.
+        """
+        if self.raw_token is not None:
+            return decode_opaque_token(self.raw_token)

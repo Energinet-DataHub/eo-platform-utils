@@ -1,17 +1,17 @@
 from functools import partial
 
 
-# class HTTPResponse(object):
-#     def __init__(self, status: int, msg: str = ''):
-#         self.status = status
-#         self.msg = msg
-#
-#     @classmethod
-#     def build(cls, *args, **kwargs) -> partial['HTTPResponse']:
-#         return partial(cls, *args, **kwargs)
+class HttpResponse(object):
+    def __init__(self, status: int, msg: str = ''):
+        self.status = status
+        self.msg = msg
+
+    @classmethod
+    def build(cls, *args, **kwargs) -> partial['HttpResponse']:
+        return partial(cls, *args, **kwargs)
 
 
-class HttpError(Exception):
+class HttpError(HttpResponse, Exception):
     def __init__(self, msg: str, status_code: int):
         super(HttpError, self).__init__('%d %s' % (status_code, msg))
         self.msg = msg

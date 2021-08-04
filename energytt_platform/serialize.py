@@ -1,8 +1,8 @@
 import serpyco
-from typing import Type
 from abc import abstractmethod
 from functools import lru_cache
 from dataclasses import dataclass
+from typing import Type, TypeVar
 
 
 @dataclass
@@ -12,7 +12,7 @@ class Serializable:
     Subclasses must be defined as dataclasses.
     """
     @property
-    def object_name(self) -> str:
+    def type_name(self) -> str:
         return self.__class__.__name__
 
 
@@ -24,13 +24,16 @@ class DeserializeError(Exception):
     pass
 
 
+TSerializable = TypeVar('TSerializable', bound=Serializable)
+
+
 class Serializer(object):
     """
     An interface for serializing and deserializing dataclasses.
     """
 
     @abstractmethod
-    def serialize(self, obj: Serializable) -> bytes:
+    def serialize(self, obj: TSerializable) -> bytes:
         """
         Serialize an object to bytes.
 
@@ -42,7 +45,7 @@ class Serializer(object):
         raise NotImplementedError
 
     @abstractmethod
-    def deserialize(self, data: bytes, cls: Type[Serializable]) -> Serializable:
+    def deserialize(self, data: bytes, cls: Type[TSerializable]) -> TSerializable:
         """
         Deserialize bytes to an object.
 
@@ -59,20 +62,33 @@ class JsonSerializer(Serializer):
     """
     Serialize and deserialize to and from JSON.
     """
-    def serialize(self, msg: Serializable) -> bytes:
-        return self.get_serializer(msg.__class__) \
-            .dump_json(msg) \
+    def serialize(self, obj: TSerializable) -> bytes:
+        """
+        Serializes object to JSON.
+        """
+        return self \
+            .get_serializer(obj.__class__) \
+            .dump_json(obj) \
             .encode()
 
-    def deserialize(self, data: bytes, cls: Type[Serializable]) -> Serializable:
-        return self.get_serializer(cls) \
+    def deserialize(self, data: bytes, cls: Type[TSerializable]) -> TSerializable:
+        """
+        Deserialize JSON data to instance of type "cls".
+        """
+        return self \
+            .get_serializer(cls) \
             .load_json(data.decode('utf8'))
 
     # -- Serializers ---------------------------------------------------------
 
     @lru_cache
-    def get_serializer(self, cls: Type[Serializable]) -> serpyco.Serializer:
+    def get_serializer(self, cls: Type[TSerializable]) -> serpyco.Serializer:
         return self.build_serializer(cls)
 
-    def build_serializer(self, cls: Type[Serializable]) -> serpyco.Serializer:
+    def build_serializer(self, cls: Type[TSerializable]) -> serpyco.Serializer:
         return serpyco.Serializer(cls)
+
+
+# -- Singletons --------------------------------------------------------------
+
+json_serializer = JsonSerializer()

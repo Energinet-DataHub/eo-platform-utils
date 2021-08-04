@@ -106,10 +106,7 @@ setuptools.setup(
     # https://packaging.python.org/en/latest/requirements.html
     # TODO SPECIFIC VERSION OF REQUIREMENTS!
     install_requires=[
-        'protobuf3',
-        'betterproto',
         'kafka-python',
-        'gunicorn',
         'Flask',
         'serpyco',
         'rapidjson',
