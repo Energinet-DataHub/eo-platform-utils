@@ -106,6 +106,7 @@ setuptools.setup(
     # https://packaging.python.org/en/latest/requirements.html
     # TODO SPECIFIC VERSION OF REQUIREMENTS!
     install_requires=[
+        'pyjwt',
         'kafka-python',
         'Flask',
         'serpyco',

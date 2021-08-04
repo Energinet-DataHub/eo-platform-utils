@@ -4,7 +4,6 @@ from abc import abstractmethod
 from energytt_platform.models.infrastructure import Service
 
 from .context import Context
-from .responses import HttpError
 
 
 from datetime import datetime
@@ -56,17 +55,17 @@ class Bouncer(object):
         raise NotImplementedError
 
 
-s1 = ServiceGuard(
-    Service(name='Service A'),
-    Service(name='Service B'),
-)
-
-s2 = ScopedGuard(
-    'meteringpoints.read',
-    'measurements.read',
-    'gc.read',
-    'gc.transfer',
-)
+# s1 = ServiceGuard(
+#     Service(name='Service A'),
+#     Service(name='Service B'),
+# )
+#
+# s2 = ScopedGuard(
+#     'meteringpoints.read',
+#     'measurements.read',
+#     'gc.read',
+#     'gc.transfer',
+# )
 
 
 # -- Singletons --------------------------------------------------------------

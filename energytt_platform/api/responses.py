@@ -7,7 +7,7 @@ class HttpResponse(object):
         self.msg = msg
 
     @classmethod
-    def build(cls, *args, **kwargs) -> partial['HttpResponse']:
+    def build(cls, *args, **kwargs):
         return partial(cls, *args, **kwargs)
 
 
