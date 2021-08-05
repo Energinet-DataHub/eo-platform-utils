@@ -4,10 +4,10 @@ from dataclasses import dataclass, field
 from energytt_platform.serialize import Serializable
 
 from .technologies import Technology
-from .common import EnergyType, Address
+from .common import EnergyDirection, Address
 
 
-MeteringPointType = EnergyType
+MeteringPointType = EnergyDirection
 
 
 @dataclass

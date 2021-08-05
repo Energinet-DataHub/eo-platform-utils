@@ -10,7 +10,7 @@ from energytt_platform.serialize import Serializable
 # -- Data objects ------------------------------------------------------------
 
 
-class EnergyType(Enum):
+class EnergyDirection(Enum):
     PRODUCTION = 'PRODUCTION'  # E18
     CONSUMPTION = 'CONSUMPTION'  # E17
 
@@ -56,7 +56,7 @@ class DateTimeRange(Serializable):
 # -- API & Querying ----------------------------------------------------------
 
 
-TOrderKey = TypeVar('TOrderKey')
+TOrderKey = TypeVar('TOrderKey', bound=Enum)
 
 
 class Order(Enum):
@@ -71,3 +71,11 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
     """
     order: Optional[Order] = field(default=None)
     key: Optional[TOrderKey] = field(default=None)
+
+    @property
+    def asc(self) -> bool:
+        return self.order is Order.ASC
+
+    @property
+    def desc(self) -> bool:
+        return self.order is Order.DESC

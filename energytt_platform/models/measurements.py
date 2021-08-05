@@ -3,10 +3,10 @@ from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
 
-from .common import EnergyType
+from .common import EnergyDirection
 
 
-MeasurementType = EnergyType
+MeasurementType = EnergyDirection
 
 
 @dataclass
