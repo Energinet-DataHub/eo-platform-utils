@@ -6,6 +6,9 @@ from energytt_platform.serialize import Serializable
 
 
 class TechnologyLabel(Enum):
+    """
+    System-wide labels of known technologies.
+    """
     COAL = 'Coal'
     NUCLEAR = 'Nuclear'
     SOLAR = 'Solar'
