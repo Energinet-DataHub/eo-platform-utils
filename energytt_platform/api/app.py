@@ -1,10 +1,10 @@
 import flask
 import logging
 from functools import cached_property
-from typing import List, Iterable, Tuple
+from typing import List, Iterable, Tuple, Optional
 
-from .endpoints import Endpoint
 from .guards import EndpointGuard
+from .endpoints import Endpoint, HealthCheck
 from .orchestration import \
     RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
@@ -17,14 +17,33 @@ class Application(object):
         self.name = name
 
     @classmethod
-    def create(cls, *args, endpoints: Iterable[Tuple[str, str, Endpoint]], **kwargs):
+    def create(
+            cls,
+            *args,
+            endpoints: Iterable[Tuple[str, str, Endpoint]],
+            health_check_path: Optional[str] = None,
+            **kwargs,
+    ) -> 'Application':
+        """
+        Create a new instance of an Application
+        """
+
         app = cls(*args, **kwargs)
 
+        # Add endpoints
         for method, path, endpoint in endpoints:
             app.add_endpoint(
                 method=method,
                 path=path,
                 endpoint=endpoint,
+            )
+
+        # Add health check endpoint
+        if health_check_path:
+            app.add_endpoint(
+                method='GET',
+                path=health_check_path,
+                endpoint=HealthCheck(),
             )
 
         return app

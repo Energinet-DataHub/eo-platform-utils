@@ -1,7 +1,18 @@
-from typing import Optional
-from dataclasses import dataclass, field
+from enum import Enum
+from serpyco import field
+from dataclasses import dataclass
+from datetime import date, datetime
+from typing import Optional, Generic, TypeVar
 
 from energytt_platform.serialize import Serializable
+
+
+# -- Data objects ------------------------------------------------------------
+
+
+class EnergyType(Enum):
+    PRODUCTION = 'PRODUCTION'  # E18
+    CONSUMPTION = 'CONSUMPTION'  # E17
 
 
 @dataclass
@@ -19,3 +30,44 @@ class Address(Serializable):
     city_sub_division_name: Optional[str] = field(default=None)
     municipality_code: Optional[str] = field(default=None)
     location_description: Optional[str] = field(default=None)
+
+
+# -- Date & Time -------------------------------------------------------------
+
+
+@dataclass
+class DateRange(Serializable):
+    """
+    A range of dates.
+    """
+    from_: Optional[date] = field(default=None, dict_key='from')
+    to_: Optional[date] = field(default=None, dict_key='to')
+
+
+@dataclass
+class DateTimeRange(Serializable):
+    """
+    A range of datetimes.
+    """
+    from_: Optional[datetime] = field(default=None, dict_key='from')
+    to_: Optional[datetime] = field(default=None, dict_key='to')
+
+
+# -- API & Querying ----------------------------------------------------------
+
+
+TOrderKey = TypeVar('TOrderKey')
+
+
+class Order(Enum):
+    ASC = 'ASC'
+    DESC = 'DESC'
+
+
+@dataclass
+class ResultOrdering(Serializable, Generic[TOrderKey]):
+    """
+    Ordering of query results.
+    """
+    order: Optional[Order] = field(default=None)
+    key: Optional[TOrderKey] = field(default=None)

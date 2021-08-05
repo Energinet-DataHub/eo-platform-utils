@@ -1,16 +1,13 @@
-from enum import Enum
 from typing import Optional
 from dataclasses import dataclass, field
 
 from energytt_platform.serialize import Serializable
 
-from .common import Address
 from .technologies import Technology
+from .common import EnergyType, Address
 
 
-class MeteringPointType(Enum):
-    PRODUCTION = 'PRODUCTION'  # E18
-    CONSUMPTION = 'CONSUMPTION'  # E17
+MeteringPointType = EnergyType
 
 
 @dataclass

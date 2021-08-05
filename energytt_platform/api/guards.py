@@ -1,16 +1,10 @@
 from typing import List
 from abc import abstractmethod
-
-from energytt_platform.models.infrastructure import Service
-
-from .context import Context
-
-
-from datetime import datetime
-from typing import List, Optional
 from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
+
+from .context import Context
 
 
 @dataclass
