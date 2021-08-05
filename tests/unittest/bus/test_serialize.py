@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from energytt_platform.bus.messages import NewMeasurement
+from energytt_platform.bus import messages as m
 from energytt_platform.bus.serialize import MessageSerializer
-from energytt_platform.models.measurements import Measurement
+from energytt_platform.models.measurements import \
+    Measurement, MeasurementType
 
 
 class TestMessageSerializer:
@@ -11,8 +12,10 @@ class TestMessageSerializer:
 
         # -- Arrange ---------------------------------------------------------
 
-        obj = NewMeasurement(
+        obj = m.MeasurementAdded(
+            subject='12345',
             measurement=Measurement(
+                type=MeasurementType.CONSUMPTION,
                 gsrn='12345',
                 amount=123,
                 begin=datetime.now(),
@@ -29,5 +32,5 @@ class TestMessageSerializer:
 
         # -- Assert ----------------------------------------------------------
 
-        assert isinstance(deserialized, NewMeasurement)
+        assert isinstance(deserialized, m.MeasurementAdded)
         assert deserialized == obj

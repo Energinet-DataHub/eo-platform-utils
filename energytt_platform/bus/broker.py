@@ -1,16 +1,28 @@
 from abc import abstractmethod
+from dataclasses import dataclass
 from typing import List, Iterable, Callable, Any
 
 from energytt_platform.serialize import Serializable
 
 
-TMessage = Serializable
-TMessageHandler = Callable[[TMessage], None]
+# TMessage = Serializable
+
+
+@dataclass
+class Message(Serializable):
+    """
+    TODO
+    """
+    pass
+
+
+TMessageHandler = Callable[[Message], None]
 
 
 class MessageBroker(object):
     """
-    Interface for publishing and consuming messages on the bus.
+    Abstract base-class for publishing and consuming messages
+    on the message-bus.
     """
 
     @abstractmethod
@@ -26,7 +38,7 @@ class MessageBroker(object):
         raise NotImplementedError
 
     @abstractmethod
-    def listen(self, topics: List[str]) -> Iterable[TMessage]:
+    def listen(self, topics: List[str]) -> Iterable[Message]:
         """
         Subscribe to one or more topics. Returns an iterable of messages.
 

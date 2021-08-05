@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
-from energytt_platform.serialize import Serializable
+from energytt_platform.bus import Message
 from energytt_platform.models.residual_mix import \
     ResidualMixEmissions, ResidualMixTechnologyDistribution
 
 
 @dataclass
-class ResidualMixEmissionsUpdate(Serializable):
+class ResidualMixEmissionsUpdate(Message):
     """
     TODO
     """
@@ -14,7 +14,7 @@ class ResidualMixEmissionsUpdate(Serializable):
 
 
 @dataclass
-class ResidualMixTechnologyDistributionUpdate(Serializable):
+class ResidualMixTechnologyDistributionUpdate(Message):
     """
     TODO
     """

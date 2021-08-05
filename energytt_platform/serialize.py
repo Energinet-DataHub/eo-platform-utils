@@ -11,9 +11,7 @@ class Serializable:
     Base class for dataclasses that can be serialized and deserialized.
     Subclasses must be defined as dataclasses.
     """
-    @property
-    def type_name(self) -> str:
-        return self.__class__.__name__
+    pass
 
 
 # -- Interfaces --------------------------------------------------------------
@@ -55,11 +53,11 @@ class SerpycoSerializerMixin:
     serializer's lifetime.
     """
 
-    @lru_cache
+    # @lru_cache
     def get_serializer(self, cls: Type[TSerializable]) -> serpyco.Serializer:
-        return self.build_serializer(cls)
-
-    def build_serializer(self, cls: Type[TSerializable]) -> serpyco.Serializer:
+        """
+        TODO Move to function in global scope
+        """
         return serpyco.Serializer(cls)
 
 

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from energytt_platform.serialize import Serializable
+from energytt_platform.bus import Message
 
 
 # @dataclass
@@ -29,7 +29,7 @@ from energytt_platform.serialize import Serializable
 
 
 @dataclass
-class UserOnboarded(Serializable):
+class UserOnboarded(Message):
     """
     A new user has been onboarded to the system.
     """

@@ -1,7 +1,7 @@
 from typing import Optional
 from dataclasses import dataclass, field
 
-from energytt_platform.serialize import Serializable
+from energytt_platform.bus import Message
 from energytt_platform.models.common import Address
 from energytt_platform.models.technologies import Technology
 from energytt_platform.models.meteringpoints import \
@@ -9,7 +9,7 @@ from energytt_platform.models.meteringpoints import \
 
 
 @dataclass
-class MeteringPointAdded(Serializable):
+class MeteringPointAdded(Message):
     """
     A new MeteringPoint has been added to the system.
     """
@@ -18,7 +18,7 @@ class MeteringPointAdded(Serializable):
 
 
 @dataclass
-class MeteringPointRemoved(Serializable):
+class MeteringPointRemoved(Message):
     """
     A MeteringPoint has been remove from the system.
     """
@@ -26,7 +26,7 @@ class MeteringPointRemoved(Serializable):
 
 
 @dataclass
-class MeteringPointMetaDataUpdate(Serializable):
+class MeteringPointMetaDataUpdate(Message):
     """
     Metadata for a MeteringPoint has been updated.
     """
