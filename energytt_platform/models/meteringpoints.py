@@ -4,7 +4,8 @@ from dataclasses import dataclass, field
 
 from energytt_platform.serialize import Serializable
 
-from .common import Address, Technology
+from .common import Address
+from .technologies import Technology
 
 
 class MeteringPointType(Enum):
@@ -16,8 +17,6 @@ class MeteringPointType(Enum):
 class MeteringPoint(Serializable):
     """
     A single Metering Point.
-
-    TODO Add physical address
     """
     gsrn: str
     sector: str
@@ -29,11 +28,8 @@ class MeteringPoint(Serializable):
 @dataclass
 class MeteringPointMetaData(Serializable):
     """
-    MeteringPoint meta data.
-
-    TODO Add physical address
+    Metadata for a MeteringPoint.
     """
-    gsrn: str
     type: Optional[MeteringPointType] = field(default=None)
     technology: Optional[Technology] = field(default=None)
     address: Optional[Address] = field(default=None)

@@ -1,29 +1,9 @@
 from typing import List
-from datetime import datetime
 from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
 from energytt_platform.models.meteringpoints import MeteringPoint
 from energytt_platform.models.certificates import GranularCertificate
-
-
-# -- Action requests ---------------------------------------------------------
-
-
-@dataclass
-class IssueCertificate(Serializable):
-    """
-    A request to issue a new Granular Certificate.
-    """
-    begin: datetime
-    end: datetime
-    sector: str
-    amount: int
-    technology_code: str
-    fuel_code: str
-
-
-# -- Action recipes ----------------------------------------------------------
 
 
 @dataclass

@@ -19,13 +19,14 @@ class UserDeleted(Serializable):
 
 
 @dataclass
-class UserConcentGiven(Serializable):
+class UserConsentGiven(Serializable):
     pass
 
 
 @dataclass
-class UserConcentRevoked(Serializable):
+class UserConsentRevoked(Serializable):
     pass
+
 
 @dataclass
 class UserOnboarded(Serializable):

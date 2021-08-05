@@ -1,39 +1,32 @@
 from datetime import datetime
+from typing import List, Dict
 from dataclasses import dataclass
-from typing import List, Dict, Optional
 
 from energytt_platform.serialize import Serializable
-
-from .common import Address, Technology
-from .meteringpoints import MeteringPointType
+from energytt_platform.models.technologies import TechnologyLabel
 
 
 @dataclass
-class MeteringPointMetaData(Serializable):
+class ResidualMixTechnology(Serializable):
     """
-    MeteringPoint meta data.
-
-    TODO Add physical address
+    Describes a part of emissions in the general mix, specifically
+    how large a percentage of the total energy from a single technology.
     """
-    gsrn: str
-    address: Optional[Address]
-    type: Optional[MeteringPointType]
-    technology: Optional[Technology]
-
-
-@dataclass
-class ResidualMixDataPart(Serializable):
-    technology: str
+    technology: TechnologyLabel
     percent: float
     sector: str  # Sector where energy is produced
 
 
 @dataclass
 class ResidualMixData(Serializable):
+    """
+    Describes emissions in the general mix, and its distribution
+    among different technologies, within a single sector (pricing area).
+    """
     sector: str  # Sector where energy is consumed
     begin: datetime
     end: datetime
     emissions: Dict[str, float]  # g/Wh
 
     # Technologies unique on: (technology, sector) (composite key)
-    technologies: List[ResidualMixDataPart]
+    technologies: List[ResidualMixTechnology]
