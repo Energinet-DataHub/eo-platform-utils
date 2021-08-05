@@ -95,7 +95,7 @@ class RequestOrchestrator(object):
         handler_kwargs = {}
 
         if self.endpoint.requires_context:
-            handler_kwargs['context'] = self.build_context()
+            handler_kwargs['context'] = context
 
         # Deserialize request data (if necessary)
         if self.endpoint.should_parse_request_data:

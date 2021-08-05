@@ -1,8 +1,11 @@
-from dataclasses import dataclass
+from typing import Optional
+from dataclasses import dataclass, field
 
 from energytt_platform.serialize import Serializable
+from energytt_platform.models.common import Address
+from energytt_platform.models.technologies import Technology
 from energytt_platform.models.meteringpoints import \
-    MeteringPoint, MeteringPointMetaData
+    MeteringPoint, MeteringPointType
 
 
 @dataclass
@@ -19,7 +22,6 @@ class MeteringPointRemoved(Serializable):
     """
     A MeteringPoint has been remove from the system.
     """
-    subject: str
     gsrn: str
 
 
@@ -29,4 +31,6 @@ class MeteringPointMetaDataUpdate(Serializable):
     Metadata for a MeteringPoint has been updated.
     """
     gsrn: str
-    data: MeteringPointMetaData
+    type: Optional[MeteringPointType] = field(default=None)
+    technology: Optional[Technology] = field(default=None)
+    address: Optional[Address] = field(default=None)

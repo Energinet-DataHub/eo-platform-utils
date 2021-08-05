@@ -1,5 +1,5 @@
-from abc import abstractmethod
 from serpyco import Serializer
+from abc import abstractmethod
 from typing import Optional, Any
 from inspect import getfullargspec
 from functools import cached_property

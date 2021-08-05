@@ -23,13 +23,3 @@ class MeteringPoint(Serializable):
     type: Optional[MeteringPointType] = field(default=None)
     technology: Optional[Technology] = field(default=None)
     address: Optional[Address] = field(default=None)
-
-
-@dataclass
-class MeteringPointMetaData(Serializable):
-    """
-    Metadata for a MeteringPoint.
-    """
-    type: Optional[MeteringPointType] = field(default=None)
-    technology: Optional[Technology] = field(default=None)
-    address: Optional[Address] = field(default=None)
