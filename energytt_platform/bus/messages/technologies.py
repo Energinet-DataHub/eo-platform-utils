@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
-from energytt_platform.models.common import Technology
+from energytt_platform.models.technologies import Technology
 
 
 @dataclass
