@@ -10,13 +10,12 @@ pytest-order = "*"
 pytest-depends = "*"
 
 [packages]
-#protobuf3 = "*"
-#betterproto = "*"
 pyjwt = "*"
 kafka-python = "*"
 Flask = "2.0.1"
 serpyco = "*"
 rapidjson = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.8"
