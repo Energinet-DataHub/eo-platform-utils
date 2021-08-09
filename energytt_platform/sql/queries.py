@@ -1,3 +1,4 @@
+from sqlalchemy import orm
 
 
 class SqlQuery(object):
@@ -31,20 +32,19 @@ class SqlQuery(object):
 
     def lazy_load(self, field):
         return self.__class__(self.session, self.q.options(
-            lazyload(field)
+            orm.lazyload(field)
         ))
 
     def eager_load(self, path, *fields):
         if isinstance(path, (list, tuple)):
-            join = joinedload(*path)
+            join = orm.joinedload(*path)
         else:
-            join = joinedload(path)
+            join = orm.joinedload(path)
 
         if fields:
             join = join.load_only(*fields)
-        return self.__class__(self.session, self.q.options(
-            join
-        ))
+
+        return self.__class__(self.session, self.q.options(join))
 
     # def eage_load_path(self, *path):
     #     join = rjoinedload(*path)
@@ -56,7 +56,7 @@ class SqlQuery(object):
 
     def only(self, *fields):
         return self.__class__(self.session, self.q.options(
-            load_only(*fields)
+            orm.load_only(*fields)
         ))
 
     def get(self, field):

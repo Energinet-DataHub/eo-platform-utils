@@ -11,6 +11,7 @@ MeasurementType = EnergyDirection
 
 @dataclass
 class Measurement(Serializable):
+    id: str
     gsrn: str
     amount: int
     begin: datetime

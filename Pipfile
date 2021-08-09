@@ -16,6 +16,7 @@ Flask = "2.0.1"
 serpyco = "*"
 rapidjson = "*"
 sqlalchemy = "*"
+alembic = "*"
 
 [requires]
 python_version = "3.8"

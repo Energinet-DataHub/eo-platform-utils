@@ -105,6 +105,7 @@ setuptools.setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     # TODO SPECIFIC VERSION OF REQUIREMENTS!
+    # TODO Read from requirements.txt instead
     install_requires=[
         'pyjwt',
         'kafka-python',
@@ -112,6 +113,7 @@ setuptools.setup(
         'serpyco',
         'rapidjson',
         'sqlalchemy',
+        'alembic',
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
