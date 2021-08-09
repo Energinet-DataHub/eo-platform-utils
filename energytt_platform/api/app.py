@@ -1,7 +1,7 @@
 import flask
 import logging
 from functools import cached_property
-from typing import List, Iterable, Tuple, Optional
+from typing import List, Iterable, Tuple, Any, Optional
 
 from .guards import EndpointGuard
 from .endpoints import Endpoint, HealthCheck
@@ -15,6 +15,9 @@ class Application(object):
     """
     def __init__(self, name: str):
         self.name = name
+
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        return self._flask_app(*args, **kwargs)
 
     @classmethod
     def create(
