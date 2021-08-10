@@ -11,7 +11,19 @@ class Serializable:
     Base class for dataclasses that can be serialized and deserialized.
     Subclasses must be defined as dataclasses.
     """
-    pass
+
+    @classmethod
+    def create_from(cls, obj):
+        """
+        TODO Map properties of 'obj' to cls constructor.
+        """
+        return cls()
+
+    def update(self, *objects):
+        """
+        TODO Copy properties from each object onto self
+        """
+        pass
 
 
 # -- Interfaces --------------------------------------------------------------

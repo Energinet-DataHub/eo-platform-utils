@@ -7,6 +7,15 @@ from energytt_platform.models.technologies import Technology
 @dataclass
 class TechnologyUpdate(Message):
     """
-    An update to a Technology.
+    A Technology has been added or updated.
     """
     technology: Technology
+
+
+@dataclass
+class TechnologyRemoved(Message):
+    """
+    An update to a Technology.
+    """
+    tech_code: str
+    fuel_code: str

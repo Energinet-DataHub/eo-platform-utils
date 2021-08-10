@@ -1,4 +1,5 @@
 from sqlalchemy import orm
+from abc import abstractmethod
 
 
 class SqlQuery(object):
@@ -7,11 +8,18 @@ class SqlQuery(object):
     """
     def __init__(self, session: orm.Session, q: orm.Query = None):
         """
-        :param sqlalchemy.orm.Session session:
-        :param sqlalchemy.orm.Query q:
+        :param session:
+        :param q:
         """
         self.session = session
-        self.q = q
+        self.q = q or self._get_base_query()
+
+    @abstractmethod
+    def _get_base_query(self) -> orm.Query:
+        """
+        TODO Describe with example
+        """
+        raise NotImplementedError
 
     def __iter__(self):
         return iter(self.q)

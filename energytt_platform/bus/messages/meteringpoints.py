@@ -3,43 +3,57 @@ from dataclasses import dataclass, field
 
 from energytt_platform.bus import Message
 from energytt_platform.models.common import Address
-from energytt_platform.models.technologies import Technology
+from energytt_platform.models.technologies import TechnologyCodes
 from energytt_platform.models.meteringpoints import \
-    MeteringPoint, MeteringPointType
+    MeteringPoint, MeteringPointBasics, MeteringPointDelegate
 
 
 @dataclass
 class MeteringPointAdded(Message):
     """
-    A new MeteringPoint has been added to the system.
+    A MeteringPoint has either been added to the system,
+    or an existing MeteringPoint has had its details updated.
     """
-    subject: str
     meteringpoint: MeteringPoint
 
 
 @dataclass
 class MeteringPointUpdated(Message):
     """
-    Details about a MeteringPoint has been updated in the system.
+    A MeteringPoint has either been added to the system,
+    or an existing MeteringPoint has had its details updated.
     """
-    subject: str
-    meteringpoint: MeteringPoint
+    gsrn: str
+    basics: Optional[MeteringPointBasics] = field(default=None)
+    technology: Optional[TechnologyCodes] = field(default=None)
+    address: Optional[Address] = field(default=None)
 
 
 @dataclass
 class MeteringPointRemoved(Message):
     """
     A MeteringPoint has been remove from the system.
+    # TODO Advice to perform Clean-up?
     """
     gsrn: str
+
+
+# -- Delegate ----------------------------------------------------------------
 
 
 @dataclass
-class MeteringPointMetaDataUpdate(Message):
+class MeteringPointDelegateGranted(Message):
     """
-    Metadata for a MeteringPoint has been updated.
+    An actor (identified by its subject) has been delegated
+    access to a MeteringPoint.
     """
-    gsrn: str
-    # """type: Optional[MeteringPointType] = field(default=None)"""
-    technology: Optional[Technology] = field(default=None)
-    address: Optional[Address] = field(default=None)
+    delegate: MeteringPointDelegate
+
+
+@dataclass
+class MeteringPointDelegateRevoked(Message):
+    """
+    An actor (identified by its subject) has had its delegated
+    access to a MeteringPoint revoked.
+    """
+    delegate: MeteringPointDelegate

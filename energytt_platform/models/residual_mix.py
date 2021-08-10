@@ -3,7 +3,7 @@ from datetime import datetime
 from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
-from energytt_platform.models.technologies import TechnologyLabel
+from energytt_platform.models.technologies import TechnologyType
 
 from .emissions import EmissionValues
 
@@ -40,7 +40,7 @@ class ResidualMixTechnology(Serializable):
     how large a percentage of the total energy consumed originates
     from a single type of technology.
     """
-    technology: TechnologyLabel
+    technology: TechnologyType
     percent: float
     sector: str  # Sector where energy is produced
 
