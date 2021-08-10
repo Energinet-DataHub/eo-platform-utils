@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Dict, Any
 from sqlalchemy import orm, engine
 from functools import cached_property
 
@@ -7,9 +7,17 @@ class SqlEngine(object):
 
     Session = orm.Session
 
-    def __init__(self, uri: str, **settings: Any):
+    def __init__(self, uri: str, pool_size: int = 1):
         self.uri = uri
-        self.settings = settings
+        self.pool_size = pool_size
+
+    @property
+    def settings(self) -> Dict[str, Any]:
+        return {
+            'echo': False,
+            'pool_pre_ping': True,
+            'pool_size': self.pool_size,
+        }
 
     @cached_property
     def engine(self) -> engine.Engine:
@@ -20,6 +28,10 @@ class SqlEngine(object):
         factory = orm.sessionmaker(bind=engine, expire_on_commit=False)
         session_class = orm.scoped_session(factory)
         return session_class
+
+    @cached_property
+    def registry(self) -> orm.registry:
+        return orm.registry()
 
     def make_session(self, *args, **kwargs):
         """
