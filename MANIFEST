@@ -42,6 +42,8 @@ energytt_platform/models/meteringpoints.py
 energytt_platform/models/residual_mix.py
 energytt_platform/models/technologies.py
 energytt_platform/sql/__init__.py
+energytt_platform/sql/engine.py
+energytt_platform/sql/models.py
 energytt_platform/sql/queries.py
 meta/PACKAGE_NAME
 meta/PACKAGE_VERSION
