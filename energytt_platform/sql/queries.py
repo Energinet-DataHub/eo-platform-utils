@@ -22,6 +22,9 @@ class SqlQuery(object):
     def filter(self, *filters):
         return self.__class__(self.session, self.q.filter(*filters))
 
+    def filter_by(self, **filters):
+        return self.__class__(self.session, self.q.filter_by(**filters))
+
     def unique_join(self, *props, **kwargs):
         if props[0] in [c.entity for c in self.q._join_entities]:
             return self

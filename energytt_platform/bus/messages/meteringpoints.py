@@ -18,6 +18,15 @@ class MeteringPointAdded(Message):
 
 
 @dataclass
+class MeteringPointUpdated(Message):
+    """
+    Details about a MeteringPoint has been updated in the system.
+    """
+    subject: str
+    meteringpoint: MeteringPoint
+
+
+@dataclass
 class MeteringPointRemoved(Message):
     """
     A MeteringPoint has been remove from the system.
@@ -31,6 +40,6 @@ class MeteringPointMetaDataUpdate(Message):
     Metadata for a MeteringPoint has been updated.
     """
     gsrn: str
-    type: Optional[MeteringPointType] = field(default=None)
+    # """type: Optional[MeteringPointType] = field(default=None)"""
     technology: Optional[Technology] = field(default=None)
     address: Optional[Address] = field(default=None)

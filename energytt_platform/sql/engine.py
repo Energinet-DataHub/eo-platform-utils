@@ -42,7 +42,7 @@ class SqlEngine(object):
         """
         return self.session(*args, **kwargs)
 
-    def inject_session(self, func):
+    def session(self, func):
         """
         Function decorator which injects a "session" named parameter
         if it doesn't already exists
@@ -62,7 +62,7 @@ class SqlEngine(object):
         if it doesn't already exists, and wraps the function in an
         atomic transaction.
         """
-        @self.inject_session
+        @self.session
         def atomic_wrapper(*args, **kwargs):
             session: orm.Session = kwargs['session']
             session.begin()
