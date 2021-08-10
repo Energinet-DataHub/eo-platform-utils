@@ -17,7 +17,8 @@ class SqlEngine(object):
 
     @cached_property
     def session(self) -> orm.scoped_session:
-        factory = orm.sessionmaker(bind=engine, expire_on_commit=False)
+        orm.configure_mappers()
+        factory = orm.sessionmaker(bind=self.engine, expire_on_commit=False)
         session_class = orm.scoped_session(factory)
         return session_class
 

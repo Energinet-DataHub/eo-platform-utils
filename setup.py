@@ -112,6 +112,7 @@ setuptools.setup(
         'Flask',
         'serpyco',
         'rapidjson',
+        'psycopg2',
         'sqlalchemy',
         'alembic',
     ],

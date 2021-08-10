@@ -5,7 +5,7 @@ class SqlQuery(object):
     """
     TODO
     """
-    def __init__(self, session, q):
+    def __init__(self, session: orm.Session, q: orm.Query = None):
         """
         :param sqlalchemy.orm.Session session:
         :param sqlalchemy.orm.Query q:
