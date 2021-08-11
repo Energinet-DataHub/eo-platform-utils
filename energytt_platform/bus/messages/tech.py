@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from energytt_platform.bus import Message
-from energytt_platform.models.technologies import Technology
+from energytt_platform.models.tech import Technology
 
 
 @dataclass
@@ -13,9 +13,9 @@ class TechnologyUpdate(Message):
 
 
 @dataclass
-class TechnologyRemoved(Message):
+class TechnologyDeleted(Message):
     """
-    An update to a Technology.
+    TODO
     """
     tech_code: str
     fuel_code: str

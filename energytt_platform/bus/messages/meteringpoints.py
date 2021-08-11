@@ -30,6 +30,17 @@ class MeteringPointUpdated(Message):
 
 
 @dataclass
+class MeteringPointTechnologyUpdated(Message):
+    """
+    A MeteringPoint has either been added to the system,
+    or an existing MeteringPoint has had its details updated.
+    """
+    gsrn: str
+    tech_code: str
+    fuel_code: str
+
+
+@dataclass
 class MeteringPointRemoved(Message):
     """
     A MeteringPoint has been remove from the system.

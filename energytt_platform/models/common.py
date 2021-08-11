@@ -11,8 +11,8 @@ from energytt_platform.serialize import Serializable
 
 
 class EnergyDirection(Enum):
-    PRODUCTION = 'PRODUCTION'  # E18
-    CONSUMPTION = 'CONSUMPTION'  # E17
+    production = 'production'  # E18
+    consumption = 'consumption'  # E17
 
 
 @dataclass
@@ -60,8 +60,8 @@ TOrderKey = TypeVar('TOrderKey', bound=Enum)
 
 
 class Order(Enum):
-    ASC = 'ASC'
-    DESC = 'DESC'
+    asc = 'asc'
+    desc = 'desc'
 
 
 @dataclass
@@ -74,8 +74,8 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
 
     @property
     def asc(self) -> bool:
-        return self.order is Order.ASC
+        return self.order is Order.asc
 
     @property
     def desc(self) -> bool:
-        return self.order is Order.DESC
+        return self.order is Order.desc

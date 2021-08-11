@@ -1,6 +1,5 @@
 from enum import Enum
-from typing import Optional
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
 
@@ -24,4 +23,3 @@ class Technology(Serializable):
     type: TechnologyType
     tech_code: str
     fuel_code: str
-
