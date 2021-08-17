@@ -10,6 +10,7 @@ pytest-order = "*"
 pytest-depends = "*"
 
 [packages]
+wrapt = "*"
 pyjwt = "*"
 kafka-python = "*"
 Flask = "2.0.1"

@@ -1,3 +1,4 @@
+from wrapt import decorator
 from typing import Dict, Any
 from sqlalchemy import orm, engine
 from functools import cached_property
@@ -24,7 +25,7 @@ class SqlEngine(object):
         return engine.create_engine(self.uri, **self.settings)
 
     @cached_property
-    def session(self) -> orm.scoped_session:
+    def session_class(self) -> orm.scoped_session:
         orm.configure_mappers()
         factory = orm.sessionmaker(bind=self.engine, expire_on_commit=False)
         session_class = orm.scoped_session(factory)
@@ -34,46 +35,55 @@ class SqlEngine(object):
     def registry(self) -> orm.registry:
         return orm.registry()
 
-    def make_session(self, *args, **kwargs):
+    @cached_property
+    def ModelBase(self) -> orm.declarative_base:
+        return self.registry.generate_base()
+        # return orm.declarative_base()
+
+    def make_session(self):
         """
         Create a new database session.
 
         :rtype: sqlalchemy.orm.Session
         """
-        return self.session(*args, **kwargs)
+        return self.session_class()
 
-    def session(self, func):
+    def session(self):
         """
         Function decorator which injects a "session" named parameter
         if it doesn't already exists
         """
-        def session_wrapper(*args, **kwargs):
+
+        @decorator
+        def session_decorator(wrapped, instance, args, kwargs):
             session = kwargs.setdefault('session', self.make_session())
             try:
-                return func(*args, **kwargs)
+                return wrapped(*args, **kwargs)
             finally:
                 session.close()
 
-        return session_wrapper
+        return session_decorator
 
-    def atomic(self, func):
+    def atomic(self):
         """
         Function decorator which injects a "session" named parameter
         if it doesn't already exists, and wraps the function in an
         atomic transaction.
         """
-        @self.session
-        def atomic_wrapper(*args, **kwargs):
-            session: orm.Session = kwargs['session']
+        @decorator
+        def atomic_wrapper(wrapped, instance, args, kwargs):
+            session: orm.Session = kwargs.setdefault('session', self.make_session())
             session.begin()
 
             try:
-                return_value = func(*args, **kwargs)
+                return_value = wrapped(*args, **kwargs)
             except:
                 session.rollback()
                 raise
             else:
                 session.commit()
                 return return_value
+            finally:
+                session.close()
 
         return atomic_wrapper

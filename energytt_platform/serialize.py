@@ -2,7 +2,7 @@ import serpyco
 from abc import abstractmethod
 from functools import lru_cache
 from dataclasses import dataclass
-from typing import Dict, Type, TypeVar, Generic, Any
+from typing import Dict, Type, TypeVar, Generic, Any, Optional
 
 
 @dataclass
@@ -39,7 +39,7 @@ class Serializer(Generic[TSerialized]):
     """
 
     @abstractmethod
-    def serialize(self, obj: TSerializable) -> TSerialized:
+    def serialize(self, obj: TSerializable, cls: Optional[Type[TSerializable]] = None) -> TSerialized:
         """
         Serialize an object.
         """
@@ -60,45 +60,49 @@ class SimpleSerializer(Serializer[Dict[str, Any]]):
     """
     Serialize and deserialize to and from simple Python types (dictionary).
     """
-    def serialize(self, obj: TSerializable) -> Dict[str, Any]:
+    def serialize(self, obj: TSerializable, cls: Optional[Type[TSerializable]] = None) -> Dict[str, Any]:
         """
         Serializes object to Python.
         """
-        return get_serializer(obj.__class__).dump(obj)
+        if cls is None:
+            cls = obj.__class__
+        return get_serpyco_serializer(cls).dump(obj)
 
     def deserialize(self, data: Dict[str, Any], cls: Type[TSerializable]) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return get_serializer(cls).load(data)
+        return get_serpyco_serializer(cls).load(data)
 
 
 class JsonSerializer(Serializer[bytes]):
     """
     Serialize and deserialize to and from JSON (encoded bytes).
     """
-    def serialize(self, obj: TSerializable) -> bytes:
+    def serialize(self, obj: TSerializable, cls: Optional[Type[TSerializable]] = None) -> bytes:
         """
         Serializes object to JSON.
         """
-        return get_serializer(obj.__class__).dump_json(obj).encode()
+        if cls is None:
+            cls = obj.__class__
+        return get_serpyco_serializer(cls).dump_json(obj).encode()
 
     def deserialize(self, data: bytes, cls: Type[TSerializable]) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return get_serializer(cls).load_json(data.decode('utf8'))
+        return get_serpyco_serializer(cls).load_json(data.decode('utf8'))
 
 
 # -- Misc --------------------------------------------------------------------
 
 
 @lru_cache
-def get_serializer(cls: Type[TSerializable]) -> serpyco.Serializer:
+def get_serpyco_serializer(cls: Type[TSerializable]) -> serpyco.Serializer:
     """
     TODO
     """
-    return serpyco.Serializer(cls)
+    return serpyco.Serializer(cls, strict=True)
 
 
 # -- Singletons --------------------------------------------------------------

@@ -48,13 +48,19 @@ class MessageSerializer(object):
             msg=msg,
         )
 
-        return json_serializer.serialize(wrapped_msg)
+        return json_serializer.serialize(
+            obj=wrapped_msg,
+            cls=MessageWrapper[msg.__class__],
+        )
 
     def deserialize(self, data: bytes) -> Message:
         """
         Deserializes JSON bytestream into a message.
         """
-        wrapped_msg = json_serializer.deserialize(data, MessageWrapper)
+        wrapped_msg = json_serializer.deserialize(
+            data=data,
+            cls=MessageWrapper[TSerializedMessage],
+        )
 
         if wrapped_msg.type_ not in message_registry:
             raise self.MessageDeserializeError((
@@ -62,7 +68,7 @@ class MessageSerializer(object):
                 'Type is unknown to the bus.'
             ))
 
-        message_cls = message_registry.get(wrapped_msg.msg)
+        message_cls = message_registry.get(wrapped_msg.type_)
 
         return simple_serializer.deserialize(
             data=wrapped_msg.msg,

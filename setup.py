@@ -107,6 +107,7 @@ setuptools.setup(
     # TODO SPECIFIC VERSION OF REQUIREMENTS!
     # TODO Read from requirements.txt instead
     install_requires=[
+        'wrapt',
         'pyjwt',
         'kafka-python',
         'Flask',

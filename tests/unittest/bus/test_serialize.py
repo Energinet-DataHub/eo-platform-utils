@@ -15,6 +15,7 @@ class TestMessageSerializer:
         obj = m.MeasurementAdded(
             subject='12345',
             measurement=Measurement(
+                id='1',
                 type=MeasurementType.consumption,
                 gsrn='12345',
                 amount=123,
