@@ -5,9 +5,16 @@ from energytt_platform.models.measurements import Measurement
 
 
 @dataclass
-class MeasurementAdded(Message):
+class MeasurementUpdate(Message):
     """
     A new Measurement has been added to the system.
     """
-    subject: str
     measurement: Measurement
+
+
+@dataclass
+class MeasurementRemoved(Message):
+    """
+    TODO
+    """
+    id: str

@@ -3,7 +3,7 @@ from datetime import datetime
 from dataclasses import dataclass
 
 from energytt_platform.serialize import Serializable
-from energytt_platform.models.technologies import TechnologyType
+from energytt_platform.models.tech import TechnologyType
 
 from .emissions import EmissionValues
 

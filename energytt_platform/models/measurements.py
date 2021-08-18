@@ -16,4 +16,3 @@ class Measurement(Serializable):
     amount: int
     begin: datetime
     end: datetime
-    type: MeasurementType

@@ -9,7 +9,7 @@ from energytt_platform.models.meteringpoints import \
 
 
 @dataclass
-class MeteringPointAdded(Message):
+class MeteringPointUpdate(Message):
     """
     A MeteringPoint has either been added to the system,
     or an existing MeteringPoint has had its details updated.
@@ -27,7 +27,7 @@ class MeteringPointRemoved(Message):
 
 
 @dataclass
-class MeteringPointTechnologyUpdated(Message):
+class MeteringPointTechnologyUpdate(Message):
     """
     Updates technology codes for a MeteringPoint.
 
@@ -39,7 +39,7 @@ class MeteringPointTechnologyUpdated(Message):
 
 
 @dataclass
-class MeteringPointAddressUpdated(Message):
+class MeteringPointAddressUpdate(Message):
     """
     Updates address for a MeteringPoint.
 

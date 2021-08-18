@@ -2,12 +2,15 @@ from energytt_platform.bus import message_registry
 
 from .auth import UserOnboarded
 from .tech import TechnologyUpdate, TechnologyRemoved
-from .measurements import MeasurementAdded
+from .measurements import (
+    MeasurementUpdate,
+    MeasurementRemoved,
+)
 from .meteringpoints import (
-    MeteringPointAdded,
+    MeteringPointUpdate,
     MeteringPointRemoved,
-    MeteringPointTechnologyUpdated,
-    MeteringPointAddressUpdated,
+    MeteringPointTechnologyUpdate,
+    MeteringPointAddressUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 )
@@ -23,13 +26,14 @@ message_registry.add(
     TechnologyRemoved,
 
     # Measurements
-    MeasurementAdded,
+    MeasurementUpdate,
+    MeasurementRemoved,
 
     # MeteringPoints
-    MeteringPointAdded,
+    MeteringPointUpdate,
     MeteringPointRemoved,
-    MeteringPointTechnologyUpdated,
-    MeteringPointAddressUpdated,
+    MeteringPointTechnologyUpdate,
+    MeteringPointAddressUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 

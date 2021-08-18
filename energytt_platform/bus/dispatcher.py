@@ -11,5 +11,6 @@ class MessageDispatcher(Dict[Type[Message], TMessageHandler]):
     def __call__(self, msg: Message):
         message_type = type(msg)
         if message_type in self:
+            print('DISPATCH: %s' % msg)
             handler = self[message_type]
             handler(msg)
