@@ -15,7 +15,7 @@ TSerializedMessage = Dict[str, Any]
 @dataclass
 class MessageWrapper(Message, Generic[TWrappedMessage]):
     """
-    A new MeteringPoint has been added to the system.
+    TODO
     """
     type_: str = field(dict_key='type')
     msg: Optional[Union[TWrappedMessage, TSerializedMessage]] = field(default=None)
@@ -28,9 +28,15 @@ class MessageSerializer(object):
     """
 
     class MessageSerializeError(Exception):
+        """
+        TODO
+        """
         pass
 
     class MessageDeserializeError(Exception):
+        """
+        TODO
+        """
         pass
 
     def serialize(self, msg: Message) -> bytes:

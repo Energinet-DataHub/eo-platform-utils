@@ -53,7 +53,6 @@ class SqlEngine(object):
         Function decorator which injects a "session" named parameter
         if it doesn't already exists
         """
-
         @decorator
         def session_decorator(wrapped, instance, args, kwargs):
             session = kwargs.setdefault('session', self.make_session())
