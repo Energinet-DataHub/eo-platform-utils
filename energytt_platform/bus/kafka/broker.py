@@ -67,6 +67,7 @@ class KafkaMessageBroker(MessageBroker):
         """
         TODO
         """
+        print('PUBLISH: %s' % msg)
         future = self.producer.send(
             topic=topic,
             value=msg,

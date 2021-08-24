@@ -34,11 +34,21 @@ class Application(object):
         app = cls(*args, **kwargs)
 
         # Add endpoints
-        for method, path, endpoint in endpoints:
+        for e in endpoints:
+            assert 3 <= len(e) <= 4
+
+            method, path, endpoint = e[:3]
+
+            if len(e) == 4:
+                guards = e[3]
+            else:
+                guards = []
+
             app.add_endpoint(
                 method=method,
                 path=path,
                 endpoint=endpoint,
+                guards=guards,
             )
 
         # Add health check endpoint

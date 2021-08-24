@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from energytt_platform.serialize import Serializable
 
 from .context import Context
+from .responses import Unauthorized
 
 
 @dataclass
@@ -36,32 +37,40 @@ class EndpointGuard(object):
 #         self.services = services
 
 
+# class TokenGuard(EndpointGuard):
+#     """
+#     Only Allows requests with a valid token provided.
+#     """
+#     def __init__(self, *scopes: str):
+#         self.scopes = scopes
+#
+#     def validate(self, context: Context):
+#         if context.token is None:
+#             raise Unauthorized('Unauthorized')
+
+
 class ScopedGuard(EndpointGuard):
     """
-    Allows only clients with specific scopes granted.
+    Only Allows requests with specific scopes granted.
     """
     def __init__(self, *scopes: str):
         self.scopes = scopes
 
+    def validate(self, context: Context):
+        if context.token is None:
+            raise Unauthorized('Unauthorized')
+        for scope in self.scopes:
+            if scope not in context.token.scope:
+                raise Unauthorized('Missing scope %s' % scope)  # TODO Write proper message
+
 
 class Bouncer(object):
     def validate(self, context: Context, guards: List[EndpointGuard]):
-        raise NotImplementedError
-
-
-# s1 = ServiceGuard(
-#     Service(name='Service A'),
-#     Service(name='Service B'),
-# )
-#
-# s2 = ScopedGuard(
-#     'meteringpoints.read',
-#     'measurements.read',
-#     'gc.read',
-#     'gc.transfer',
-# )
+        for guard in guards:
+            guard.validate(context)
 
 
 # -- Singletons --------------------------------------------------------------
+
 
 bouncer = Bouncer()

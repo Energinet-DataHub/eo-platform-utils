@@ -13,6 +13,7 @@ from .responses import HttpError, BadRequest
 
 # -- Request data ------------------------------------------------------------
 
+
 class RequestDataProvider(object):
     """
     Provides request parameters.

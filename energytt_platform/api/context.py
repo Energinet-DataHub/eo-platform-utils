@@ -1,15 +1,9 @@
 import re
-import jwt
 from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
 
-from energytt_platform.serialize import json_serializer
-from energytt_platform.auth import (
-    OpaqueToken,
-    encode_opaque_token,
-    decode_opaque_token,
-)
+from energytt_platform.auth import OpaqueToken, decode_opaque_token
 
 
 class Context(object):
