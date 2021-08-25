@@ -1,11 +1,8 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, Tuple, Iterable, Union, Callable, Any
+from typing import List, Iterable, Callable, Any
 
 from energytt_platform.serialize import Serializable
-
-
-# TMessage = Serializable
 
 
 @dataclass
@@ -39,7 +36,7 @@ class MessageBroker(object):
         raise NotImplementedError
 
     @abstractmethod
-    def listen(self, topics: List[str]) -> Iterable[Message]:
+    def subscribe(self, topics: List[str]) -> Iterable[Message]:
         """
         Subscribe to one or more topics. Returns an iterable of messages.
 
@@ -48,7 +45,7 @@ class MessageBroker(object):
         """
         raise NotImplementedError
 
-    def subscribe(self, topics: List[str], handler: TMessageHandler):
+    def listen(self, topics: List[str], handler: TMessageHandler):
         """
         An alias for subscribe() except this function takes a callable
         which is invoked for each message.
@@ -56,5 +53,5 @@ class MessageBroker(object):
         :param topics: The topics to subscribe to
         :param handler: Message handler
         """
-        for msg in self.listen(topics):
+        for msg in self.subscribe(topics):
             handler(msg)

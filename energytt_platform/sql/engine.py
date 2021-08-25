@@ -5,6 +5,9 @@ from functools import cached_property
 
 
 class SqlEngine(object):
+    """
+    TODO
+    """
 
     Session = orm.Session
 
@@ -14,6 +17,9 @@ class SqlEngine(object):
 
     @property
     def settings(self) -> Dict[str, Any]:
+        """
+        TODO
+        """
         return {
             'echo': False,
             'pool_pre_ping': True,
@@ -22,10 +28,16 @@ class SqlEngine(object):
 
     @cached_property
     def engine(self) -> engine.Engine:
+        """
+        TODO
+        """
         return engine.create_engine(self.uri, **self.settings)
 
     @cached_property
     def session_class(self) -> orm.scoped_session:
+        """
+        TODO
+        """
         orm.configure_mappers()
         factory = orm.sessionmaker(bind=self.engine, expire_on_commit=False)
         session_class = orm.scoped_session(factory)
@@ -33,12 +45,17 @@ class SqlEngine(object):
 
     @cached_property
     def registry(self) -> orm.registry:
+        """
+        TODO
+        """
         return orm.registry()
 
     @cached_property
     def ModelBase(self) -> orm.declarative_base:
+        """
+        TODO
+        """
         return self.registry.generate_base()
-        # return orm.declarative_base()
 
     def make_session(self):
         """

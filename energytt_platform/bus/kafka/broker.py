@@ -81,7 +81,7 @@ class KafkaMessageBroker(MessageBroker):
                 # Decide what to do if produce request failed...
                 raise PublishError(str(e))
 
-    def listen(self, topics: List[str]) -> KafkaMessageConsumer:
+    def subscribe(self, topics: List[str]) -> KafkaMessageConsumer:
         """
         TODO
         """

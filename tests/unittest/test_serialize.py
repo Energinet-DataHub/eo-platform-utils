@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass
 
-from energytt_platform.serialize import JsonSerializer, Serializable
+from energytt_platform.serializeOLD import JsonSerializer, Serializable
 
 
 @dataclass

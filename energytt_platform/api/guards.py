@@ -1,17 +1,8 @@
 from typing import List
 from abc import abstractmethod
-from dataclasses import dataclass
-
-from energytt_platform.serialize import Serializable
 
 from .context import Context
 from .responses import Unauthorized
-
-
-@dataclass
-class Issuer(Serializable):
-    id: str
-    public_key: str
 
 
 class EndpointGuard(object):
