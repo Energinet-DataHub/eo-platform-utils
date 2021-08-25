@@ -28,5 +28,7 @@ class MeteringPointDelegate(Serializable):
     An actor (identified by its subject) who has been delegated
     access to a MeteringPoint (identified by its GSRN number).
     """
-    gsrn: str
     subject: str
+    gsrn: str
+
+    # TODO Define time period (???)

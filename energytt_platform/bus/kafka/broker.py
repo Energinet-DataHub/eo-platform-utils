@@ -10,9 +10,10 @@ from energytt_platform.bus.serialize import MessageSerializer
 
 class KafkaMessageConsumer(object):
     """
-    A consumer of Kafka messages.
+    A kafka_consumer of Kafka messages.
     Iterates over messages in subscribed topics.
     """
+
     def __init__(
             self,
             topics: List[str],
@@ -20,16 +21,16 @@ class KafkaMessageConsumer(object):
             serializer: MessageSerializer,
     ):
         """
-        :param List[str] topics:
-        :param List[str] servers:
-        :param MessageSerializer serializer:
+        :param topics:
+        :param servers:
+        :param serializer:
         """
         self.topics = topics
         self.servers = servers
         self.serializer = serializer
 
     @cached_property
-    def consumer(self) -> KafkaConsumer:
+    def kafka_consumer(self) -> KafkaConsumer:
         """
         TODO
         """
@@ -42,7 +43,7 @@ class KafkaMessageConsumer(object):
         )
 
     def __iter__(self):
-        return (msg.value for msg in self.consumer)
+        return (msg.value for msg in self.kafka_consumer)
 
 
 class KafkaMessageBroker(MessageBroker):
@@ -54,7 +55,7 @@ class KafkaMessageBroker(MessageBroker):
         self.serializer = serializer
 
     @cached_property
-    def producer(self) -> KafkaProducer:
+    def kafka_producer(self) -> KafkaProducer:
         """
         TODO
         """
@@ -68,7 +69,7 @@ class KafkaMessageBroker(MessageBroker):
         TODO
         """
         print('PUBLISH: %s' % msg)
-        future = self.producer.send(
+        future = self.kafka_producer.send(
             topic=topic,
             value=msg,
         )

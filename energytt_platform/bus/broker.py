@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, Iterable, Callable, Any
+from typing import List, Tuple, Iterable, Union, Callable, Any
 
 from energytt_platform.serialize import Serializable
 
@@ -16,6 +16,7 @@ class Message(Serializable):
     pass
 
 
+# Message handler function for consuming
 TMessageHandler = Callable[[Message], None]
 
 
@@ -30,10 +31,10 @@ class MessageBroker(object):
         """
         Publish a message to a topic on the bus.
 
-        :param str topic: The topic to publish to
-        :param Any msg: The message to publish
-        :param bool block: Whether to block until publishing is complete
-        :param int timeout: Timeout in seconds (if block=True)
+        :param topic: The topic to publish to
+        :param msg: The message to publish
+        :param block: Whether to block until publishing is complete
+        :param timeout: Timeout in seconds (if block=True)
         """
         raise NotImplementedError
 
@@ -42,8 +43,7 @@ class MessageBroker(object):
         """
         Subscribe to one or more topics. Returns an iterable of messages.
 
-        :param List[str] topics: The topics to subscribe to
-        :rtype: Iterable[Any]
+        :param topics: The topics to subscribe to
         :return: An iterable of messages
         """
         raise NotImplementedError
@@ -53,8 +53,8 @@ class MessageBroker(object):
         An alias for subscribe() except this function takes a callable
         which is invoked for each message.
 
-        :param List[str] topics: The topics to subscribe to
-        :param TMessageHandler handler: Message handler
+        :param topics: The topics to subscribe to
+        :param handler: Message handler
         """
         for msg in self.listen(topics):
             handler(msg)
