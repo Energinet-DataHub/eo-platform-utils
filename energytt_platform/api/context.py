@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 from energytt_platform.tokens import TokenEncoder
 from energytt_platform.models.auth import InternalToken
 
+from .responses import Unauthorized
+
 
 class Context(object):
     """
@@ -42,27 +44,53 @@ class Context(object):
             if matches:
                 return matches[0]
 
-    @property
-    def has_token(self) -> bool:
-        """
-        Check whether or not the client provided a token.
-        """
-        return self.raw_token is not None
-
     @cached_property
     def token(self) -> Optional[InternalToken]:
         """
         Parses token into an OpaqueToken.
         """
-        if self.has_token:
+        if self.raw_token is not None:
             try:
                 internal_token = self.token_encoder.decode(self.raw_token)
             except self.token_encoder.DecodeError:
                 # TODO Raise exception if in debug mode?
                 return None
 
-            if internal_token.expires < datetime.now(tz=timezone.utc):
+            if internal_token.is_expired:
                 # TODO Raise exception if in debug mode?
                 return None
 
             return internal_token
+
+    @property
+    def is_authorized(self) -> bool:
+        """
+        Check whether or not the client provided a valid token.
+        """
+        return self.token is not None
+
+    def has_scope(self, scope: str) -> bool:
+        """
+        TODO
+        """
+        if self.token:
+            return scope in self.token.scope
+        return False
+
+    def get_token(self, required=True) -> Optional[InternalToken]:
+        """
+        TODO
+        """
+        if self.token:
+            return self.token
+        elif required:
+            raise Unauthorized('')  # TODO Error message
+
+    def get_subject(self, required=True) -> Optional[str]:
+        """
+        TODO
+        """
+        if self.token:
+            return self.token.subject
+        elif required:
+            raise Unauthorized('')  # TODO Error message

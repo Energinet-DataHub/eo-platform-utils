@@ -34,6 +34,8 @@ class TokenEncoder(Generic[TToken]):
         self.schema = schema
         self.secret = secret
 
+        # TODO Detect schema from Generic type instead of parameter
+
     def encode(self, obj: TToken) -> str:
         """
         TODO
