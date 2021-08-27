@@ -14,6 +14,13 @@ class Endpoint(object):
     Request = None
     Response = None
 
+    @abstractmethod
+    def handle_request(self, **kwargs) -> Optional[Any]:
+        """
+        Handle a HTTP request.
+        """
+        raise NotImplementedError
+
     @cached_property
     def request_serializer(self) -> Optional[Serializer]:
         """
@@ -63,17 +70,10 @@ class Endpoint(object):
     @cached_property
     def should_parse_response_object(self) -> bool:
         """
-        Returns True if handle_request() requires an instance of self.Request
+        Returns True if handle_request() requires an instance of self.Response
         passed as argument.
         """
         return self.Response is not None
-
-    @abstractmethod
-    def handle_request(self, **kwargs) -> Optional[Any]:
-        """
-        Handle a HTTP request.
-        """
-        raise NotImplementedError
 
 
 class HealthCheck(Endpoint):

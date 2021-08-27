@@ -20,15 +20,3 @@ class MeteringPoint(Serializable):
     sector: Optional[str] = field(default=None)
     technology: Optional[Technology] = field(default=None)
     address: Optional[Address] = field(default=None)
-
-
-@dataclass
-class MeteringPointDelegate(Serializable):
-    """
-    An actor (identified by its subject) who has been delegated
-    access to a MeteringPoint (identified by its GSRN number).
-    """
-    subject: str
-    gsrn: str
-
-    # TODO Define time period (???)

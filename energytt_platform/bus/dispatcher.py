@@ -14,3 +14,5 @@ class MessageDispatcher(Dict[Type[Message], TMessageHandler]):
             print('DISPATCH: %s' % msg)
             handler = self[message_type]
             handler(msg)
+        else:
+            print('IGNORING: %s' % message_type)

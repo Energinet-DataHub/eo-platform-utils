@@ -1,8 +1,6 @@
 from inspect import isclass
 from typing import Dict, Union, Type, Optional
 
-# from energytt_platform.serialize import Serializable
-
 from .broker import Message
 
 
@@ -18,13 +16,27 @@ class MessageRegistry(Dict[str, Type[Message]]):
     """
 
     @classmethod
-    def from_message_types(cls, *message_types: Type[Message]) -> 'MessageRegistry':
+    def from_message_types(cls, *message_types: Type[Message]) \
+            -> 'MessageRegistry':
+        """
+        TODO
+
+        :param message_types:
+        :return:
+        """
         return cls({c.__name__: c for c in message_types})
 
     def add(self, *message_types: Type[Message]):
+        """
+        TODO
+
+        :param message_types:
+        :return:
+        """
         self.update({c.__name__: c for c in message_types})
 
-    def __contains__(self, item: Union[str, Message, Type[Message]]) -> bool:
+    def __contains__(self, item: Union[str, Message, Type[Message]]) \
+            -> bool:
         """
         Check whether an item is known by the registry.
 
@@ -42,7 +54,8 @@ class MessageRegistry(Dict[str, Type[Message]]):
         else:
             return False
 
-    def get(self, item: Union[str, Message, Type[Message]]) -> Optional[Message]:
+    def get(self, item: Union[str, Message, Type[Message]]) \
+            -> Optional[Message]:
         """
         TODO
         """
@@ -54,10 +67,3 @@ class MessageRegistry(Dict[str, Type[Message]]):
             return super(MessageRegistry, self).get(item.__class__.__name__)
         else:
             raise RuntimeError('TODO')
-
-
-# -- Singletons --------------------------------------------------------------
-
-
-# Singleton message registry TODO
-message_registry = MessageRegistry()

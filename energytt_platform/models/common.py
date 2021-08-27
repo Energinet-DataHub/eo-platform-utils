@@ -2,7 +2,7 @@ from enum import Enum
 from serpyco import field
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Optional, Generic, TypeVar
+from typing import Optional, Generic, TypeVar, List
 
 from energytt_platform.serialize import Serializable
 
@@ -11,6 +11,9 @@ from energytt_platform.serialize import Serializable
 
 
 class EnergyDirection(Enum):
+    """
+    TODO
+    """
     production = 'production'  # E18
     consumption = 'consumption'  # E17
 
@@ -30,6 +33,25 @@ class Address(Serializable):
     city_sub_division_name: Optional[str] = field(default=None)
     municipality_code: Optional[str] = field(default=None)
     location_description: Optional[str] = field(default=None)
+
+    def __str__(self) -> str:
+        """
+        Creates a string representation of the address.
+        """
+        return self.format()
+
+    def format(self, separator: str = '\n') -> str:
+        """
+        Creates a string representation of the address.
+        """
+        return separator.join(self.parts)
+
+    @property
+    def parts(self) -> List[str]:
+        """
+        TODO
+        """
+        return []
 
 
 # -- Date & Time -------------------------------------------------------------
@@ -60,6 +82,9 @@ TOrderKey = TypeVar('TOrderKey', bound=Enum)
 
 
 class Order(Enum):
+    """
+    TODO
+    """
     asc = 'asc'
     desc = 'desc'
 

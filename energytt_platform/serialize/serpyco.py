@@ -11,11 +11,14 @@ except ImportError:
 
 
 @lru_cache
-def _get_serpyco_serializer(cls: Type[TSerializable]) -> serpyco.Serializer:
+def _get_serializer(schema: Type[TSerializable]) -> serpyco.Serializer:
     """
     TODO
     """
-    return serpyco.Serializer(cls, strict=True)
+    return serpyco.Serializer(schema, strict=True)
+
+
+# -- Serializers -------------------------------------------------------------
 
 
 class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
@@ -24,24 +27,24 @@ class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
     """
     def serialize(
             self, obj: TSerializable,
-            cls: Optional[Type[TSerializable]] = None,
+            schema: Optional[Type[TSerializable]] = None,
     ) -> Dict[str, Any]:
         """
         Serializes object to Python.
         """
-        if cls is None:
-            cls = obj.__class__
-        return _get_serpyco_serializer(cls).dump(obj)
+        if schema is None:
+            schema = obj.__class__
+        return _get_serializer(schema).dump(obj)
 
     def deserialize(
             self,
             data: Dict[str, Any],
-            cls: Type[TSerializable],
+            schema: Type[TSerializable],
     ) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return _get_serpyco_serializer(cls).load(data)
+        return _get_serializer(schema).load(data)
 
 
 class SerpycoJsonSerializer(Serializer[bytes]):
@@ -51,21 +54,21 @@ class SerpycoJsonSerializer(Serializer[bytes]):
     def serialize(
             self,
             obj: TSerializable,
-            cls: Optional[Type[TSerializable]] = None,
+            schema: Optional[Type[TSerializable]] = None,
     ) -> bytes:
         """
         Serializes object to JSON.
         """
-        if cls is None:
-            cls = obj.__class__
-        return _get_serpyco_serializer(cls).dump_json(obj).encode()
+        if schema is None:
+            schema = obj.__class__
+        return _get_serializer(schema).dump_json(obj).encode()
 
     def deserialize(
             self,
             data: bytes,
-            cls: Type[TSerializable],
+            schema: Type[TSerializable],
     ) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return _get_serpyco_serializer(cls).load_json(data.decode('utf8'))
+        return _get_serializer(schema).load_json(data.decode('utf8'))

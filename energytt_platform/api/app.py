@@ -13,8 +13,9 @@ class Application(object):
     """
     TODO
     """
-    def __init__(self, name: str):
+    def __init__(self, name: str, secret: str):
         self.name = name
+        self.secret = secret
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         return self._flask_app(*args, **kwargs)
@@ -99,6 +100,7 @@ class Application(object):
             view_func=RequestOrchestrator(
                 endpoint=endpoint,
                 data=data_provider,
+                secret=self.secret,
                 guards=guards,
             ),
         )

@@ -24,7 +24,7 @@ class Serializer(Generic[TSerialized]):
     @abstractmethod
     def serialize(
             self, obj: TSerializable,
-            cls: Optional[Type[TSerializable]] = None,
+            schema: Optional[Type[TSerializable]] = None,
     ) -> TSerialized:
         """
         Serialize an object.
@@ -35,7 +35,7 @@ class Serializer(Generic[TSerialized]):
     def deserialize(
             self,
             data: TSerialized,
-            cls: Type[TSerializable],
+            schema: Type[TSerializable],
     ) -> TSerializable:
         """
         Deserialize an object.

@@ -1,37 +1,41 @@
 from dataclasses import dataclass
 
 from energytt_platform.bus import Message
-
-
-# @dataclass
-# class UserCreated(Serializable):
-#     pass
-#
-#
-# @dataclass
-# class UserProfileUpdated(Serializable):
-#     pass
-#
-#
-# @dataclass
-# class UserDeleted(Serializable):
-#     pass
-#
-#
-# @dataclass
-# class UserConsentGiven(Serializable):
-#     pass
-#
-#
-# @dataclass
-# class UserConsentRevoked(Serializable):
-#     pass
+from energytt_platform.models.auth import MeteringPointDelegate
 
 
 @dataclass
-class UserOnboarded(Message):
+class DelegateGranted(Message):
     """
-    A new user has been onboarded to the system.
+    TODO
     """
     subject: str
-    name: str
+
+
+@dataclass
+class DelegateRevoked(Message):
+    """
+    TODO
+    """
+    subject: str
+
+
+# -- Delegates ---------------------------------------------------------------
+
+
+@dataclass
+class MeteringPointDelegateGranted(Message):
+    """
+    An actor (identified by its subject) has been delegated
+    access to a MeteringPoint.
+    """
+    delegate: MeteringPointDelegate
+
+
+@dataclass
+class MeteringPointDelegateRevoked(Message):
+    """
+    An actor (identified by its subject) has had its delegated
+    access to a MeteringPoint revoked.
+    """
+    delegate: MeteringPointDelegate

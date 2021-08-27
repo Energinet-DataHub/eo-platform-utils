@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from energytt_platform.bus import Message
 from energytt_platform.models.common import Address
 from energytt_platform.models.tech import TechnologyCodes
-from energytt_platform.models.meteringpoints import \
-    MeteringPoint, MeteringPointDelegate
+from energytt_platform.models.meteringpoints import MeteringPoint
 
 
 @dataclass
@@ -48,24 +47,3 @@ class MeteringPointAddressUpdate(Message):
     """
     gsrn: str
     address: Optional[Address]
-
-
-# -- Delegates ---------------------------------------------------------------
-
-
-@dataclass
-class MeteringPointDelegateGranted(Message):
-    """
-    An actor (identified by its subject) has been delegated
-    access to a MeteringPoint.
-    """
-    delegate: MeteringPointDelegate
-
-
-@dataclass
-class MeteringPointDelegateRevoked(Message):
-    """
-    An actor (identified by its subject) has had its delegated
-    access to a MeteringPoint revoked.
-    """
-    delegate: MeteringPointDelegate

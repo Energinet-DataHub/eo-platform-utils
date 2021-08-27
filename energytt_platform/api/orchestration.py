@@ -2,7 +2,11 @@ import flask
 import serpyco
 import rapidjson
 from abc import abstractmethod
+from functools import cached_property
 from typing import List, Dict, Any, Optional
+
+from energytt_platform.tokens import TokenEncoder
+from energytt_platform.models.auth import InternalToken
 
 from .context import Context
 from .flask import FlaskContext
@@ -20,6 +24,9 @@ class RequestDataProvider(object):
     """
     @abstractmethod
     def get(self) -> Optional[Dict[str, Any]]:
+        """
+        TODO
+        """
         raise NotImplementedError
 
 
@@ -28,6 +35,9 @@ class JsonBodyProvider(RequestDataProvider):
     Reads request data from request body JSON.
     """
     def get(self) -> Optional[Dict[str, Any]]:
+        """
+        TODO
+        """
         if not flask.request.data:
             return None
 
@@ -42,6 +52,9 @@ class QueryStringProvider(RequestDataProvider):
     Reads request data from query parameters.
     """
     def get(self) -> Optional[Dict[str, Any]]:
+        """
+        TODO
+        """
         return dict(flask.request.args)
 
 
@@ -59,10 +72,12 @@ class RequestOrchestrator(object):
             self,
             endpoint: Endpoint,
             data: RequestDataProvider,
+            secret: str,
             guards: List[EndpointGuard] = None,
     ):
         self.endpoint = endpoint
         self.data = data
+        self.secret = secret
         self.guards = guards
 
     def __call__(self) -> flask.Response:
@@ -70,24 +85,36 @@ class RequestOrchestrator(object):
         Invoked by Flask to handle a HTTP request.
         """
         try:
-            return self.invoke_endpoint()
+            return self._invoke_endpoint()
         except HttpError as e:
-            return self.handle_http_error(e)
+            return self._handle_http_error(e)
         except Exception as e:
             raise
-            return self.handle_exception(e)
+            return self._handle_exception(e)
 
-    def build_context(self) -> Context:
-        """
-        Creates a new request context.
-        """
-        return FlaskContext()
-
-    def invoke_endpoint(self) -> flask.Response:
+    @cached_property
+    def _internal_token_encoder(self) -> TokenEncoder[InternalToken]:
         """
         TODO
         """
-        context = self.build_context()
+        return TokenEncoder(
+            schema=InternalToken,
+            secret=self.secret,
+        )
+
+    def _build_context(self) -> Context:
+        """
+        Creates a new request context.
+        """
+        return FlaskContext(
+            token_encoder=self._internal_token_encoder,
+        )
+
+    def _invoke_endpoint(self) -> flask.Response:
+        """
+        TODO
+        """
+        context = self._build_context()
 
         if self.guards:
             bouncer.validate(context, self.guards)
@@ -102,14 +129,14 @@ class RequestOrchestrator(object):
         if self.endpoint.should_parse_request_data:
             # Defaulting to an empty dictionary makes it possible to omit
             # request data for models where all fields are optional
-            handler_kwargs['request'] = self.parse_request_data(self.data.get() or {})
+            handler_kwargs['request'] = self._parse_request_data(self.data.get() or {})
 
         # Invoke endpoint
         response_body = self.endpoint.handle_request(**handler_kwargs)
 
         # Serialize response object (if necessary)
         if self.endpoint.should_parse_response_object:
-            response_body = self.parse_response_object(response_body)
+            response_body = self._parse_response_object(response_body)
             response_mimetype = 'application/json'
         else:
             # TODO
@@ -122,7 +149,7 @@ class RequestOrchestrator(object):
             response=response_body,
         )
 
-    def handle_http_error(self, e: HttpError) -> flask.Response:
+    def _handle_http_error(self, e: HttpError) -> flask.Response:
         """
         TODO
         """
@@ -132,7 +159,7 @@ class RequestOrchestrator(object):
             mimetype='text/html',
         )
 
-    def handle_exception(self, e: Exception) -> flask.Response:
+    def _handle_exception(self, e: Exception) -> flask.Response:
         """
         TODO
         """
@@ -142,7 +169,7 @@ class RequestOrchestrator(object):
             mimetype='text/html',
         )
 
-    def parse_request_data(self, data: Dict[str, Any]) -> Any:
+    def _parse_request_data(self, data: Dict[str, Any]) -> Any:
         """
         TODO
         """
@@ -153,7 +180,7 @@ class RequestOrchestrator(object):
             # TODO Parse ValidationError to something useful
             raise BadRequest(str(e))
 
-    def parse_response_object(self, response: Any) -> str:
+    def _parse_response_object(self, response: Any) -> str:
         """
         TODO
         """

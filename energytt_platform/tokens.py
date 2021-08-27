@@ -24,17 +24,26 @@ class TokenEncoder(Generic[TToken]):
         """
         pass
 
-    def __init__(self, cls_: Type[TToken], secret: str):
-        self.cls = cls_
+    def __init__(self, schema: Type[TToken], secret: str):
+        """
+        TODO
+
+        :param schema:
+        :param secret:
+        """
+        self.schema = schema
         self.secret = secret
 
     def encode(self, obj: TToken) -> str:
         """
-        Encodes object to JWT.
+        TODO
+
+        :param obj:
+        :return:
         """
         payload = simple_serializer.serialize(
             obj=obj,
-            cls=self.cls,
+            schema=self.schema,
         )
 
         # TODO Raise EncodeError
@@ -47,17 +56,21 @@ class TokenEncoder(Generic[TToken]):
 
     def decode(self, encoded_jwt: str) -> TToken:
         """
-        Decodes JWT to object.
-        """
-        payload = jwt.decode(
-            jwt=encoded_jwt,
-            key=self.secret,
-            algorithms=['HS256'],
-        )
+        TODO
 
-        # TODO Raise DecodeError
+        :param encoded_jwt:
+        :return:
+        """
+        try:
+            payload = jwt.decode(
+                jwt=encoded_jwt,
+                key=self.secret,
+                algorithms=['HS256'],
+            )
+        except jwt.DecodeError as e:
+            raise self.DecodeError(str(e))
 
         return simple_serializer.deserialize(
             data=payload,
-            cls=self.cls,
+            schema=self.schema,
         )

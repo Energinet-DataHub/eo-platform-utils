@@ -8,7 +8,8 @@ from energytt_platform.serialize import Serializable
 @dataclass
 class Message(Serializable):
     """
-    TODO
+    Base-class for messages that can be sent on the bus.
+    Inherited classes must remember to use the @dataclass decorator.
     """
     pass
 
@@ -22,6 +23,18 @@ class MessageBroker(object):
     Abstract base-class for publishing and consuming messages
     on the message-bus.
     """
+
+    class PublishError(Exception):
+        """
+        TODO
+        """
+        pass
+
+    class DispatchError(Exception):
+        """
+        TODO
+        """
+        pass
 
     @abstractmethod
     def publish(self, topic: str, msg: Any, block=False, timeout=10):
