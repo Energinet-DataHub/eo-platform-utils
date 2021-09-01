@@ -47,3 +47,11 @@ class MeteringPointAddressUpdate(Message):
     """
     gsrn: str
     address: Optional[Address]
+
+
+@dataclass
+class ImportMeteringPoints(Message):
+    """
+    TODO
+    """
+    pass

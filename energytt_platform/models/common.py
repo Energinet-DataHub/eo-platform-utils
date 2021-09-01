@@ -54,25 +54,35 @@ class Address(Serializable):
         return []
 
 
-# -- Date & Time -------------------------------------------------------------
+# -- Value Ranges ------------------------------------------------------------
+
+
+TRange = TypeVar('TRange')
 
 
 @dataclass
-class DateRange(Serializable):
+class Range(Generic[TRange]):
     """
     A range of dates.
     """
-    from_: Optional[date] = field(default=None, dict_key='from')
-    to_: Optional[date] = field(default=None, dict_key='to')
+    from_: Optional[TRange] = field(default=None, dict_key='from')
+    to_: Optional[TRange] = field(default=None, dict_key='to')
 
 
 @dataclass
-class DateTimeRange(Serializable):
+class DateRange(Range[date]):
+    """
+    A range of dates.
+    """
+    pass
+
+
+@dataclass
+class DateTimeRange(Range[datetime]):
     """
     A range of datetimes.
     """
-    from_: Optional[datetime] = field(default=None, dict_key='from')
-    to_: Optional[datetime] = field(default=None, dict_key='to')
+    pass
 
 
 # -- API & Querying ----------------------------------------------------------
