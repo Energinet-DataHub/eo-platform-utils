@@ -57,32 +57,22 @@ class Address(Serializable):
 # -- Value Ranges ------------------------------------------------------------
 
 
-TRange = TypeVar('TRange')
-
-
 @dataclass
-class Range(Generic[TRange]):
+class DateRange(Serializable):
     """
     A range of dates.
     """
-    from_: Optional[TRange] = field(default=None, dict_key='from')
-    to_: Optional[TRange] = field(default=None, dict_key='to')
+    from_: Optional[date] = field(default=None, dict_key='from')
+    to_: Optional[date] = field(default=None, dict_key='to')
 
 
 @dataclass
-class DateRange(Range[date]):
-    """
-    A range of dates.
-    """
-    pass
-
-
-@dataclass
-class DateTimeRange(Range[datetime]):
+class DateTimeRange(Serializable):
     """
     A range of datetimes.
     """
-    pass
+    from_: Optional[datetime] = field(default=None, dict_key='from')
+    to_: Optional[datetime] = field(default=None, dict_key='to')
 
 
 # -- API & Querying ----------------------------------------------------------
@@ -104,8 +94,8 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
     """
     Ordering of query results.
     """
-    order: Optional[Order] = field(default=None)
     key: Optional[TOrderKey] = field(default=None)
+    order: Order = field(default=Order.asc)
 
     @property
     def asc(self) -> bool:

@@ -12,7 +12,15 @@ class InternalToken(Serializable):
     """
     issued: datetime
     expires: datetime
+
+    # The user performing action(s)
+    actor: str
+
+    # The subject we're working with data on behalf of
     subject: str
+
+    # Scopes granted on subject's data
+    # meteringpoints.read, measurements.read, emissions.read, meteringpoint.onboard
     scope: List[str]
 
     @property

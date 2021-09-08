@@ -3,6 +3,7 @@ from energytt_platform.bus import message_registry
 from .users import UserOnboarded
 from .tech import TechnologyUpdate, TechnologyRemoved
 from .auth import (
+    MeteringPointOwnerUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 )
@@ -26,6 +27,7 @@ message_registry.add(
     UserOnboarded,
 
     # Authentication
+    MeteringPointOwnerUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 
@@ -36,6 +38,7 @@ message_registry.add(
     # Measurements
     MeasurementUpdate,
     MeasurementRemoved,
+    ImportMeasurements,
 
     # MeteringPoints
     MeteringPointUpdate,

@@ -2,7 +2,6 @@ import re
 from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
-from datetime import datetime, timezone
 
 from energytt_platform.tokens import TokenEncoder
 from energytt_platform.models.auth import InternalToken

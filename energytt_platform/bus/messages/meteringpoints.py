@@ -1,5 +1,5 @@
-from typing import Optional
 from dataclasses import dataclass
+from typing import Dict, Any, Optional
 
 from energytt_platform.bus import Message
 from energytt_platform.models.common import Address
@@ -10,6 +10,8 @@ from energytt_platform.models.meteringpoints import MeteringPoint
 @dataclass
 class MeteringPointUpdate(Message):
     """
+    Event.
+
     A MeteringPoint has either been added to the system,
     or an existing MeteringPoint has had its details updated.
     """
@@ -19,6 +21,8 @@ class MeteringPointUpdate(Message):
 @dataclass
 class MeteringPointRemoved(Message):
     """
+    Event.
+
     A MeteringPoint has been remove from the system.
     # TODO Advice to perform Clean-up?
     """
@@ -28,6 +32,8 @@ class MeteringPointRemoved(Message):
 @dataclass
 class MeteringPointTechnologyUpdate(Message):
     """
+    Event.
+
     Updates technology codes for a MeteringPoint.
 
     Providing None value for 'codes' indicates that services should
@@ -40,6 +46,8 @@ class MeteringPointTechnologyUpdate(Message):
 @dataclass
 class MeteringPointAddressUpdate(Message):
     """
+    Event.
+
     Updates address for a MeteringPoint.
 
     Providing None value for 'address' indicates that services should
@@ -52,6 +60,17 @@ class MeteringPointAddressUpdate(Message):
 @dataclass
 class ImportMeteringPoints(Message):
     """
-    TODO
+    Command.
+
+    Request system to import a MeteringPoint.
+
+    TODO Describe more
     """
-    pass
+    subject: str
+    params: Dict[str, Any]
+
+    # Pre-defined param keys:
+    GSRN = 'GSRN'
+    WEB_ACCESS_CODE = 'WEB_ACCESS_CODE'
+    CVR = 'CVR'
+    CPR = 'CPR'
