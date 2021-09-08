@@ -10,14 +10,16 @@ from .broker import MessageBroker, Message
 message_registry = MessageRegistry()
 
 
-def get_default_broker(servers: List[str]) -> MessageBroker:
+def get_default_broker(group: str, servers: List[str]) -> MessageBroker:
     """
     Creates and returns an instance of the default message broker.
 
+    :param group: Consumer group
     :param servers: List of broker servers in the format "IP:PORT"
     :return: An instance of the default message broker
     """
     return KafkaMessageBroker(
+        group=group,
         servers=servers,
         serializer=MessageSerializer(registry=message_registry),
     )

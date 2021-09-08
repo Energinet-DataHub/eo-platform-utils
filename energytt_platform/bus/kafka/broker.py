@@ -11,7 +11,13 @@ class KafkaMessageBroker(MessageBroker):
     """
     Implementation of Kafka as message bus.
     """
-    def __init__(self, servers: List[str], serializer: MessageSerializer):
+    def __init__(
+            self,
+            group: str,
+            servers: List[str],
+            serializer: MessageSerializer,
+    ):
+        self.group = group
         self.servers = servers
         self.serializer = serializer
 
@@ -30,17 +36,20 @@ class KafkaMessageBroker(MessageBroker):
         TODO
         """
         print('PUBLISH: %s' % msg)
-        future = self._kafka_producer.send(
-            topic=topic,
-            value=msg,
-        )
+        self._kafka_producer.send(topic=topic, value=msg)
+        self._kafka_producer.flush()
 
-        if block:
-            try:
-                record_metadata = future.get(timeout=timeout)
-            except KafkaError as e:
-                # Decide what to do if produce request failed...
-                raise self.PublishError(str(e))
+        # future = self._kafka_producer.send(
+        #     topic=topic,
+        #     value=msg,
+        # )
+        #
+        # if block:
+        #     try:
+        #         record_metadata = future.get(timeout=timeout)
+        #     except KafkaError as e:
+        #         # Decide what to do if produce request failed...
+        #         raise self.PublishError(str(e))
 
     def subscribe(self, topics: List[str]) -> Iterable[Message]:
         """
@@ -50,7 +59,8 @@ class KafkaMessageBroker(MessageBroker):
             *topics,
             bootstrap_servers=self.servers,
             value_deserializer=self.serializer.deserialize,
-            auto_offset_reset='earliest',
+            group_id=self.group,
+            auto_offset_reset='latest',
             enable_auto_commit=False,
         )
 
