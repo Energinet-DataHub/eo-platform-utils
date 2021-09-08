@@ -66,4 +66,4 @@ class MessageRegistry(Dict[str, Type[Message]]):
         elif isinstance(item, Message):
             return super(MessageRegistry, self).get(item.__class__.__name__)
         else:
-            raise RuntimeError('TODO')
+            raise RuntimeError('Should NOT have happened!')
