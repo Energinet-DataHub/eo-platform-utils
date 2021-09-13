@@ -16,6 +16,10 @@ class SqlEngine(object):
         self.uri = uri
         self.pool_size = pool_size
 
+        #
+        self._uri = None
+        self._engine = None
+
     @property
     def settings(self) -> Dict[str, Any]:
         """
@@ -27,14 +31,17 @@ class SqlEngine(object):
             'pool_size': self.pool_size,
         }
 
-    @cached_property
+    @property
     def engine(self) -> engine.Engine:
         """
         TODO
         """
-        return engine.create_engine(self.uri, **self.settings)
+        if self.uri != self._uri:
+            self._uri = self.uri
+            self._engine = engine.create_engine(self.uri, **self.settings)
+        return self._engine
 
-    @cached_property
+    @property
     def session_class(self) -> orm.scoped_session:
         """
         TODO

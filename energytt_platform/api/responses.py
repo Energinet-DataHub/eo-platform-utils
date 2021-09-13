@@ -18,10 +18,11 @@ class HttpError(HttpResponse, Exception):
         self.status_code = status_code
 
     @classmethod
-    def build(cls, status_code: int):
-        return partial(cls, status_code=status_code)
+    def build(cls, status_code: int, msg: str = ''):
+        return partial(cls, status_code=status_code, msg=msg)
 
 
-BadRequest = HttpError.build(400)
-Unauthorized = HttpError.build(401)
-InternalServerError = HttpError.build(500)
+BadRequest = HttpError.build(400, 'Bad Request')
+Unauthorized = HttpError.build(401, 'Unauthorized')
+Forbidden = HttpError.build(403, 'Forbidden')
+InternalServerError = HttpError.build(500, 'Internal Server Error')

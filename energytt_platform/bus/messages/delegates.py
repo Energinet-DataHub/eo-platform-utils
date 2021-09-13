@@ -2,26 +2,7 @@ from typing import Optional
 from dataclasses import dataclass
 
 from energytt_platform.bus import Message
-from energytt_platform.models.auth import MeteringPointDelegate
-
-
-@dataclass
-class DelegateGranted(Message):
-    """
-    TODO
-    """
-    subject: str
-
-
-@dataclass
-class DelegateRevoked(Message):
-    """
-    TODO
-    """
-    subject: str
-
-
-# -- Delegates ---------------------------------------------------------------
+from energytt_platform.models.delegates import MeteringPointDelegate
 
 
 @dataclass
