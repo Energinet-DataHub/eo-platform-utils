@@ -1,5 +1,6 @@
-import flask
 import logging
+from flask import Flask
+from flask.testing import FlaskClient
 from functools import cached_property
 from typing import List, Iterable, Tuple, Any, Optional
 
@@ -24,7 +25,7 @@ class Application(object):
     def create(
             cls,
             *args,
-            endpoints: Iterable[Tuple[str, str, Endpoint]],
+            endpoints: Iterable[Tuple[str, str, Endpoint]] = [],
             health_check_path: Optional[str] = None,
             **kwargs,
     ) -> 'Application':
@@ -63,18 +64,25 @@ class Application(object):
         return app
 
     @cached_property
-    def _flask_app(self) -> flask.Flask:
+    def _flask_app(self) -> Flask:
         """
         TODO
         """
-        return flask.Flask(self.name)
+        return Flask(self.name)
 
     @property
-    def wsgi_app(self) -> flask.Flask:
+    def wsgi_app(self) -> Flask:
         """
         TODO
         """
         return self._flask_app
+
+    @property
+    def test_client(self) -> FlaskClient:
+        """
+        TODO
+        """
+        return self._flask_app.test_client()
 
     def add_endpoint(
             self,

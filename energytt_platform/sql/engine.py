@@ -9,6 +9,7 @@ class SqlEngine(object):
     TODO
     """
 
+    # Shortcut/alias
     Session = orm.Session
 
     def __init__(self, uri: str, pool_size: int = 1):
@@ -57,7 +58,7 @@ class SqlEngine(object):
         """
         return self.registry.generate_base()
 
-    def make_session(self):
+    def make_session(self) -> orm.Session:
         """
         Create a new database session.
 
@@ -72,7 +73,10 @@ class SqlEngine(object):
         """
         @decorator
         def session_decorator(wrapped, instance, args, kwargs):
-            session = kwargs.setdefault('session', self.make_session())
+
+            session = kwargs.setdefault(
+                'session', self.make_session())
+
             try:
                 return wrapped(*args, **kwargs)
             finally:
@@ -88,7 +92,10 @@ class SqlEngine(object):
         """
         @decorator
         def atomic_wrapper(wrapped, instance, args, kwargs):
-            session: orm.Session = kwargs.setdefault('session', self.make_session())
+
+            session: orm.Session = kwargs.setdefault(
+                'session', self.make_session())
+
             session.begin()
 
             try:

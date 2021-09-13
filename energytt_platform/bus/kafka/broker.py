@@ -29,6 +29,7 @@ class KafkaMessageBroker(MessageBroker):
         return KafkaProducer(
             bootstrap_servers=self.servers,
             value_serializer=self.serializer.serialize,
+
         )
 
     def publish(self, topic: str, msg: Any, block=True, timeout=10):

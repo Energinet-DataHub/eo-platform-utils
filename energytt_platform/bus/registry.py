@@ -4,6 +4,9 @@ from typing import Dict, Union, Type, Optional
 from .broker import Message
 
 
+TDictItem = Union[str, Message, Type[Message]]
+
+
 class MessageRegistry(Dict[str, Type[Message]]):
     """
     A registry of all messages that the bus knows of.
@@ -16,15 +19,14 @@ class MessageRegistry(Dict[str, Type[Message]]):
     """
 
     @classmethod
-    def from_message_types(cls, *message_types: Type[Message]) \
-            -> 'MessageRegistry':
+    def from_message_types(cls, *types: Type[Message]) -> 'MessageRegistry':
         """
         TODO
 
-        :param message_types:
+        :param types:
         :return:
         """
-        return cls({c.__name__: c for c in message_types})
+        return cls({c.__name__: c for c in types})
 
     def add(self, *message_types: Type[Message]):
         """
@@ -35,8 +37,7 @@ class MessageRegistry(Dict[str, Type[Message]]):
         """
         self.update({c.__name__: c for c in message_types})
 
-    def __contains__(self, item: Union[str, Message, Type[Message]]) \
-            -> bool:
+    def __contains__(self, item: TDictItem) -> bool:
         """
         Check whether an item is known by the registry.
 
@@ -47,22 +48,19 @@ class MessageRegistry(Dict[str, Type[Message]]):
         """
         if isinstance(item, str):
             return item in self.keys()
-        elif isclass(item) and issubclass(item, Message):
+        elif isclass(item):
             return item in self.values()
         elif isinstance(item, Message):
             return item.__class__ in self.values()
         else:
             return False
 
-    def get(self, item: Union[str, Message, Type[Message]]) \
-            -> Optional[Message]:
+    def get(self, item: TDictItem) -> Optional[Message]:
         """
         TODO
         """
         if isinstance(item, str):
             return super(MessageRegistry, self).get(item)
-        elif isclass(item) and issubclass(item, Message):
-            return super(MessageRegistry, self).get(item.__name__)
         elif isinstance(item, Message):
             return super(MessageRegistry, self).get(item.__class__.__name__)
         else:

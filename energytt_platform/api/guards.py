@@ -28,16 +28,13 @@ class EndpointGuard(object):
 #         self.services = services
 
 
-# class TokenGuard(EndpointGuard):
-#     """
-#     Only Allows requests with a valid token provided.
-#     """
-#     def __init__(self, *scopes: str):
-#         self.scopes = scopes
-#
-#     def validate(self, context: Context):
-#         if context.token is None:
-#             raise Unauthorized('Unauthorized')
+class TokenGuard(EndpointGuard):
+    """
+    Only Allows requests with a valid token provided.
+    """
+    def validate(self, context: Context):
+        if context.token is None:
+            raise Unauthorized('Unauthorized')
 
 
 class ScopedGuard(EndpointGuard):
