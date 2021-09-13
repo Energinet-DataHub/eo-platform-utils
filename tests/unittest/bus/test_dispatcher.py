@@ -13,12 +13,12 @@ from energytt_platform.models.measurements import Measurement
 
 
 @dataclass
-class TestMessage1(Message):
+class Message1(Message):
     something: str
 
 
 @dataclass
-class TestMessage2(Message):
+class Message2(Message):
     something: str
 
 
@@ -28,12 +28,14 @@ class TestMessageSerializer:
 
         # -- Arrange ---------------------------------------------------------
 
-        msg = TestMessage1(something='something')
+        msg = Message1(something='something')
 
-        handler = Mock()
+        handler1 = Mock()
+        handler2 = Mock()
 
         uut = MessageDispatcher({
-            TestMessage1: handler,
+            Message1: handler1,
+            Message2: handler2,
         })
 
         # -- Act -------------------------------------------------------------
@@ -42,7 +44,8 @@ class TestMessageSerializer:
 
         # -- Assert ----------------------------------------------------------
 
-        handler.assert_called_once_with(msg)
+        handler1.assert_called_once_with(msg)
+        handler2.assert_not_called()
 
     def test__handler_does_not_exist_for_type__should_not_invoke_handler(self):
 
@@ -51,12 +54,12 @@ class TestMessageSerializer:
         handler = Mock()
 
         uut = MessageDispatcher({
-            TestMessage1: handler,
+            Message1: handler,
         })
 
         # -- Act -------------------------------------------------------------
 
-        uut(TestMessage2(something='something'))
+        uut(Message2(something='something'))
 
         # -- Assert ----------------------------------------------------------
 
