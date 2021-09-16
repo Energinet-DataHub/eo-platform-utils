@@ -5,7 +5,8 @@ from functools import cached_property
 from typing import List, Iterable, Tuple, Any, Optional
 
 from .guards import EndpointGuard
-from .endpoints import Endpoint, HealthCheck
+from .endpoint import Endpoint
+from .endpoints import HealthCheck, OpenApiSchema
 from .orchestration import \
     RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
