@@ -10,7 +10,7 @@ from energytt_platform.models.auth import InternalToken
 
 from .context import Context
 from .flask import FlaskContext
-from .endpoints import Endpoint
+from .endpoint import Endpoint
 from .guards import EndpointGuard, bouncer
 from .responses import HttpError, BadRequest
 

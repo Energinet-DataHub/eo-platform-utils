@@ -45,7 +45,7 @@ class TestMessageSerializer:
         assert isinstance(deserialized, Message1)
         assert deserialized == obj
 
-    def test__serialize__message_not_in_registry__should_raise(self):
+    def test__serialize__message_not_in_registry__should_raise_serialize_error(self):
 
         # -- Arrange ---------------------------------------------------------
 
@@ -69,11 +69,6 @@ class TestMessageSerializer:
 
         # -- Arrange ---------------------------------------------------------
 
-        obj = Message1(
-          something='something',
-          nested=Nested(something='something nested'),
-        )
-
         registry_mock = MagicMock()
         registry_mock.__contains__.return_value = False
 
@@ -81,11 +76,9 @@ class TestMessageSerializer:
 
         json_serializer_mock.deserialize.return_value = wrapped_msg_mock
 
-
         uut = MessageSerializer(registry=registry_mock)
 
         # -- Act -------------------------------------------------------------
 
         with pytest.raises(uut.DeserializeError):
             uut.deserialize(b'does not matter')
-       

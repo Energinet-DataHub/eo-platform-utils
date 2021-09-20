@@ -61,6 +61,8 @@ class MessageRegistry(Dict[str, Type[Message]]):
         """
         if isinstance(item, str):
             return super(MessageRegistry, self).get(item)
+        elif isclass(item):
+            return super(MessageRegistry, self).get(item.__name__)
         elif isinstance(item, Message):
             return super(MessageRegistry, self).get(item.__class__.__name__)
         else:

@@ -102,7 +102,6 @@ class TestMessageRegistry:
 
         assert uut.get(item) is Message1
 
-    
     @pytest.mark.parametrize('item', [
         Message2,
         Message2(something='test'),
