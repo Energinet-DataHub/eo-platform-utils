@@ -8,6 +8,8 @@ pytest = "*"
 pytest-cov = "*"
 pytest-order = "*"
 pytest-depends = "*"
+iterators = "*"
+testcontainers = "*"
 
 [packages]
 wrapt = "*"

@@ -6,13 +6,14 @@ from functools import cached_property
 from typing import List, Dict, Any, Optional
 
 from energytt_platform.tokens import TokenEncoder
+from energytt_platform.serialize import json_serializer
 from energytt_platform.models.auth import InternalToken
 
 from .context import Context
 from .flask import FlaskContext
 from .endpoint import Endpoint
 from .guards import EndpointGuard, bouncer
-from .responses import HttpError, BadRequest
+from .responses import HttpResponse, BadRequest
 
 
 # -- Request data ------------------------------------------------------------
@@ -86,7 +87,7 @@ class RequestOrchestrator(object):
         """
         try:
             return self._invoke_endpoint()
-        except HttpError as e:
+        except HttpResponse as e:
             return self._handle_http_error(e)
         except Exception as e:
             raise
@@ -119,7 +120,8 @@ class RequestOrchestrator(object):
         if self.guards:
             bouncer.validate(context, self.guards)
 
-        # kwargs passed to Endpoint.handle_request()
+        # -- Define arguments for handler ------------------------------------
+
         handler_kwargs = {}
 
         if self.endpoint.requires_context:
@@ -131,32 +133,47 @@ class RequestOrchestrator(object):
             # request data for models where all fields are optional
             handler_kwargs['request'] = self._parse_request_data(self.data.get() or {})
 
-        # Invoke endpoint
-        response_body = self.endpoint.handle_request(**handler_kwargs)
+        # -- Invoke endpoint -------------------------------------------------
 
-        # Serialize response object (if necessary)
+        response = self.endpoint.handle_request(**handler_kwargs)
+
+        # -- Parse response --------------------------------------------------
+
+        status_code = 200
+        mimetype = 'text/html'
+        headers = {}
+
         if self.endpoint.should_parse_response_object:
-            response_body = self._parse_response_object(response_body)
-            response_mimetype = 'application/json'
+            body = self.endpoint.response_serializer.dump_json(response)
+            mimetype = 'application/json'
+        elif isinstance(response, HttpResponse):
+            status_code = response.status_code
+            body = response.body
+            headers.update(response.headers)
+        elif isinstance(response, (str, bytes)):
+            body = response
+        elif response is None:
+            body = ''
         else:
-            # TODO
-            response_body = ''
-            response_mimetype = 'text/html'
+            # Serialize response object
+            raise RuntimeError('INVALID RESPONSE?!')
 
         return flask.Response(
-            status=200,
-            mimetype=response_mimetype,
-            response=response_body,
+            status=status_code,
+            response=body,
+            mimetype=mimetype,
+            headers=headers,
         )
 
-    def _handle_http_error(self, e: HttpError) -> flask.Response:
+    def _handle_http_error(self, e: HttpResponse) -> flask.Response:
         """
         TODO
         """
         return flask.Response(
-            response=e.msg,
             status=e.status_code,
-            mimetype='text/html',
+            response=e.body_encoded,
+            mimetype='text/html',  # TODO
+            headers=e.headers,
         )
 
     def _handle_exception(self, e: Exception) -> flask.Response:
@@ -164,8 +181,8 @@ class RequestOrchestrator(object):
         TODO
         """
         return flask.Response(
-            response='Internal Server Error',
             status=500,
+            response='Internal Server Error',
             mimetype='text/html',
         )
 
@@ -178,10 +195,11 @@ class RequestOrchestrator(object):
         except serpyco.exception.ValidationError as e:
             # JSON schema validation failed for request data
             # TODO Parse ValidationError to something useful
-            raise BadRequest(str(e))
+            # TODO Format body properly
+            raise BadRequest(body=str(e))
 
-    def _parse_response_object(self, response: Any) -> str:
-        """
-        TODO
-        """
-        return self.endpoint.response_serializer.dump_json(response)
+    # def _parse_response_object(self, response: Any) -> str:
+    #     """
+    #     TODO
+    #     """
+    #     return self.endpoint.response_serializer.dump_json(response)

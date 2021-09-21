@@ -73,6 +73,12 @@ class SqlEngine(object):
         """
         return self.session_class()
 
+    def apply_schema(self):
+        """
+        TODO
+        """
+        self.ModelBase.metadata.create_all(self.engine)
+
     def session(self):
         """
         Function decorator which injects a "session" named parameter
