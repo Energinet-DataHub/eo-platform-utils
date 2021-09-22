@@ -157,6 +157,7 @@ class TestGuards:
         [ScopedGuard('scope1', 'scope2')],
         [TokenGuard(), ScopedGuard('scope1')],
         [TokenGuard(), ScopedGuard('scope1', 'scope2')],
+        [TokenGuard(), ScopedGuard('scope1'), ScopedGuard('scope2')],
     ])
     def test__token_has_required_scope__should_return_status_200(
             self,

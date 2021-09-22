@@ -36,6 +36,8 @@ class Context(object):
         """
         Returns request Bearer token.
         """
+        # TODO Try to read HttpOnly cookie, fallback to Authorization Header
+
         if self.TOKEN_HEADER in self.headers:
             matches = self.TOKEN_PATTERN \
                 .findall(self.headers[self.TOKEN_HEADER])

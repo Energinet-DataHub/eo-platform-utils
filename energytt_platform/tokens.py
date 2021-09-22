@@ -24,7 +24,10 @@ class TokenEncoder(Generic[TToken]):
         """
         pass
 
-    def __init__(self, schema: Type[TToken], secret: str):
+    HS256 = 'HS256'
+    RS256 = 'RS256'
+
+    def __init__(self, schema: Type[TToken], secret: str, alg: str = HS256):
         """
         TODO
 
@@ -33,6 +36,7 @@ class TokenEncoder(Generic[TToken]):
         """
         self.schema = schema
         self.secret = secret
+        self.alg = alg
 
         # TODO Detect schema from Generic type instead of parameter
 
@@ -53,7 +57,7 @@ class TokenEncoder(Generic[TToken]):
         return jwt.encode(
             payload=payload,
             key=self.secret,
-            algorithm='HS256',
+            algorithm=self.alg,
         )
 
     def decode(self, encoded_jwt: str) -> TToken:
@@ -67,7 +71,7 @@ class TokenEncoder(Generic[TToken]):
             payload = jwt.decode(
                 jwt=encoded_jwt,
                 key=self.secret,
-                algorithms=['HS256'],
+                algorithms=[self.alg],
             )
         except jwt.DecodeError as e:
             raise self.DecodeError(str(e))

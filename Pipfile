@@ -13,7 +13,7 @@ testcontainers = "*"
 
 [packages]
 wrapt = "*"
-pyjwt = "*"
+pyjwt = { version = "*", extras = [ "crypto" ] }
 kafka-python = "*"
 Flask = "2.0.1"
 serpyco = "*"

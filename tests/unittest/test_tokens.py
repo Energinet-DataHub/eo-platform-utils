@@ -39,4 +39,5 @@ class TestTokenEncoder:
         # -- Assert ----------------------------------------------------------
 
         assert isinstance(decoded, Message1)
+        assert decoded != encoded
         assert decoded == obj

@@ -50,7 +50,7 @@ def token_encoder(secret: str):
 
 
 @pytest.fixture(scope='function')
-def valid_token(token_encoder: TokenEncoder[InternalToken]):
+def valid_token():
     """
     TODO
     """

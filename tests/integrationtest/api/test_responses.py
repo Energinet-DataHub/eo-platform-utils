@@ -59,6 +59,36 @@ class TestEndpointResponse:
         assert r.get_data(as_text=True) == response_body
         assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
 
+    def test__endpoint_returns_dict__should_return_dict_as_body(self, obj, response_body, app, client):
+        """
+        TODO
+        """
+
+        # -- Arrange ---------------------------------------------------------
+
+        response_data = {
+            'foo': 'bar',
+            'something': {
+                'foo': 1,
+                'bar': 22.2,
+            },
+        }
+
+        app.add_endpoint(
+            method='POST',
+            path='/something',
+            endpoint=EndpointReturnsGeneric(response_data),
+        )
+
+        # -- Act -------------------------------------------------------------
+
+        r = client.post('/something')
+
+        # -- Assert ----------------------------------------------------------
+
+        assert r.json == response_data
+        assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
+
     @pytest.mark.parametrize('status_code, obj', [
         (301, MovedPermanently('http://something.com/')),
         (307, TemporaryRedirect('http://something.com/')),
@@ -84,8 +114,6 @@ class TestEndpointResponse:
         # -- Assert ----------------------------------------------------------
 
         assert r.status_code == status_code
-        # assert r.get_data(as_text=True) == response_body
-        # assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
 
     def test__endpoint_raises_exception__should_return_status_500(self, app, client):
         """
@@ -120,12 +148,12 @@ class TestEndpointResponse:
 
         # -- Act -------------------------------------------------------------
 
-        response = client.post('/something')
+        r = client.post('/something')
 
         # -- Assert ----------------------------------------------------------
 
-        assert response.headers['Content-Type'] == 'application/json'
-        assert response.json == {
+        assert r.headers['Content-Type'] == 'application/json'
+        assert r.json == {
             'success': True,
             'something': 'something',
         }
@@ -142,18 +170,21 @@ class TestEndpointResponse:
 
         # -- Act -------------------------------------------------------------
 
-        response = client.post(
+        r = client.post(
             path='/something',
             json={'something': 'Hello world'},
         )
 
         # -- Assert ----------------------------------------------------------
 
-        assert response.headers['Content-Type'] == 'application/json'
-        assert response.json == {
+        assert r.headers['Content-Type'] == 'application/json'
+        assert r.json == {
             'success': True,
             'something': 'Hello world',
         }
+
+
+class TestEndpointRedirect:
 
     @pytest.mark.parametrize('status_code, response', [
         (301, MovedPermanently('http://something.com/')),
@@ -171,12 +202,12 @@ class TestEndpointResponse:
 
         # -- Act -------------------------------------------------------------
 
-        response = client.get('/something')
+        r = client.get('/something')
 
         # -- Assert ----------------------------------------------------------
 
-        assert response.status_code == status_code
-        assert response.headers['Location'] == 'http://something.com/'
+        assert r.status_code == status_code
+        assert r.headers['Location'] == 'http://something.com/'
 
     @pytest.mark.parametrize('status_code, response', [
         (301, MovedPermanently('http://something.com/')),
@@ -194,9 +225,9 @@ class TestEndpointResponse:
 
         # -- Act -------------------------------------------------------------
 
-        response = client.post('/something')
+        r = client.post('/something')
 
         # -- Assert ----------------------------------------------------------
 
-        assert response.status_code == status_code
-        assert response.headers['Location'] == 'http://something.com/'
+        assert r.status_code == status_code
+        assert r.headers['Location'] == 'http://something.com/'
