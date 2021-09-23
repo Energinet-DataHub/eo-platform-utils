@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import pytest
 from datetime import datetime
 from itertools import product
@@ -26,8 +28,8 @@ def get_cookie_combinations() -> Iterable[Dict[str, Any]]:
 
     for http_only, secure, same_site, domain, path, expires in combinations:
         yield {
-            'name': 'Header1',
-            'value': 'Value1',
+            'name': str(uuid4()),
+            'value': str(uuid4()),
             'http_only': http_only,
             'secure': secure,
             'same_site': same_site,
