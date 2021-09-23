@@ -26,7 +26,7 @@ class Application(object):
     def create(
             cls,
             *args,
-            endpoints: Iterable[Tuple[str, str, Endpoint]] = [],
+            endpoints: Iterable[Tuple[str, str, Endpoint]] = (),
             health_check_path: Optional[str] = None,
             **kwargs,
     ) -> 'Application':

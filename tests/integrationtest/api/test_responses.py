@@ -1,6 +1,9 @@
 import pytest
+from flask.testing import FlaskClient
 
 from energytt_platform.api import (
+    Application,
+    HttpResponse,
     BadRequest,
     MovedPermanently,
     TemporaryRedirect,
@@ -59,7 +62,7 @@ class TestEndpointResponse:
         assert r.get_data(as_text=True) == response_body
         assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    def test__endpoint_returns_dict__should_return_dict_as_body(self, obj, response_body, app, client):
+    def test__endpoint_returns_dict__should_return_dict_as_body(self, app, client):
         """
         TODO
         """
@@ -87,7 +90,7 @@ class TestEndpointResponse:
         # -- Assert ----------------------------------------------------------
 
         assert r.json == response_data
-        assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
+        assert r.headers['Content-Type'] == 'application/json'
 
     @pytest.mark.parametrize('status_code, obj', [
         (301, MovedPermanently('http://something.com/')),
@@ -231,3 +234,38 @@ class TestEndpointRedirect:
 
         assert r.status_code == status_code
         assert r.headers['Location'] == 'http://something.com/'
+
+
+class TestHeaders:
+
+    def test__endpoint_returns_redirect(
+            self,
+            app: Application,
+            client: FlaskClient,
+    ):
+
+        # -- Arrange ---------------------------------------------------------
+
+        response = HttpResponse(
+            status=200,
+            headers={
+                'Header1': 'Value1',
+                'Header2': 'Value2',
+            }
+        )
+
+        app.add_endpoint(
+            method='GET',
+            path='/something',
+            endpoint=EndpointReturnsGeneric(response),
+        )
+
+        # -- Act -------------------------------------------------------------
+
+        r = client.get('/something')
+
+        # -- Assert ----------------------------------------------------------
+
+        assert r.status_code == 200
+        assert r.headers['Header1'] == 'Value1'
+        assert r.headers['Header2'] == 'Value2'

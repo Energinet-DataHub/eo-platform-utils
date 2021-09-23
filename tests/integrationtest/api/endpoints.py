@@ -96,6 +96,9 @@ class EndpointWithRequestAndResponseModels(Endpoint):
         something: str
 
     def handle_request(self, request: Request) -> Response:
+        # x = 2
+        # k = 2
+        # 0/0
         return self.Response(
             success=True,
             something=request.something,
