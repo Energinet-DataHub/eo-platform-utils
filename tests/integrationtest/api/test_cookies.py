@@ -87,7 +87,7 @@ class TestCookies:
         response = HttpResponse(
             status=200,
             cookies=(
-                Cookie(name='Cookie1', value='Value1'),
+                Cookie(name='Cookie1', value='Value1', same_site=True),
                 Cookie(name='Cookie2', value='Value2'),
                 Cookie(name='Cookie3', value='Value3'),
             ),
@@ -107,6 +107,6 @@ class TestCookies:
 
         CookieTester(r.headers) \
             .assert_has_cookies('Cookie1', 'Cookie2', 'Cookie3') \
-            .assert_cookie(name='Cookie1', value='Value1') \
+            .assert_cookie(name='Cookie1', value='Value1', same_site=True) \
             .assert_cookie(name='Cookie2', value='Value2') \
             .assert_cookie(name='Cookie3', value='Value3')
