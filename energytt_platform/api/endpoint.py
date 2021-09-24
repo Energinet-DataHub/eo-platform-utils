@@ -1,4 +1,3 @@
-from serpyco import Serializer
 from abc import abstractmethod
 from typing import Optional, Any, Type
 from inspect import getfullargspec
@@ -20,36 +19,6 @@ class Endpoint(object):
         Handle a HTTP request.
         """
         raise NotImplementedError
-
-    # @cached_property
-    # def request_serializer(self) -> Optional[Serializer]:
-    #     """
-    #     Returns serpyco Serializer for request model.
-    #     """
-    #     return self.build_request_serializer() \
-    #         if self.Request is not None \
-    #         else None
-    #
-    # @cached_property
-    # def response_serializer(self) -> Optional[Serializer]:
-    #     """
-    #     Returns serpyco Serializer for response model.
-    #     """
-    #     return self.build_response_serializer() \
-    #         if self.Response is not None \
-    #         else None
-    #
-    # def build_request_serializer(self) -> Serializer:
-    #     """
-    #     Builds serpyco Serializer for request model.
-    #     """
-    #     return Serializer(self.Request)
-    #
-    # def build_response_serializer(self) -> Serializer:
-    #     """
-    #     Builds serpyco Serializer for response model.
-    #     """
-    #     return Serializer(self.Response)
 
     @property
     def request_schema(self) -> Optional[Type[Any]]:
@@ -80,11 +49,3 @@ class Endpoint(object):
         """
         return (self.request_schema is not None
                 and 'request' in getfullargspec(self.handle_request)[0])
-
-    # @cached_property
-    # def should_parse_response_object(self) -> bool:
-    #     """
-    #     Returns True if handle_request() requires an instance of self.Response
-    #     passed as argument.
-    #     """
-    #     return self.response_schema is not None

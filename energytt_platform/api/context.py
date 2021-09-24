@@ -1,10 +1,12 @@
 import re
+from flask import request
 from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
 
 from energytt_platform.tokens import TokenEncoder
 from energytt_platform.models.auth import InternalToken
+from energytt_platform.auth import TOKEN_HEADER_NAME, TOKEN_COOKIE_NAME
 
 from .responses import Unauthorized
 
@@ -14,7 +16,6 @@ class Context(object):
     Context for a single incoming HTTP request.
     """
 
-    TOKEN_HEADER = 'Authorization'
     TOKEN_PATTERN = re.compile(r'^Bearer:\s*(.+)$', re.IGNORECASE)
 
     def __init__(self, token_encoder: TokenEncoder[InternalToken]):
@@ -38,12 +39,15 @@ class Context(object):
         """
         # TODO Try to read HttpOnly cookie, fallback to Authorization Header
 
-        if self.TOKEN_HEADER in self.headers:
+        if TOKEN_HEADER_NAME in self.headers:
             matches = self.TOKEN_PATTERN \
-                .findall(self.headers[self.TOKEN_HEADER])
+                .findall(self.headers[TOKEN_HEADER_NAME])
 
             if matches:
                 return matches[0]
+
+        elif TOKEN_COOKIE_NAME in request.cookies:
+            return request.cookies[TOKEN_COOKIE_NAME]
 
     @cached_property
     def token(self) -> Optional[InternalToken]:

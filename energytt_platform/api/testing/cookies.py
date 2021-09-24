@@ -29,7 +29,7 @@ class CookieTester(object):
     def assert_cookie(
             self,
             name: str,
-            value: str,
+            value: Optional[str] = None,
             expires: Optional[datetime] = None,
             path: Optional[str] = None,
             comment: Optional[str] = None,
@@ -56,7 +56,8 @@ class CookieTester(object):
         :param same_site:
         :return:
         """
-        assert self.cookies[name].value == value
+        if value is not None:
+            assert self.cookies[name].value == value
         assert self.cookies[name]['expires'] == \
                (expires.strftime('%a, %d %b %Y %H:%M:%S GMT') if expires is not None else '')
         assert self.cookies[name]['path'] == (path if path is not None else '')
@@ -69,3 +70,9 @@ class CookieTester(object):
         assert self.cookies[name]['samesite'] == ('Strict' if same_site else '')
 
         return self
+
+    def get_value(self, name: str) -> Optional[str]:
+        """
+        Get value of a cookie.
+        """
+        return self.cookies[name].value

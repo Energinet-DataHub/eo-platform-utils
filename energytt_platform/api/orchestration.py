@@ -142,7 +142,7 @@ class RequestOrchestrator(object):
 
         return_value = self.endpoint.handle_request(**handler_kwargs)
 
-        # -- Parse return_value --------------------------------------------------
+        # -- Parse return value ----------------------------------------------
 
         if isinstance(return_value, HttpResponse):
             response = return_value
@@ -155,61 +155,10 @@ class RequestOrchestrator(object):
         elif return_value is None:
             response = HttpResponse(status=200)
         else:
+            # TODO Handle this
             raise RuntimeError('ENDPOINT RETURNED INVALID RESPONSE?!?!?')
 
-        # if return_value is None:
-        #     mimetype = 'text/html'
-        #     body = None
-        # elif self.endpoint.should_parse_response_object:
-        #     return_value = HttpResponse(status=200, model=return_value)
-        #     mimetype = return_value.actual_mimetype
-        #     body = return_value.actual_body
-        # elif not isinstance(return_value, HttpResponse):
-        #
-        #
-        # elif self.endpoint.should_parse_response_object:
-        #     return_value = HttpResponse(status=200, model=return_value)
-        #
-        # mimetype = 'text/html'
-        # body = None
-        #
-        # if return_value is not None:
-        #     if self.endpoint.should_parse_response_object:
-        #         return_value = HttpResponse(status=200, model=return_value)
-        #
-        #     if return_value.body is not None:
-        #         mimetype = 'text/html'
-        #         body = return_value.body
-        #     elif return_value.json is not None:
-        #         mimetype = 'application/json'
-        #         body = rapidjson.dumps(return_value.json)
-        #     elif return_value.model is not None:
-        #         mimetype = 'application/json'
-        #         # body = self.endpoint.response_serializer.dump_json(return_value.model)
-        #     else:
-        #         raise RuntimeError('TODO?')
-
-        # status_code = 200
-        # mimetype = 'text/html'
-        # headers = {}
-        # body = None
-
-        # if self.endpoint.should_parse_response_object:
-        #     body = self.endpoint.response_serializer.dump_json(return_value)
-        #     mimetype = 'application/json'
-        # elif isinstance(return_value, HttpResponse):
-        #     status_code = return_value.status
-        #     if return_value.actual_body:
-        #         body = return_value.actual_body
-        #     if return_value.actual_headers:
-        #         headers.update(return_value.actual_headers)
-        # elif isinstance(return_value, (str, bytes)):
-        #     body = return_value
-        # elif return_value is None:
-        #     body = ''
-        # else:
-        #     # Serialize return_value object
-        #     raise RuntimeError('INVALID RESPONSE?!')
+        # -- Create Flask response -------------------------------------------
 
         flask_response = flask.Response(
             status=response.status,
