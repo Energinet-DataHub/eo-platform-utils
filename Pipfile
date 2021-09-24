@@ -21,7 +21,6 @@ rapidjson = "*"
 psycopg2 = "*"
 sqlalchemy = "*"
 alembic = "*"
-pydantic = "*"
 requests = "*"
 
 [requires]

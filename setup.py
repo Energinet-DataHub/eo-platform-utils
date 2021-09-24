@@ -108,7 +108,7 @@ setuptools.setup(
     # TODO Read from requirements.txt instead
     install_requires=[
         'wrapt',
-        'pyjwt',
+        'pyjwt[crypto]',
         'kafka-python',
         'Flask',
         'serpyco',
@@ -116,6 +116,7 @@ setuptools.setup(
         'psycopg2',
         'sqlalchemy',
         'alembic',
+        'requests',
     ],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
