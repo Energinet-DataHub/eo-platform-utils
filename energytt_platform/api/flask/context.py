@@ -16,3 +16,10 @@ class FlaskContext(Context):
         Returns request headers.
         """
         return dict(request.headers)
+
+    @cached_property
+    def cookies(self) -> Dict[str, str]:
+        """
+        Returns request cookies.
+        """
+        return request.cookies

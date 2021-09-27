@@ -9,6 +9,7 @@ from energytt_platform.models.auth import InternalToken
 from energytt_platform.auth import TOKEN_HEADER_NAME, TOKEN_COOKIE_NAME
 
 from .responses import Unauthorized
+from ..serialize import json_serializer
 
 
 class Context(object):
@@ -32,6 +33,18 @@ class Context(object):
         """
         raise NotImplementedError
 
+    # -- Tokens --------------------------------------------------------------
+
+    def _decode_token(self, token: str) -> InternalToken:
+        """
+        TODO
+        """
+        # return json_serializer.deserialize(
+        #     data=token.encode('utf8'),
+        #     schema=InternalToken,
+        # )
+        return self.token_encoder.decode(token)
+
     @cached_property
     def raw_token(self) -> Optional[str]:
         """
@@ -46,26 +59,25 @@ class Context(object):
             if matches:
                 return matches[0]
 
-        elif TOKEN_COOKIE_NAME in request.cookies:
-            return request.cookies[TOKEN_COOKIE_NAME]
-
     @cached_property
     def token(self) -> Optional[InternalToken]:
         """
         Parses token into an OpaqueToken.
         """
-        if self.raw_token is not None:
-            try:
-                internal_token = self.token_encoder.decode(self.raw_token)
-            except self.token_encoder.DecodeError:
-                # TODO Raise exception if in debug mode?
-                return None
+        if self.raw_token is None:
+            return None
 
-            if internal_token.is_expired:
-                # TODO Raise exception if in debug mode?
-                return None
+        try:
+            internal_token = self._decode_token(self.raw_token)
+        except self.token_encoder.DecodeError:
+            # TODO Raise exception if in debug mode?
+            return None
 
-            return internal_token
+        if internal_token.is_expired:
+            # TODO Raise exception if in debug mode?
+            return None
+
+        return internal_token
 
     @property
     def is_authorized(self) -> bool:
