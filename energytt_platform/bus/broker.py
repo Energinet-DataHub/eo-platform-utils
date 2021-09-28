@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, Iterable, Callable, Any, Optional, Union, Tuple
+from typing import List, Iterable, Callable, Any, Union, Tuple
 
 from energytt_platform.serialize import Serializable
 
@@ -39,6 +39,33 @@ class MessageBroker(object):
         pass
 
     @abstractmethod
+    def __iter__(self) -> Iterable[Message]:
+        """
+        Returns an iterable of messages received in any
+        of the subscribed topics.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def subscribe(self, topics: TTopicList):
+        """
+        Subscribe to a number of topics.
+
+        :param topics: The topics to subscribe to
+        """
+        raise NotImplementedError
+
+    def listen(self, topics: TTopicList, handler: TMessageHandler):
+        """
+        Subscribed to the provided topics and invokes the handler
+        with each new message.
+        """
+        self.subscribe(topics)
+
+        for msg in self:
+            handler(msg)
+
+    @abstractmethod
     def publish(self, topic: TTopic, msg: Any, block=False, timeout=10):
         """
         Publish a message to a topic on the bus.
@@ -49,56 +76,3 @@ class MessageBroker(object):
         :param timeout: Timeout in seconds (if block=True)
         """
         raise NotImplementedError
-
-    @abstractmethod
-    def subscribe(self, topics: TTopicList):
-        """
-        Invoked the handler for incoming messages in any of the topics.
-
-        :param topics: The topics to subscribe to
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def listen(self) -> Iterable[Message]:
-        """
-        Returns an iterable of messages received in any
-        of the subscribed topics.
-        """
-        raise NotImplementedError
-
-    # def listen222(self, topics: List[str], handler: TMessageHandler):
-    #     """
-    #     An alias for subscribe() except this function takes a callable
-    #     which is invoked for each message.
-    #
-    #     :param topics: The topics to subscribe to
-    #     :param handler: Message handler
-    #     """
-    #     for msg in self.subscribe(topics):
-    #         handler(msg)
-
-    # def subscribe2222(self, topics: List[str], handler: TMessageHandler):
-    #     """
-    #     An alias for subscribe() except this function takes a callable
-    #     which is invoked for each message.
-    #
-    #     :param topics: The topics to subscribe to
-    #     :param handler: Message handler
-    #     """
-    #     for msg in self.subscribe(topics):
-    #         handler(msg)
-
-    # @abstractmethod
-    # def subscribe_listen(
-    #         self,
-    #         topics: List[str],
-    #         handler: Optional[TMessageHandler],
-    # ) -> Iterable[Message]:
-    #     """
-    #     Invoked the handler for incoming messages in any of the topics.
-    #
-    #     :param topics: The topics to subscribe to
-    #     :param handler: Message handler
-    #     """
-    #     raise NotImplementedError

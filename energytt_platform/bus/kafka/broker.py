@@ -1,9 +1,9 @@
 from typing import List, Any, Iterable
 from functools import cached_property
-from kafka import KafkaProducer, KafkaConsumer, ConsumerRebalanceListener
+from kafka import KafkaProducer, KafkaConsumer
 
-from energytt_platform.bus.broker import MessageBroker, Message, TTopicList, TMessageHandler
 from energytt_platform.bus.serialize import MessageSerializer
+from energytt_platform.bus.broker import MessageBroker, Message, TTopicList
 
 
 class KafkaMessageBroker(MessageBroker):
@@ -44,6 +44,21 @@ class KafkaMessageBroker(MessageBroker):
             enable_auto_commit=False,
         )
 
+    def __iter__(self) -> Iterable[Message]:
+        """
+        Returns an iterable of messages received in any
+        of the subscribed topics.
+        """
+        return (msg.value for msg in self._kafka_consumer)
+
+    def subscribe(self, topics: TTopicList):
+        """
+        Subscribe to a number of topics.
+
+        :param topics: The topics to subscribe to
+        """
+        self._kafka_consumer.subscribe(topics)
+
     def publish(self, topic: str, msg: Any, block=True, timeout=10):
         """
         TODO
@@ -63,44 +78,3 @@ class KafkaMessageBroker(MessageBroker):
         #     except KafkaError as e:
         #         # Decide what to do if produce request failed...
         #         raise self.PublishError(str(e))
-
-    def subscribe(self, topics: TTopicList):
-        """
-        Invoked the handler for incoming messages in any of the topics.
-
-        :param topics: The topics to subscribe to
-        """
-        self._kafka_consumer.subscribe(topics)
-
-    def listen(self, topics) -> Iterable[Message]:
-        """
-        Returns an iterable of messages received in any
-        of the subscribed topics.
-        """
-        kafka_consumer = KafkaConsumer(
-            *topics,
-            bootstrap_servers=self.servers,
-            value_deserializer=self.serializer.deserialize,
-            group_id=self.group,
-            auto_offset_reset='latest',
-            enable_auto_commit=False,
-        )
-
-        return (msg.value for msg in kafka_consumer)
-
-    # def subscribe(self, topics: List[str]) -> Iterable[Message]:
-    #     """
-    #     TODO
-    #     """
-    #     kafka_consumer = KafkaConsumer(
-    #         *topics,
-    #         bootstrap_servers=self.servers,
-    #         value_deserializer=self.serializer.deserialize,
-    #         group_id=self.group,
-    #         auto_offset_reset='latest',
-    #         enable_auto_commit=False,
-    #     )
-    #
-    #     kafka_consumer.subscribe()
-    #
-    #     return (msg.value for msg in self._kafka_consumer)
