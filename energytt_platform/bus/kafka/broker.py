@@ -36,12 +36,13 @@ class KafkaMessageBroker(MessageBroker):
         """
         TODO
         """
+
         return KafkaConsumer(
             bootstrap_servers=self.servers,
             value_deserializer=self.serializer.deserialize,
             group_id=self.group,
-            auto_offset_reset='latest',
-            enable_auto_commit=False,
+            auto_offset_reset='earliest',
+            enable_auto_commit=True,
         )
 
     def __iter__(self) -> Iterable[Message]:
