@@ -51,7 +51,7 @@ def broker(kafka_container: DockerContainer) -> MessageBroker:
     """
     TODO
     """
-    return create_broker(kafka_container)
+    return _create_test_broker(kafka_container)
 
 
 @pytest.fixture(scope='function')
@@ -59,7 +59,7 @@ def broker2(kafka_container: DockerContainer) -> MessageBroker:
     """
     TODO
     """
-    return create_broker(kafka_container)
+    return _create_test_broker(kafka_container)
 
 
 @pytest.fixture(scope='function')
@@ -71,8 +71,8 @@ def msg1() -> Message:
         technology=Technology(
             tech_code=str(uuid4()),
             fuel_code=str(uuid4()),
-            type=random.choice(TechnologyType),
-        )
+            type=random.choice(list(TechnologyType)),
+        ),
     )
 
 
@@ -85,15 +85,29 @@ def msg2() -> Message:
         technology=Technology(
             tech_code=str(uuid4()),
             fuel_code=str(uuid4()),
-            type=random.choice(TechnologyType),
-        )
+            type=random.choice(list(TechnologyType)),
+        ),
+    )
+
+
+@pytest.fixture(scope='function')
+def msg3() -> Message:
+    """
+    TODO
+    """
+    return m.TechnologyUpdate(
+        technology=Technology(
+            tech_code=str(uuid4()),
+            fuel_code=str(uuid4()),
+            type=random.choice(list(TechnologyType)),
+        ),
     )
 
 
 # -- Helpers -----------------------------------------------------------------
 
 
-def create_broker(kafka_container: DockerContainer) -> MessageBroker:
+def _create_test_broker(kafka_container: DockerContainer) -> MessageBroker:
     """
     Creates a new message broker instance with a unique Consumer Group ID.
     """
