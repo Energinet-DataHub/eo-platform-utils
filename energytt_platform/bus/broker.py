@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import List, Iterable, Callable, Any, Union, Tuple
+from typing import List, Iterable, Callable, Any, Union, Tuple, Dict
 
 from energytt_platform.serialize import Serializable
 
@@ -43,6 +43,26 @@ class MessageBroker(object):
         """
         Returns an iterable of messages received in any
         of the subscribed topics.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def poll(self, timeout: int = 0) -> Dict[str, List[Message]]:
+        """
+        Polls the broker for at least one message with a timeout.
+        Returns messages mapped by topic.
+
+        :param timeout: Timeout in seconds
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def poll_list(self, timeout: int = 0) -> List[Message]:
+        """
+        Polls the broker for at least one message with a timeout.
+        Returns a list of messages from any topics subscribed to.
+
+        :param timeout: Timeout in seconds
         """
         raise NotImplementedError
 

@@ -2,11 +2,22 @@
 conftest.py according to pytest docs:
 https://docs.pytest.org/en/2.7.3/plugins.html?highlight=re#conftest-py-plugins
 """
+import time
+import random
 import pytest
-
+from uuid import uuid4
 from testcontainers.core.container import DockerContainer
 
-from energytt_platform.bus import get_default_broker
+from energytt_platform.models.tech import Technology, TechnologyType
+from energytt_platform.bus import (
+    MessageBroker,
+    Message,
+    messages as m,
+    get_default_broker,
+)
+
+
+# -- Fixtures ----------------------------------------------------------------
 
 
 @pytest.fixture(scope='function')
@@ -31,23 +42,66 @@ def kafka_container():
     })
 
     with kafka_docker as container:
-        import time
-        time.sleep(30)
+        time.sleep(5)
         yield container
 
 
 @pytest.fixture(scope='function')
-def broker(kafka_container):
+def broker(kafka_container: DockerContainer) -> MessageBroker:
     """
     TODO
+    """
+    return create_broker(kafka_container)
+
+
+@pytest.fixture(scope='function')
+def broker2(kafka_container: DockerContainer) -> MessageBroker:
+    """
+    TODO
+    """
+    return create_broker(kafka_container)
+
+
+@pytest.fixture(scope='function')
+def msg1() -> Message:
+    """
+    TODO
+    """
+    return m.TechnologyUpdate(
+        technology=Technology(
+            tech_code=str(uuid4()),
+            fuel_code=str(uuid4()),
+            type=random.choice(TechnologyType),
+        )
+    )
+
+
+@pytest.fixture(scope='function')
+def msg2() -> Message:
+    """
+    TODO
+    """
+    return m.TechnologyUpdate(
+        technology=Technology(
+            tech_code=str(uuid4()),
+            fuel_code=str(uuid4()),
+            type=random.choice(TechnologyType),
+        )
+    )
+
+
+# -- Helpers -----------------------------------------------------------------
+
+
+def create_broker(kafka_container: DockerContainer) -> MessageBroker:
+    """
+    Creates a new message broker instance with a unique Consumer Group ID.
     """
     host = kafka_container.get_container_host_ip()
     port = kafka_container.get_exposed_port(9092)
     server = f'{host}:{port}'
-    # x = kafka_container.get_container_host_ip()
-    # j = 2
 
-    yield get_default_broker(
-        group='test-group',
+    return get_default_broker(
+        group=str(uuid4()),
         servers=[server],
     )
