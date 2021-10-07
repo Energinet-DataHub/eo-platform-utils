@@ -1,4 +1,4 @@
-from typing import List, Any, Iterable
+from typing import List, Any, Iterable, Dict
 from functools import cached_property
 from kafka import KafkaProducer, KafkaConsumer
 
@@ -51,6 +51,35 @@ class KafkaMessageBroker(MessageBroker):
         of the subscribed topics.
         """
         return (msg.value for msg in self._kafka_consumer)
+
+    def poll(self, timeout: int = 0) -> Dict[str, List[Message]]:
+        """
+        Polls the broker for at least one message with a timeout.
+        Returns messages mapped by topic.
+
+        :param timeout: Timeout in seconds
+        """
+        res = self._kafka_consumer.poll(timeout_ms=timeout*1000)
+
+        return {
+            partition.topic: [record.value for record in record_list]
+            for partition, record_list in res.items()
+        }
+
+    def poll_list(self, timeout: int = 0) -> List[Message]:
+        """
+        Polls the broker for at least one message with a timeout.
+        Returns a list of messages from any topics subscribed to.
+
+        :param timeout: Timeout in seconds
+        """
+        res = self._kafka_consumer.poll(timeout_ms=timeout*1000)
+
+        return [
+            record.value
+            for record_list in res.values()
+            for record in record_list
+        ]
 
     def subscribe(self, topics: TTopicList):
         """
