@@ -42,26 +42,6 @@ class HttpResponse(Generic[TResponseModel], Exception):
     cookies: Union[List[Cookie], Tuple[Cookie, ...]] = \
         field(default_factory=tuple)
 
-    # def __init__(
-    #         self,
-    #         status: int,
-    #         body: Optional[Any] = None,
-    #         headers: Dict[str, str] = None,
-    #         cookies: List[Cookie] = None,
-    # ):
-    #     """
-    #     TODO
-    #
-    #     :param status:
-    #     :param body:
-    #     :param headers:
-    #     :param cookies:
-    #     """
-    #     self.status = status
-    #     self.body = body
-    #     self.headers = headers or {}
-    #     self.cookies = cookies or []
-
     @cached_property
     def actual_headers(self) -> Dict[str, str]:
         """
@@ -70,23 +50,7 @@ class HttpResponse(Generic[TResponseModel], Exception):
         headers = {}
         headers.update(self.headers)
 
-        # if self.cookies:
-        #     headers['Set-Cookie'] = self.get_cookies_header()
-
         return headers
-
-    # def get_cookies_header(self) -> str:
-    #     """
-    #     TODO
-    #     """
-    #     cookies = SimpleCookie()
-    #
-    #     for c in self.cookies:
-    #         cookies[c.name] = c.value
-    #         if c.path:
-    #             cookies[c.name]['path'] = c.path
-    #
-    #     return cookies.output(header='').strip()
 
     @cached_property
     def actual_body(self) -> Optional[Union[str, bytes]]:
@@ -116,9 +80,6 @@ class HttpResponse(Generic[TResponseModel], Exception):
         else:
             return 'text/html'
 
-        # if isinstance(self.body, dict) or is_dataclass(self.body):
-        # else:
-
 
 class HttpError(HttpResponse):
     """
@@ -129,53 +90,68 @@ class HttpError(HttpResponse):
         super(HttpError, self).__init__(status=status, **kwargs)
 
 
-# def create_http_response()
-
-
-# class HttpError(HttpResponse, Exception):
-#     def __init__(self, status_code: int, msg: str, body: str = None):
-#         Exception.__init__(self, msg)
-#         HttpResponse.__init__(self, status_code, body)
-
-
-# TemporaryRedirect = HttpError.build(307, 'Temporary Redirect')
-# BadRequest = HttpResponse.build(400, 'Bad Request')
-# Unauthorized = HttpResponse.build(401, 'Unauthorized')
-# Forbidden = HttpResponse.build(403, 'Forbidden')
-# InternalServerError = HttpResponse.build(500, 'Internal Server Error')
-
-
 class MovedPermanently(HttpResponse):
+    """
+    HTTP 301 Moved Permanently.
+    """
     def __init__(self, url, **kwargs):
         super(MovedPermanently, self).__init__(
             status=301, headers={'Location': url}, **kwargs)
 
 
 class TemporaryRedirect(HttpResponse):
+    """
+    HTTP 307 Temporary Redirect.
+    """
     def __init__(self, url, **kwargs):
         super(TemporaryRedirect, self).__init__(
             status=307, headers={'Location': url}, **kwargs)
 
 
 class BadRequest(HttpError):
+    """
+    HTTP 400 Bad Request.
+
+    Returned by the API in case the client invokes an endpoint but
+    validation of input data (either query parameters or POST body) fails.
+
+    This response should be accompanied by the validation errors.
+    """
     def __init__(self, **kwargs):
         super(BadRequest, self).__init__(
             status=400, msg='Bad Request', **kwargs)
 
 
 class Unauthorized(HttpError):
+    """
+    HTTP 401 Unauthorized.
+
+    Returned by the API in case the client provides an invalid token,
+    ie. a token that is expired, belongs to a user that doesn't exist etc.
+
+    This is an indication that the client must acquire a new token.
+    """
     def __init__(self, msg: str = 'Unauthorized', **kwargs):
         super(Unauthorized, self).__init__(
             status=401, msg=msg, **kwargs)
 
 
 class Forbidden(HttpError):
+    """
+    HTTP 403 Forbidden.
+
+    Returned by the API in case the client provides a token without
+    the necessary scope(s).
+    """
     def __init__(self, msg: str = 'Forbidden', **kwargs):
         super(Forbidden, self).__init__(
             status=403, msg=msg, **kwargs)
 
 
 class InternalServerError(HttpError):
+    """
+    HTTP 500 Internal Server Error.
+    """
     def __init__(self, msg: str = 'Internal Server Error', **kwargs):
         super(InternalServerError, self).__init__(
             status=500, msg=msg, **kwargs)

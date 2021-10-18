@@ -37,6 +37,7 @@ class Serializer(Generic[TSerialized]):
             self,
             data: TSerialized,
             schema: Type[TSerializable],
+            validate: bool = True,
     ) -> TSerializable:
         """
         Deserialize an object.
