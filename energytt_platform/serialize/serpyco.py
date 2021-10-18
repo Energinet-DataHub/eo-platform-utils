@@ -40,11 +40,13 @@ class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
             self,
             data: Dict[str, Any],
             schema: Type[TSerializable],
+            validate: bool = True,
     ) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return _get_serializer(schema).load(data)
+        return _get_serializer(schema) \
+            .load(data, validate=validate)
 
 
 class SerpycoJsonSerializer(Serializer[bytes]):
@@ -67,8 +69,10 @@ class SerpycoJsonSerializer(Serializer[bytes]):
             self,
             data: bytes,
             schema: Type[TSerializable],
+            validate: bool = True,
     ) -> TSerializable:
         """
         Deserialize JSON data to instance of type "cls".
         """
-        return _get_serializer(schema).load_json(data.decode('utf8'))
+        return _get_serializer(schema) \
+            .load_json(data.decode('utf8'), validate=validate)
