@@ -1,5 +1,4 @@
 import re
-from flask import request
 from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
@@ -9,19 +8,22 @@ from energytt_platform.models.auth import InternalToken
 from energytt_platform.auth import TOKEN_HEADER_NAME, TOKEN_COOKIE_NAME
 
 from .responses import Unauthorized
-from ..serialize import json_serializer
 
 
 class Context(object):
     """
     Context for a single incoming HTTP request.
+
+    An instance is create for each HTTP request, and dies when the request
+    if out of scope again.
     """
 
+    # Regex pattern for matching bearer token (in HTTP header)
     TOKEN_PATTERN = re.compile(r'^Bearer:\s*(.+)$', re.IGNORECASE)
 
     def __init__(self, token_encoder: TokenEncoder[InternalToken]):
         """
-        :param token_encoder:
+        :param token_encoder: Internal token encoder
         """
         self.token_encoder = token_encoder
 
@@ -29,29 +31,38 @@ class Context(object):
     @abstractmethod
     def headers(self) -> Dict[str, str]:
         """
-        Returns request headers.
+        :returns: HTTP request headers
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def cookies(self) -> Dict[str, str]:
+        """
+        :returns: HTTP request cookies
         """
         raise NotImplementedError
 
     # -- Tokens --------------------------------------------------------------
 
-    def _decode_token(self, token: str) -> InternalToken:
+    @property
+    def opaque_token(self) -> Optional[str]:
         """
-        TODO
-        """
-        # return json_serializer.deserialize(
-        #     data=token.encode('utf8'),
-        #     schema=InternalToken,
-        # )
-        return self.token_encoder.decode(token)
+        Returns value for the opaque token provided by the client in a cookie.
 
-    @cached_property
-    def raw_token(self) -> Optional[str]:
+        :returns: Opaque token or None
         """
-        Returns request Bearer token.
-        """
-        # TODO Try to read HttpOnly cookie, fallback to Authorization Header
+        return self.cookies.get(TOKEN_COOKIE_NAME)
 
+    @property
+    def internal_token_encoded(self) -> Optional[str]:
+        """
+        Returns value for the raw, encoded internal token. The opaque token
+        (provided by the client in a cookie) is translated to an internal
+        token by the API gateway and passed on as a header.
+
+        :returns: Raw, encoded internal token
+        """
         if TOKEN_HEADER_NAME in self.headers:
             matches = self.TOKEN_PATTERN \
                 .findall(self.headers[TOKEN_HEADER_NAME])
@@ -64,11 +75,12 @@ class Context(object):
         """
         Parses token into an OpaqueToken.
         """
-        if self.raw_token is None:
+        if self.internal_token_encoded is None:
             return None
 
         try:
-            internal_token = self._decode_token(self.raw_token)
+            internal_token = self.token_encoder.decode(
+                self.internal_token_encoded)
         except self.token_encoder.DecodeError:
             # TODO Raise exception if in debug mode?
             return None
