@@ -10,6 +10,7 @@ pytest-order = "*"
 pytest-depends = "*"
 iterators = "*"
 testcontainers = "*"
+flake8 = "*"
 
 [packages]
 wrapt = "*"
@@ -23,6 +24,11 @@ sqlalchemy = "*"
 alembic = "*"
 requests = "*"
 pycryptodome = "*"
+
+[scripts]
+lint-flake8 = "flake8"
+unittest= "pytest tests/unittest"
+integrationtest= "pytest tests/integrationtest"
 
 [requires]
 python_version = "3.8"
