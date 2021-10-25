@@ -3,8 +3,8 @@ from typing import List
 from .registry import MessageRegistry
 from .kafka import KafkaMessageBroker
 from .serialize import MessageSerializer
-from .dispatcher import MessageDispatcher
-from .broker import MessageBroker, Message
+from .dispatcher import MessageDispatcher  # noqa: F401
+from .broker import MessageBroker, Message  # noqa: F401
 
 
 message_registry = MessageRegistry()

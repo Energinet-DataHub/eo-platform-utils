@@ -59,7 +59,7 @@ class KafkaMessageBroker(MessageBroker):
 
         :param timeout: Timeout in seconds
         """
-        res = self._kafka_consumer.poll(timeout_ms=timeout*1000)
+        res = self._kafka_consumer.poll(timeout_ms=timeout * 1000)
 
         return {
             partition.topic: [record.value for record in record_list]
@@ -73,7 +73,7 @@ class KafkaMessageBroker(MessageBroker):
 
         :param timeout: Timeout in seconds
         """
-        res = self._kafka_consumer.poll(timeout_ms=timeout*1000)
+        res = self._kafka_consumer.poll(timeout_ms=timeout * 1000)
 
         return [
             record.value

@@ -81,7 +81,7 @@
 #                 status_code=response.status_code,
 #                 response_body=response.content.decode(),
 #                 msg=(
-#                     f'Request resulted in status code {response.status_code}: '
+#                     f'Request resulted in status {response.status_code}: '
 #                     f'{url}\n\n{response.content}'
 #                 ),
 #             )
@@ -100,13 +100,13 @@
 #         #     # response_model = response_schema().load(response_json)
 #         # except json.decoder.JSONDecodeError:
 #         #     raise ServiceError(
-#         #         f'Failed to parse response JSON: {url}\n\n{response.content}',
+#         #         f'Failed to parse response JSON: {url}\n\n{response.content}',  # noqa: E501
 #         #         status_code=response.status_code,
 #         #         response_body=str(response.content),
 #         #     )
 #         # except marshmallow.ValidationError as e:
 #         #     raise ServiceError(
-#         #         f'Failed to validate response JSON: {url}\n\n{response.content}\n\n{str(e)}',
+#         #         f'Failed to validate response JSON: {url}\n\n{response.content}\n\n{str(e)}', # noqa: E501
 #         #         status_code=response.status_code,
 #         #         response_body=str(response.content),
 #         #     )
@@ -119,7 +119,7 @@
 #     def post(self, *args, **kwargs):
 #         return self.invoke(requests.post, *args, **kwargs)
 #
-#     def get_residual_mix(self, sector, begin_from, begin_to) -> GetMixEmissionsResponse:
+#     def get_residual_mix(self, sector, begin_from, begin_to) -> GetMixEmissionsResponse:  # noqa: E501
 #         """
 #         Returns a dict of emission data for a MeteringPoint.
 #         :param list[str] sector:

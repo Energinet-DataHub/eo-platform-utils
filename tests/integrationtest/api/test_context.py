@@ -60,7 +60,7 @@ class TestContext:
 
         r = client.post(
             path='/something',
-            headers={'Authorization': f'Bearer: INVALID-TOKEN'},
+            headers={'Authorization': 'Bearer: INVALID-TOKEN'},
         )
 
         # -- Assert ----------------------------------------------------------

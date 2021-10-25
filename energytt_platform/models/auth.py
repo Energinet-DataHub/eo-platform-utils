@@ -20,7 +20,7 @@ class InternalToken(Serializable):
     subject: str
 
     # Scopes granted on subject's data
-    # meteringpoints.read, measurements.read, emissions.read, meteringpoint.onboard
+    # meteringpoints.read, measurements.read, emissions.read, etc
     scope: List[str]
 
     @property

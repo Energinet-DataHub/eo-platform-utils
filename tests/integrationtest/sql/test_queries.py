@@ -33,7 +33,7 @@ def seeded_session(session: db.Session):
         session.add(DbTestModel(string_field='s1', integer_field=2))
         session.add(DbTestModel(string_field='s2', integer_field=1))
         session.add(DbTestModel(string_field='s2', integer_field=2))
-    except:
+    except:  # noqa: E722
         session.rollback()
     else:
         session.commit()
@@ -51,7 +51,7 @@ class TestQueries:
 
     # -- filter() ------------------------------------------------------------
 
-    def test__filter__no_results_exists__should_apply_filter_and_return_nothing(
+    def test__filter__no_results_exists__should_apply_filter_and_return_nothing(  # noqa: E501
             self,
             seeded_session: db.Session,
     ):
@@ -73,7 +73,7 @@ class TestQueries:
         assert len(results) == 0
 
     @pytest.mark.parametrize('value', ['s1', 's2'])
-    def test__filter__results_exists__should_apply_filter_and_return_correct_results(
+    def test__filter__results_exists__should_apply_filter_and_return_correct_results(  # noqa: E501
             self,
             value: str,
             seeded_session: db.Session,
@@ -98,7 +98,7 @@ class TestQueries:
 
     # -- filter_by() ---------------------------------------------------------
 
-    def test__filter_by__no_results_exists__should_apply_filter_and_return_nothing(
+    def test__filter_by__no_results_exists__should_apply_filter_and_return_nothing(  # noqa: E501
             self,
             seeded_session: db.Session,
     ):
@@ -120,7 +120,7 @@ class TestQueries:
         assert len(results) == 0
 
     @pytest.mark.parametrize('value', ['s1', 's2'])
-    def test__filter_by__results_exists__should_apply_filter_and_return_correct_results(
+    def test__filter_by__results_exists__should_apply_filter_and_return_correct_results(  # noqa: E501
             self,
             value: str,
             seeded_session: db.Session,
@@ -233,49 +233,3 @@ class TestQueries:
 
         assert count == 0
         assert result is None
-
-    # -- get() ---------------------------------------------------------------
-
-    # def test__get__one_result__should_return_correct_field(
-    #         self,
-    #         seeded_session: db.Session,
-    # ):
-    #     """
-    #     TODO
-    #     """
-    #
-    #     # -- Act -------------------------------------------------------------
-    #
-    #     q = TestModelQuery(seeded_session) \
-    #         .filter(DbTestModel.string_field == 's1') \
-    #         .filter(DbTestModel.integer_field == 1) \
-    #         .only(DbTestModel.string_field)
-    #
-    #     result = TestModelQuery(seeded_session) \
-    #         .filter(DbTestModel.string_field == 's1') \
-    #         .filter(DbTestModel.integer_field == 1) \
-    #         .get(DbTestModel.string_field)
-    #
-    #     # -- Assert ----------------------------------------------------------
-    #
-    #     assert result.string_field == 's1'
-
-    # def test__get__no_results__should_return_none(
-    #         self,
-    #         seeded_session: db.Session,
-    # ):
-    #     """
-    #     TODO
-    #     """
-    #
-    #     # -- Act + Assert ----------------------------------------------------
-    #
-    #     query = TestModelQuery(seeded_session) \
-    #         .filter(DbTestModel.string_field == 's1') \
-    #         .filter(DbTestModel.integer_field == 9999)
-    #
-    #     count = query.count()
-    #     result = query.one_or_none()
-    #
-    #     assert count == 0
-    #     assert result is None

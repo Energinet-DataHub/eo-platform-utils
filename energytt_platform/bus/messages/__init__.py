@@ -8,7 +8,6 @@ from .tech import (
     TechnologyRemoved,
 )
 from .delegates import (
-    MeteringPointOwnerUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 )
@@ -17,7 +16,7 @@ from .measurements import (
     MeasurementRemoved,
     ImportMeasurements,
 )
-from .meteringpoints import (
+from .meteringpoints import (  # noqa: F401
     MeteringPointUpdate,
     MeteringPointRemoved,
     MeteringPointTechnologyUpdate,
@@ -32,7 +31,6 @@ message_registry.add(
     UserOnboarded,
 
     # Delegates
-    MeteringPointOwnerUpdate,
     MeteringPointDelegateGranted,
     MeteringPointDelegateRevoked,
 

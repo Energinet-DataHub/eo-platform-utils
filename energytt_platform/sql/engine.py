@@ -113,7 +113,7 @@ class SqlEngine(object):
 
             try:
                 return_value = wrapped(*args, **kwargs)
-            except:
+            except:  # noqa: E722
                 session.rollback()
                 raise
             else:

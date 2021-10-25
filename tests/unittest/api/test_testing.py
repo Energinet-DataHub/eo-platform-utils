@@ -13,21 +13,21 @@ class TestAssertBaseUrl:
     """
 
     @pytest.mark.parametrize('check_path, url, expected_base_url', (
-            (False, 'http://foobar.com', 'http://foobar.com'),
-            (False, 'http://foobar.com/', 'http://foobar.com/'),
-            (False, 'http://foobar.com/', 'http://foobar.com'),
-            (False, 'http://foobar.com', 'http://foobar.com/'),
-            (False, 'http://foobar.com', 'http://foobar.com/something'),
-            (False, 'http://foobar.com', 'http://foobar.com/something?query=value'),
-            (False, 'http://foobar.com', 'http://foobar.com/something?query=value#fragment'),
-            (False, 'http://foobar.com/something', 'http://foobar.com'),
-            (False, 'http://foobar.com/something?query=value', 'http://foobar.com'),
-            (False, 'http://foobar.com/something?query=value#fragment', 'http://foobar.com'),
-            (True, 'http://foobar.com', 'http://foobar.com'),
-            (True, 'http://foobar.com/', 'http://foobar.com/'),
-            (True, 'http://foobar.com/something', 'http://foobar.com/something'),
-            (True, 'http://foobar.com/something', 'http://foobar.com/something?query=value'),
-            (True, 'http://foobar.com/something', 'http://foobar.com/something?query=value#fragment'),
+        (False, 'http://foobar.com', 'http://foobar.com'),
+        (False, 'http://foobar.com/', 'http://foobar.com/'),
+        (False, 'http://foobar.com/', 'http://foobar.com'),
+        (False, 'http://foobar.com', 'http://foobar.com/'),
+        (False, 'http://foobar.com', 'http://foobar.com/something'),
+        (False, 'http://foobar.com', 'http://foobar.com/something?query=value'),  # noqa: E501
+        (False, 'http://foobar.com', 'http://foobar.com/something?query=value#fragment'),  # noqa: E501
+        (False, 'http://foobar.com/something', 'http://foobar.com'),
+        (False, 'http://foobar.com/something?query=value', 'http://foobar.com'),  # noqa: E501
+        (False, 'http://foobar.com/something?query=value#fragment', 'http://foobar.com'),  # noqa: E501
+        (True, 'http://foobar.com', 'http://foobar.com'),
+        (True, 'http://foobar.com/', 'http://foobar.com/'),
+        (True, 'http://foobar.com/something', 'http://foobar.com/something'),
+        (True, 'http://foobar.com/something', 'http://foobar.com/something?query=value'),  # noqa: E501
+        (True, 'http://foobar.com/something', 'http://foobar.com/something?query=value#fragment'),  # noqa: E501
     ))
     def test__should_not_raise_assertion_error(
             self,
@@ -50,12 +50,12 @@ class TestAssertBaseUrl:
         )
 
     @pytest.mark.parametrize('check_path, url, expected_base_url', (
-            (True, 'http://foobar.com/', 'http://foobar.com'),
-            (True, 'http://foobar.com', 'http://foobar.com/'),
-            (True, 'http://foobar.com/', 'http://foobar.com/something'),
-            (True, 'http://foobar.com/', 'http://foobar.com;something'),
-            (True, 'http://foobar.com/something', 'http://foobar.com'),
-            (True, 'http://foobar.com;something', 'http://foobar.com'),
+        (True, 'http://foobar.com/', 'http://foobar.com'),
+        (True, 'http://foobar.com', 'http://foobar.com/'),
+        (True, 'http://foobar.com/', 'http://foobar.com/something'),
+        (True, 'http://foobar.com/', 'http://foobar.com;something'),
+        (True, 'http://foobar.com/something', 'http://foobar.com'),
+        (True, 'http://foobar.com;something', 'http://foobar.com'),
     ))
     def test__should_raise_assertion_error(
             self,
@@ -84,10 +84,10 @@ class TestAssertQueryParameter:
     """
 
     @pytest.mark.parametrize('url, name, value', (
-            ('http://foobar.com?foo=bar', 'foo', None),
-            ('http://foobar.com?foo=bar', 'foo', 'bar'),
-            ('http://foobar.com?foo=bar&bar=foo', 'bar', None),
-            ('http://foobar.com?foo=bar&bar=foo', 'bar', 'foo'),
+        ('http://foobar.com?foo=bar', 'foo', None),
+        ('http://foobar.com?foo=bar', 'foo', 'bar'),
+        ('http://foobar.com?foo=bar&bar=foo', 'bar', None),
+        ('http://foobar.com?foo=bar&bar=foo', 'bar', 'foo'),
     ))
     def test__should_not_raise_assertion_error(
             self,
@@ -107,10 +107,10 @@ class TestAssertQueryParameter:
         )
 
     @pytest.mark.parametrize('url, name, value', (
-            ('http://foobar.com?foo=bar', 'bar', None),
-            ('http://foobar.com?foo=bar', 'spam', None),
-            ('http://foobar.com?foo=bar', 'foo', 'spam'),
-            ('http://foobar.com?foo=bar', 'bar', 'foo'),
+        ('http://foobar.com?foo=bar', 'bar', None),
+        ('http://foobar.com?foo=bar', 'spam', None),
+        ('http://foobar.com?foo=bar', 'foo', 'spam'),
+        ('http://foobar.com?foo=bar', 'bar', 'foo'),
     ))
     def test__should_raise_assertion_error(
             self,

@@ -23,7 +23,10 @@ class TestSerializer:
         simple_serializer,
         json_serializer,
     ])
-    def test__should_serialize_and_deserialize_correctly(self, uut: Serializer):
+    def test__should_serialize_and_deserialize_correctly(
+            self,
+            uut: Serializer,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 

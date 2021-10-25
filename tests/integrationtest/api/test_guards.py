@@ -77,7 +77,7 @@ class TestGuards:
 
         r = client.post(
             path='/something',
-            headers={'Authorization': f'Bearer: NOT-A-VALID-TOKEN'},
+            headers={'Authorization': 'Bearer: NOT-A-VALID-TOKEN'},
         )
 
         # -- Assert ----------------------------------------------------------

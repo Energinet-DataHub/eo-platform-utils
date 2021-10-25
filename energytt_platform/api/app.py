@@ -6,7 +6,7 @@ from typing import List, Iterable, Tuple, Any, Optional
 
 from .guards import EndpointGuard
 from .endpoint import Endpoint
-from .endpoints import HealthCheck, OpenApiSchema
+from .endpoints import HealthCheck
 from .orchestration import \
     RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
@@ -100,7 +100,8 @@ class Application(object):
         elif method == 'POST':
             data_provider = JsonBodyProvider()
         else:
-            raise RuntimeError('Unsupported HTTP method for endpoints: %s' % method)
+            raise RuntimeError(
+                'Unsupported HTTP method for endpoints: %s' % method)
 
         self._flask_app.add_url_rule(
             rule=path,

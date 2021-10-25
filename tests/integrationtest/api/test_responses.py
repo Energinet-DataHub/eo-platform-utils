@@ -19,7 +19,10 @@ class TestEndpointResponse:
     Testing different responses data types.
     """
 
-    def test__health_check__should_return_status_200(self, client):
+    def test__health_check__should_return_status_200(
+            self,
+            client,
+    ):
         """
         TODO
         """
@@ -37,7 +40,13 @@ class TestEndpointResponse:
         (b'bytes-body', 'bytes-body'),
         # TODO ByteStream, more?
     ])
-    def test__endpoint_returns_string_alike__should_return_string_as_body(self, obj, response_body, app, client):
+    def test__endpoint_returns_string_alike__should_return_string_as_body(
+            self,
+            obj,
+            response_body,
+            app,
+            client,
+    ):
         """
         TODO
         """
@@ -59,7 +68,11 @@ class TestEndpointResponse:
         assert r.get_data(as_text=True) == response_body
         assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
 
-    def test__endpoint_returns_dict__should_return_dict_as_body(self, app, client):
+    def test__endpoint_returns_dict__should_return_dict_as_body(
+            self,
+            app,
+            client,
+    ):
         """
         TODO
         """
@@ -94,7 +107,13 @@ class TestEndpointResponse:
         (307, TemporaryRedirect('http://something.com/')),
         (400, BadRequest()),
     ])
-    def test__endpoint_raises_http_response__should_format_response_appropriately(self, status_code, obj, app, client):
+    def test__endpoint_raises_http_response__should_format_response_appropriately(  # noqa: E501
+            self,
+            status_code,
+            obj,
+            app,
+            client,
+    ):
         """
         TODO
         """
@@ -115,7 +134,11 @@ class TestEndpointResponse:
 
         assert r.status_code == status_code
 
-    def test__endpoint_raises_exception__should_return_status_500(self, app, client):
+    def test__endpoint_raises_exception__should_return_status_500(
+            self,
+            app,
+            client,
+    ):
         """
         TODO
         """
@@ -136,7 +159,11 @@ class TestEndpointResponse:
 
         assert r.status_code == 500
 
-    def test__endpoint_returns_response_model__should_format_response_appropriately(self, app, client):
+    def test__endpoint_returns_response_model__should_format_response_appropriately(  # noqa: E501
+            self,
+            app,
+            client,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 
@@ -158,7 +185,11 @@ class TestEndpointResponse:
             'something': 'something',
         }
 
-    def test__endpoint_with_request_and_response_models(self, app, client):
+    def test__endpoint_with_request_and_response_models(
+            self,
+            app,
+            client,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 
@@ -190,7 +221,13 @@ class TestEndpointRedirect:
         (301, MovedPermanently('http://something.com/')),
         (307, TemporaryRedirect('http://something.com/')),
     ])
-    def test__endpoint_returns_redirect(self, status_code, response, app, client):
+    def test__endpoint_returns_redirect(
+            self,
+            status_code,
+            response,
+            app,
+            client,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 
@@ -213,7 +250,13 @@ class TestEndpointRedirect:
         (301, MovedPermanently('http://something.com/')),
         (307, TemporaryRedirect('http://something.com/')),
     ])
-    def test__endpoint_raises_redirect(self, status_code, response, app, client):
+    def test__endpoint_raises_redirect(
+            self,
+            status_code,
+            response,
+            app,
+            client,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 

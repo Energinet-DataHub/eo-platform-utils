@@ -1,4 +1,4 @@
-from .serializer import Serializer, Serializable
+from .serializer import Serializer, Serializable  # noqa: F401
 from .serpyco import SerpycoSimpleSerializer, SerpycoJsonSerializer
 
 

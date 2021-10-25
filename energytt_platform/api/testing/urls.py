@@ -13,13 +13,13 @@ def assert_base_url(
 
     Example of tests that will pass::
 
-        assert_base_url('http://something.com', 'http://something.com')
-        assert_base_url('https://something.com?query=value', 'https://something.com')
+        assert_base_url('http://foo.com', 'http://foo.com')
+        assert_base_url('https://foo.com?query=value', 'https://foo.com')
 
     Examples of tests that will fail::
 
-        assert_has_base_url('http://something.com', 'http://something.com')
-        assert_has_base_url('https://something.com?query=value', 'https://something.com')
+        assert_has_base_url('http://bar.com', 'http://bar.com')
+        assert_has_base_url('https://bar.com?query=value', 'https://bar.com')
 
     :param url: The URL to test
     :param expected_base_url: The base-URL to match
@@ -50,13 +50,13 @@ def assert_query_parameter(
 
     Example of tests that will pass::
 
-        assert_query_parameter('http://something.com?query=value', 'query')
-        assert_query_parameter('http://something.com?query=value', 'query', 'value')
+        assert_query_parameter('http://foo.com?query=value', 'query')
+        assert_query_parameter('http://foo.com?query=value', 'query', 'value')
 
     Examples of tests that will fail::
 
-        assert_query_parameter('http://something.com?query=value', 'foo')
-        assert_query_parameter('http://something.com?query=value', 'query', 'bar')
+        assert_query_parameter('http://bar.com?query=value', 'foo')
+        assert_query_parameter('http://bar.com?query=value', 'query', 'bar')
 
     :param url: The URL to test
     :param name: Name of the query parameter

@@ -1,2 +1,2 @@
-from .health import HealthCheck
-from .openapischema import OpenApiSchema
+from .health import HealthCheck  # noqa: F401
+from .openapischema import OpenApiSchema  # noqa: F401

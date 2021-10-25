@@ -1,1 +1,1 @@
-from .context import FlaskContext
+from .context import FlaskContext  # noqa: F401

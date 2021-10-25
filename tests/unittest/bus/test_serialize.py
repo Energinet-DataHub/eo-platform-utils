@@ -1,7 +1,6 @@
+import pytest
 from dataclasses import dataclass
 from unittest.mock import MagicMock, patch
-
-import pytest
 
 from energytt_platform.bus import Message
 from energytt_platform.bus.serialize import MessageSerializer
@@ -25,8 +24,8 @@ class TestMessageSerializer:
         # -- Arrange ---------------------------------------------------------
 
         obj = Message1(
-          something='something',
-          nested=Nested(something='something nested'),
+            something='something',
+            nested=Nested(something='something nested'),
         )
 
         registry_mock = MagicMock()
@@ -45,13 +44,13 @@ class TestMessageSerializer:
         assert isinstance(deserialized, Message1)
         assert deserialized == obj
 
-    def test__serialize__message_not_in_registry__should_raise_serialize_error(self):
+    def test__serialize__message_not_in_registry__should_raise_serialize_error(self):  # noqa: E501
 
         # -- Arrange ---------------------------------------------------------
 
         obj = Message1(
-          something='something',
-          nested=Nested(something='something nested'),
+            something='something',
+            nested=Nested(something='something nested'),
         )
 
         registry_mock = MagicMock()
@@ -63,9 +62,12 @@ class TestMessageSerializer:
 
         with pytest.raises(uut.SerializeError):
             uut.serialize(obj)
-  
+
     @patch('energytt_platform.bus.serialize.json_serializer')
-    def test__deserialize__message_not_in_registry__should_raise(self, json_serializer_mock):
+    def test__deserialize__message_not_in_registry__should_raise(
+            self,
+            json_serializer_mock,
+    ):
 
         # -- Arrange ---------------------------------------------------------
 
