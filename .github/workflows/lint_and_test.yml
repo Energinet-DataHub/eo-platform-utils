@@ -1,4 +1,4 @@
-name: ci
+name: Lint and test
 
 env:
   python-version: 3.8
