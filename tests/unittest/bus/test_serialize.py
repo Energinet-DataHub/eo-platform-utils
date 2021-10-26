@@ -43,7 +43,7 @@ class TestMessageSerializer:
 
         assert isinstance(deserialized, Message1)
         assert deserialized == obj
-        assert deserialized != deserialized
+        assert deserialized != serialized
 
     def test__serialize__message_not_in_registry__should_raise_serialize_error(self):  # noqa: E501
 
