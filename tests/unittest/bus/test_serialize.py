@@ -43,6 +43,7 @@ class TestMessageSerializer:
 
         assert isinstance(deserialized, Message1)
         assert deserialized == obj
+        assert deserialized != deserialized
 
     def test__serialize__message_not_in_registry__should_raise_serialize_error(self):  # noqa: E501
 
@@ -64,7 +65,7 @@ class TestMessageSerializer:
             uut.serialize(obj)
 
     @patch('energytt_platform.bus.serialize.json_serializer')
-    def test__deserialize__message_not_in_registry__should_raise(
+    def test__deserialize__message_not_in_registry__should_raise_deserialize_error(  # noqa: E501
             self,
             json_serializer_mock,
     ):
