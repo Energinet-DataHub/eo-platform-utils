@@ -42,7 +42,7 @@ def kafka_container():
     })
 
     with kafka_docker as container:
-        time.sleep(5)
+        time.sleep(15)
         yield container
 
 
