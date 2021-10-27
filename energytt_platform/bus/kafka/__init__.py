@@ -1,1 +1,1 @@
-from .broker import KafkaMessageBroker
+from .broker import KafkaMessageBroker  # noqa: F401

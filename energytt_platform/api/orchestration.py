@@ -8,7 +8,7 @@ from functools import cached_property
 from typing import List, Dict, Any, Optional, Type
 
 from energytt_platform.tokens import TokenEncoder
-from energytt_platform.serialize import json_serializer, simple_serializer
+from energytt_platform.serialize import simple_serializer
 from energytt_platform.models.auth import InternalToken
 
 from .context import Context

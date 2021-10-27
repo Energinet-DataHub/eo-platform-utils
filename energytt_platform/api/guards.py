@@ -49,7 +49,8 @@ class ScopedGuard(EndpointGuard):
             raise Unauthorized('Unauthorized')
         for scope in self.scopes:
             if scope not in context.token.scope:
-                raise Unauthorized('Missing scope %s' % scope)  # TODO Write proper message
+                # TODO Write proper message
+                raise Unauthorized('Missing scope %s' % scope)
 
 
 class Bouncer(object):

@@ -20,7 +20,8 @@ class WrappedMessage(Message, Generic[TWrappedMessage]):
     """
     type: str
     time: datetime = field(default_factory=datetime.now)
-    msg: Optional[Union[TWrappedMessage, TSerializedMessage]] = field(default=None)
+    msg: Optional[Union[TWrappedMessage, TSerializedMessage]] = \
+        field(default=None)
 
 
 class MessageSerializer(object):

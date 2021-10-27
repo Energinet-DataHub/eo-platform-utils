@@ -1,9 +1,7 @@
 import rapidjson
-from datetime import datetime
-from functools import partial, cached_property
-from http.cookies import SimpleCookie
+from functools import cached_property
+from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional, Union, TypeVar, Generic, Tuple
-from dataclasses import dataclass, field, is_dataclass
 
 from energytt_platform.serialize import json_serializer
 

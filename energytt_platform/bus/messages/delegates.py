@@ -1,18 +1,7 @@
-from typing import Optional
 from dataclasses import dataclass
 
 from energytt_platform.bus import Message
 from energytt_platform.models.delegates import MeteringPointDelegate
-
-
-@dataclass
-class MeteringPointOwnerUpdate(Message):
-    """
-    TODO
-    TODO Received by auth-service to determine the owner, who can grant delegates on this GSRN number
-    """
-    gsrn: str
-    subject: Optional[str]
 
 
 @dataclass

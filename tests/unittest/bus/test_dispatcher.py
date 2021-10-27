@@ -1,15 +1,9 @@
-from datetime import datetime
 from unittest.mock import Mock
-
-from energytt_platform.bus import messages as m
-from energytt_platform.bus.dispatcher import MessageDispatcher
-
-
 from dataclasses import dataclass
 
+from energytt_platform.bus.dispatcher import MessageDispatcher
+
 from energytt_platform.bus import Message
-from energytt_platform.models.common import DateTimeRange
-from energytt_platform.models.measurements import Measurement
 
 
 @dataclass

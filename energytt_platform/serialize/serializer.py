@@ -23,7 +23,7 @@ class Serializer(Generic[TSerialized]):
 
     @abstractmethod
     def serialize(
-            self, 
+            self,
             obj: TSerializable,
             schema: Optional[Type[TSerializable]] = None,
     ) -> TSerialized:

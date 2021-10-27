@@ -8,7 +8,7 @@ class TestMessageBroker:
 
     # -- poll() --------------------------------------------------------------
 
-    def test__poll__publish_messages_and_subscribe_to_all_topics__should_receive_messages_from_all_topics(
+    def test__poll__publish_messages_and_subscribe_to_all_topics__should_receive_messages_from_all_topics(  # noqa: E501
             self,
             broker: MessageBroker,
             msg1: Message,
@@ -36,7 +36,7 @@ class TestMessageBroker:
             'TOPIC2': [msg2, msg3],
         }
 
-    def test__poll__publish_messages_and_subscribe_to_some_topics__should_receive_messages_from_subscribed_topics(
+    def test__poll__publish_messages_and_subscribe_to_some_topics__should_receive_messages_from_subscribed_topics(  # noqa: E501
             self,
             broker: MessageBroker,
             msg1: Message,
@@ -65,7 +65,7 @@ class TestMessageBroker:
 
     # -- poll_list() ---------------------------------------------------------
 
-    def test__poll_list__publish_messages_and_subscribe_to_all_topics__should_receive_messages_from_all_topics(
+    def test__poll_list__publish_messages_and_subscribe_to_all_topics__should_receive_messages_from_all_topics(  # noqa: E501
             self,
             broker: MessageBroker,
             msg1: Message,
@@ -91,7 +91,7 @@ class TestMessageBroker:
         assert len(received_messages) == 3
         assert all(msg in received_messages for msg in [msg1, msg2, msg3])
 
-    def test__poll_list__publish_messages_and_subscribe_to_some_topics__should_receive_messages_from_all_topics(
+    def test__poll_list__publish_messages_and_subscribe_to_some_topics__should_receive_messages_from_all_topics(  # noqa: E501
             self,
             broker: MessageBroker,
             msg1: Message,

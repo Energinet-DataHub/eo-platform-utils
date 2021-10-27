@@ -1,5 +1,5 @@
 """
-Example setup.py from https://github.com/activescott/python-package-example/blob/master/package-project/src/setup.py.
+Example setup.py from https://github.com/activescott/python-package-example/blob/master/package-project/src/setup.py.  # noqa: E501
 """
 # Always prefer setuptools over distutils
 import os
@@ -9,7 +9,7 @@ from distutils.command.sdist import sdist
 
 class sdist_hg(sdist):
     """Add git short commit hash to version.
-    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html
+    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html  # noqa: E501
     """
 
     user_options = sdist.user_options + [

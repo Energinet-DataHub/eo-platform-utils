@@ -59,15 +59,24 @@ class CookieTester(object):
         if value is not None:
             assert self.cookies[name].value == value
         assert self.cookies[name]['expires'] == \
-               (expires.strftime('%a, %d %b %Y %H:%M:%S GMT') if expires is not None else '')
-        assert self.cookies[name]['path'] == (path if path is not None else '')
-        assert self.cookies[name]['comment'] == (comment if comment is not None else '')
-        assert self.cookies[name]['domain'] == (domain if domain is not None else '')
-        assert self.cookies[name]['max-age'] == (max_age if max_age is not None else '')
-        assert self.cookies[name]['secure'] == (secure if secure else '')
-        assert self.cookies[name]['httponly'] == (http_only if http_only else '')
-        assert self.cookies[name]['version'] == (version if version is not None else '')
-        assert self.cookies[name]['samesite'] == ('Strict' if same_site else '')
+               (expires.strftime('%a, %d %b %Y %H:%M:%S GMT')
+                if expires is not None else '')
+        assert self.cookies[name]['path'] == \
+               (path if path is not None else '')
+        assert self.cookies[name]['comment'] == \
+               (comment if comment is not None else '')
+        assert self.cookies[name]['domain'] == \
+               (domain if domain is not None else '')
+        assert self.cookies[name]['max-age'] == \
+               (max_age if max_age is not None else '')
+        assert self.cookies[name]['secure'] == \
+               (secure if secure else '')
+        assert self.cookies[name]['httponly'] == \
+               (http_only if http_only else '')
+        assert self.cookies[name]['version'] == \
+               (version if version is not None else '')
+        assert self.cookies[name]['samesite'] == \
+               ('Strict' if same_site else '')
 
         return self
 
