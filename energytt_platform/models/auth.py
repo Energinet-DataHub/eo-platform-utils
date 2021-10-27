@@ -24,5 +24,9 @@ class InternalToken(Serializable):
     scope: List[str]
 
     @property
-    def is_expired(self) -> bool:
-        return self.expires < datetime.now(tz=timezone.utc)
+    def is_valid(self) -> bool:
+        """
+        A token is valid only if its issued before now, and expires
+        after now.
+        """
+        return self.issued <= datetime.now(tz=timezone.utc) < self.expires

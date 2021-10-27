@@ -85,7 +85,7 @@ class Context(object):
             # TODO Raise exception if in debug mode?
             return None
 
-        if internal_token.is_expired:
+        if not internal_token.is_valid:
             # TODO Raise exception if in debug mode?
             return None
 
