@@ -1,8 +1,8 @@
 import pytest
 from dataclasses import dataclass
 
-from energytt_platform.bus import Message
-from energytt_platform.serialize import \
+from origin_platform.bus import Message
+from origin_platform.serialize import \
     Serializer, simple_serializer, json_serializer
 
 

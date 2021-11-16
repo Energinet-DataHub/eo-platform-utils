@@ -4,7 +4,7 @@ from uuid import uuid4
 import pytest
 from flask.testing import FlaskClient
 
-from energytt_platform.api import (
+from origin_platform.api import (
     Application,
     EndpointGuard,
     TokenGuard,

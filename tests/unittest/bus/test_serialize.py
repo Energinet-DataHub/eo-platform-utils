@@ -2,8 +2,8 @@ import pytest
 from dataclasses import dataclass
 from unittest.mock import MagicMock, patch
 
-from energytt_platform.bus import Message
-from energytt_platform.bus.serialize import MessageSerializer
+from origin_platform.bus import Message
+from origin_platform.bus.serialize import MessageSerializer
 
 
 @dataclass
@@ -64,7 +64,7 @@ class TestMessageSerializer:
         with pytest.raises(uut.SerializeError):
             uut.serialize(obj)
 
-    @patch('energytt_platform.bus.serialize.json_serializer')
+    @patch('origin_platform.bus.serialize.json_serializer')
     def test__deserialize__message_not_in_registry__should_raise_deserialize_error(  # noqa: E501
             self,
             json_serializer_mock,

@@ -1,4 +1,4 @@
-# eet-protocol
+# origin-protocol
 Protocol Descriptions
 
 ## Protocol Buffers installation:

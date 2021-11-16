@@ -1,6 +1,6 @@
 from flask.testing import FlaskClient
 
-from energytt_platform.api import Application, HttpResponse
+from origin_platform.api import Application, HttpResponse
 
 from .endpoints import EndpointReturnsGeneric
 

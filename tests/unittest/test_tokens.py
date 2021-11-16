@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from energytt_platform.bus import Message
-from energytt_platform.tokens import TokenEncoder
+from origin_platform.bus import Message
+from origin_platform.tokens import TokenEncoder
 
 
 @dataclass

@@ -1,7 +1,7 @@
 import pytest
 from typing import Optional
 
-from energytt_platform.api.testing import (
+from origin_platform.api.testing import (
     assert_base_url,
     assert_query_parameter,
 )

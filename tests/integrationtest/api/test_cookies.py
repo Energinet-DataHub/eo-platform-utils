@@ -6,8 +6,8 @@ from itertools import product
 from flask.testing import FlaskClient
 from typing import Dict, Iterable, Any
 
-from energytt_platform.api.testing import CookieTester
-from energytt_platform.api import Application, HttpResponse, Cookie
+from origin_platform.api.testing import CookieTester
+from origin_platform.api import Application, HttpResponse, Cookie
 
 from .endpoints import EndpointReturnsGeneric
 
