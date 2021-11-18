@@ -1,8 +1,8 @@
 import pytest
 from dataclasses import dataclass
 
-from energytt_platform.bus import Message
-from energytt_platform.bus.registry import MessageRegistry
+from origin_platform.bus import Message
+from origin_platform.bus.registry import MessageRegistry
 
 
 @dataclass

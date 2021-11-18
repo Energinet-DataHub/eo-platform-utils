@@ -8,8 +8,8 @@ import pytest
 from uuid import uuid4
 from testcontainers.core.container import DockerContainer
 
-from energytt_platform.models.tech import Technology, TechnologyType
-from energytt_platform.bus import (
+from origin_platform.models.tech import Technology, TechnologyType
+from origin_platform.bus import (
     MessageBroker,
     Message,
     messages as m,

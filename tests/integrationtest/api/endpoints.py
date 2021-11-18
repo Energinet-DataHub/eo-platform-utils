@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from energytt_platform.api import Endpoint, Context
-from energytt_platform.models.auth import InternalToken
+from origin_platform.api import Endpoint, Context
+from origin_platform.models.auth import InternalToken
 
 
 class EmptyEndpoint(Endpoint):

@@ -1,4 +1,4 @@
-from energytt_platform.bus import MessageBroker, Message
+from origin_platform.bus import MessageBroker, Message
 
 
 class TestMessageBroker:

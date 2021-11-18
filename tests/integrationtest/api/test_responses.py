@@ -1,6 +1,6 @@
 import pytest
 
-from energytt_platform.api import (
+from origin_platform.api import (
     BadRequest,
     MovedPermanently,
     TemporaryRedirect,

@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import orm, exc
 
-from energytt_platform.sql import SqlQuery
+from origin_platform.sql import SqlQuery
 
 from .db import db
 from .models import DbTestModel

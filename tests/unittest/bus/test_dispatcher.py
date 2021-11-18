@@ -1,9 +1,9 @@
 from unittest.mock import Mock
 from dataclasses import dataclass
 
-from energytt_platform.bus.dispatcher import MessageDispatcher
+from origin_platform.bus.dispatcher import MessageDispatcher
 
-from energytt_platform.bus import Message
+from origin_platform.bus import Message
 
 
 @dataclass
