@@ -9,13 +9,14 @@ https://grpc.io/docs/protoc-installation/
 
 ## Uploading package manually
 
-First the package has to be built:
+Steps to uploading package manually.
+- Using pipenv first sync with development packages.
+- Next build the tar.
+- last upload it to pypi
 
-    python setup.py install
+Commands to run:
 
-The install command is used, because for unknown reasons the build currently does not generate the ./dist folder
-
-Next the package must be uploaded to pypi
-
-    python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+    pipenv sync -d 
+    pipenv run build
+    python run upload
 
