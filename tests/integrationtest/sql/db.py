@@ -1,4 +1,4 @@
-from origin_platform.sql import SqlEngine
+from origin.sql import SqlEngine
 
 
 db = SqlEngine(

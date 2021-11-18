@@ -1,7 +1,7 @@
 from flask.testing import FlaskClient
 
-from origin_platform.api import Application
-from origin_platform.models.auth import InternalToken
+from origin.api import Application
+from origin.models.auth import InternalToken
 
 from .endpoints import (
     EndpointRequiresContextReturnsToken,

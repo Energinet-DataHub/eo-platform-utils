@@ -1,6 +1,6 @@
 from flask.testing import FlaskClient
 
-from origin_platform.api import Application, HttpResponse
+from origin.api import Application, HttpResponse
 
 from .endpoints import EndpointReturnsGeneric
 

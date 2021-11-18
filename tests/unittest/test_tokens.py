@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from origin_platform.bus import Message
-from origin_platform.tokens import TokenEncoder
+from origin.bus import Message
+from origin.tokens import TokenEncoder
 
 
 @dataclass

@@ -6,7 +6,7 @@ import pytest
 from unittest.mock import patch
 from testcontainers.postgres import PostgresContainer
 
-from origin_platform.sql import POSTGRES_VERSION, SqlEngine
+from origin.sql import POSTGRES_VERSION, SqlEngine
 
 from .db import db as _db
 

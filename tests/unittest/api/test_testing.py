@@ -1,7 +1,7 @@
 import pytest
 from typing import Optional
 
-from origin_platform.api.testing import (
+from origin.api.testing import (
     assert_base_url,
     assert_query_parameter,
 )

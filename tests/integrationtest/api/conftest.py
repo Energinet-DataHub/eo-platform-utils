@@ -5,9 +5,9 @@ https://docs.pytest.org/en/2.7.3/plugins.html?highlight=re#conftest-py-plugins
 import pytest
 from datetime import datetime, timedelta, timezone
 
-from origin_platform.api import Application
-from origin_platform.models.auth import InternalToken
-from origin_platform.tokens import TokenEncoder
+from origin.api import Application
+from origin.models.auth import InternalToken
+from origin.tokens import TokenEncoder
 
 
 @pytest.fixture(scope='function')
