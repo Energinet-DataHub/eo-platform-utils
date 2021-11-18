@@ -96,7 +96,8 @@ setuptools.setup(
     #
     #   py_modules=["my_module"],
     #
-    packages=setuptools.find_packages(),  # Required
+    packages=setuptools.find_packages(
+        where=os.path.join('.', 'src')),  # Required
     # Alternatively, if you want to distribute just a my_module.py, uncomment
     # this:
     #   py_modules=["my_module"],
@@ -106,6 +107,10 @@ setuptools.setup(
     # https://packaging.python.org/en/latest/requirements.html
     # TODO SPECIFIC VERSION OF REQUIREMENTS!
     # TODO Read from requirements.txt instead
+    package_dir={
+        'origin': os.path.join('.', 'src', 'origin')
+    },
+
     install_requires=[
         'wrapt',
         'pyjwt[crypto]',
