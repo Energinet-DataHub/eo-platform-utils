@@ -1,6 +1,7 @@
+import os
 import sys
-from os.path import dirname as d
-from os.path import abspath, join
+
 # Adds the src folder to the local path
-root_dir = join(d(d(abspath(__file__))), 'src')
+test_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.join(test_dir, '..', 'src')
 sys.path.append(root_dir)
