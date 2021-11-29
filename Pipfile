@@ -25,6 +25,8 @@ sqlalchemy = "*"
 alembic = "*"
 requests = "*"
 pycryptodome = "*"
+fastapi = "2.0.1"
+uvicorn = {extras = ["standard"]}
 
 [scripts]
 lint-flake8 = "flake8"
