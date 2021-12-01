@@ -1,4 +1,4 @@
-name: Release pypi package
+name: Release pypi dev-package
 
 env:
   python-version: 3.8
@@ -7,7 +7,7 @@ on:
   workflow_run:
     workflows: ["Lint and test"]
     types: [completed]
-    branches: [main]
+    branches: [development]
 
 jobs:
   publish:
@@ -37,7 +37,7 @@ jobs:
           pipenv install --deploy --dev
 
       - name: Build tarball
-        run: python setup.py sdist
+        run: python setup.py sdist --build=dev${{ github.run_number }}
 
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@v1.4.2
