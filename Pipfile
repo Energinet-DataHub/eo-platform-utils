@@ -5,9 +5,9 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
-pytest-cov = "*"
-pytest-order = "*"
-pytest-depends = "*"
+#pytest-cov = "*"
+#pytest-order = "*"
+#pytest-depends = "*"
 iterators = "*"
 testcontainers = "*"
 flake8 = "*"
@@ -25,6 +25,7 @@ sqlalchemy = "*"
 alembic = "*"
 requests = "*"
 pycryptodome = "*"
+openapi-specgen = "*"
 
 [scripts]
 lint-flake8 = "flake8"

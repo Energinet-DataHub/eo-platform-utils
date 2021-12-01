@@ -35,9 +35,18 @@ class Endpoint(object):
         return self.Response
 
     @cached_property
+    def requires_app(self) -> bool:
+        """
+        Returns True if handle_request() requires a Application
+        passed as argument.
+        """
+        return 'app' in getfullargspec(self.handle_request)[0]
+
+    @cached_property
     def requires_context(self) -> bool:
         """
-        Returns True if handle_request() requires a Context passed as argument.
+        Returns True if handle_request() requires a Context
+        passed as argument.
         """
         return 'context' in getfullargspec(self.handle_request)[0]
 
