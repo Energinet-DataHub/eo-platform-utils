@@ -78,7 +78,19 @@ class OpenApiSpecs(Endpoint):
         paths = []
 
         for e in self.app.endpoints:
-            response = OpenApiResponse('Response description', data_type=World)
+            response = OpenApiResponse(
+                descr='Response description',
+                data_type=e.endpoint.Response,
+            )
+
+            path = OpenApiPath(
+                path=e.path,
+                method=e.method,
+                responses=[response],
+                params=[sample_param],
+            )
+
+            paths.append(path)
 
         sample_response = OpenApiResponse('Response description', data_type=World)
         sample_param = OpenApiParam('param_name', 'query', data_type=str)
