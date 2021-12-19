@@ -11,9 +11,15 @@ from .endpoints import HealthCheck
 from .orchestration import \
     RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
+
 class RequestOrchestratorWrapper(object):
     """
     Wrapper for the request orchestrator.
+    By implementation flask does not allow to use multiple view functions
+    using the same endpoint/path even though the methods are different.
+
+    This wrapper routes the request to the correct endpoint,
+    based on the endpoint path and the method.
     """
 
     def __init__(self, flask_app: Flask):
@@ -22,8 +28,11 @@ class RequestOrchestratorWrapper(object):
 
     def path_exists(self, path: str) -> bool:
         return path in self._orchestrators.keys()
-    
-    def add_endpoint(self, method: str, path: str, request_orchestrator: RequestOrchestrator):
+
+    def add_endpoint(self,
+                     method: str,
+                     path: str,
+                     request_orchestrator: RequestOrchestrator):
 
         if not self.path_exists(path=path):
             self._flask_app.add_url_rule(
@@ -33,20 +42,19 @@ class RequestOrchestratorWrapper(object):
                 view_func=self,
             )
             self._orchestrators[path] = {}
-            
-        self._orchestrators[path][method] = request_orchestrator
 
-        
-        print(f'Added endpoint {path} and {method}')
-        
+        self._orchestrators[path][method] = request_orchestrator
 
     def __call__(self, *args, **kwargs):
         method = flask.request.method
         endpoint = flask.request.endpoint
 
+        # Find correct orchestrator with given endpoint and method
         _orchestrator = self._orchestrators.get(endpoint).get(method)
 
+        # Call ocrherator
         return _orchestrator(*args, **kwargs)
+
 
 class Application(object):
     """
