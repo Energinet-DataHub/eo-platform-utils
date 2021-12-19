@@ -82,11 +82,15 @@ class RequestOrchestrator(object):
         self.data = data
         self.secret = secret
         self.guards = guards
+        self.view_args = {}
 
-    def __call__(self) -> flask.Response:
+    def __call__(self, **view_args) -> flask.Response:
         """
         Invoked by Flask to handle a HTTP request.
         """
+        
+        self.view_args = view_args
+
         try:
             return self._invoke_endpoint()
         except HttpResponse as e:
@@ -136,6 +140,12 @@ class RequestOrchestrator(object):
             handler_kwargs['request'] = self._parse_request_data(
                 data=self.data.get() or {},
                 schema=self.endpoint.request_schema,
+            )
+        
+        if self.endpoint.should_parse_view_args:
+            handler_kwargs['view_args'] = self._parse_request_data(
+                data=self.view_args or {},
+                schema=self.endpoint.view_args_schema,
             )
 
         # -- Invoke endpoint -------------------------------------------------
