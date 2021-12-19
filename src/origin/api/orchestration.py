@@ -88,7 +88,7 @@ class RequestOrchestrator(object):
         """
         Invoked by Flask to handle a HTTP request.
         """
-        
+
         self.view_args = view_args
 
         try:
@@ -141,7 +141,7 @@ class RequestOrchestrator(object):
                 data=self.data.get() or {},
                 schema=self.endpoint.request_schema,
             )
-        
+
         if self.endpoint.should_parse_view_args:
             handler_kwargs['view_args'] = self._parse_request_data(
                 data=self.view_args or {},

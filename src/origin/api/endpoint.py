@@ -13,7 +13,8 @@ class Endpoint(object):
     Request = None
     Response = None
 
-    # view arguments retrieved from the request url path eg. /api/v1/users/<user_id>
+    # view arguments retrieved from the request url path
+    # eg. /api/v1/users/<user_id>
     View_args = None
 
     @abstractmethod
@@ -59,7 +60,7 @@ class Endpoint(object):
         """
         return (self.request_schema is not None
                 and 'request' in getfullargspec(self.handle_request)[0])
-    
+
     @cached_property
     def should_parse_view_args(self) -> bool:
         """
