@@ -1,4 +1,5 @@
 import logging
+import flask
 from flask import Flask
 from flask.testing import FlaskClient
 from functools import cached_property
@@ -10,6 +11,42 @@ from .endpoints import HealthCheck
 from .orchestration import \
     RequestOrchestrator, JsonBodyProvider, QueryStringProvider
 
+class RequestOrchestratorWrapper(object):
+    """
+    Wrapper for the request orchestrator.
+    """
+
+    def __init__(self, flask_app: Flask):
+        self._orchestrators = {}
+        self._flask_app = flask_app
+
+    def path_exists(self, path: str) -> bool:
+        return path in self._orchestrators.keys()
+    
+    def add_endpoint(self, method: str, path: str, request_orchestrator: RequestOrchestrator):
+
+        if not self.path_exists(path=path):
+            self._flask_app.add_url_rule(
+                rule=path,
+                endpoint=path,
+                methods=[method],
+                view_func=self,
+            )
+            self._orchestrators[path] = {}
+            
+        self._orchestrators[path][method] = request_orchestrator
+
+        
+        print(f'Added endpoint {path} and {method}')
+        
+
+    def __call__(self, *args, **kwargs):
+        method = flask.request.method
+        endpoint = flask.request.endpoint
+
+        _orchestrator = self._orchestrators.get(endpoint).get(method)
+
+        return _orchestrator(*args, **kwargs)
 
 class Application(object):
     """
@@ -18,6 +55,9 @@ class Application(object):
     def __init__(self, name: str, secret: str):
         self.name = name
         self.secret = secret
+
+        self.request_orchestrator_wrapper =\
+            RequestOrchestratorWrapper(self._flask_app)
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         return self._flask_app(*args, **kwargs)
@@ -103,16 +143,17 @@ class Application(object):
             raise RuntimeError(
                 'Unsupported HTTP method for endpoints: %s' % method)
 
-        self._flask_app.add_url_rule(
-            rule=path,
-            endpoint=path,
-            methods=[method],
-            view_func=RequestOrchestrator(
-                endpoint=endpoint,
-                data=data_provider,
-                secret=self.secret,
-                guards=guards,
-            ),
+        request_orchestrator = RequestOrchestrator(
+            endpoint=endpoint,
+            data=data_provider,
+            secret=self.secret,
+            guards=guards,
+        )
+
+        self.request_orchestrator_wrapper.add_endpoint(
+            method=method,
+            path=path,
+            request_orchestrator=request_orchestrator,
         )
 
     def run_debug(self, host: str, port: int):
