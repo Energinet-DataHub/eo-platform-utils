@@ -28,6 +28,9 @@ class RequestOrchestratorWrapper(object):
 
     def path_exists(self, path: str) -> bool:
         return path in self._orchestrators.keys()
+    
+    def get_path_methods(self, path: str) -> List[str]:
+        return self._orchestrators.get(path).keys()
 
     def add_endpoint(self,
                      method: str,
@@ -35,15 +38,23 @@ class RequestOrchestratorWrapper(object):
                      request_orchestrator: RequestOrchestrator):
 
         if not self.path_exists(path=path):
-            self._flask_app.add_url_rule(
-                rule=path,
-                endpoint=path,
-                methods=[method],
-                view_func=self,
-            )
             self._orchestrators[path] = {}
 
         self._orchestrators[path][method] = request_orchestrator
+
+        self.add_url_rule(path=path)
+    
+    def add_url_rule(self,
+                     path: str):
+        
+        methods = self.get_path_methods(path=path)
+        
+        self._flask_app.add_url_rule(
+            rule=path,
+            endpoint=path,
+            methods=methods,
+            view_func=self,
+        )
 
     def __call__(self, *args, **kwargs):
         method = flask.request.method
