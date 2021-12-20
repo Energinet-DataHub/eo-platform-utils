@@ -13,6 +13,10 @@ class Endpoint(object):
     Request = None
     Response = None
 
+    # view arguments retrieved from the request url path
+    # eg. /api/v1/users/<user_id>
+    View_args = None
+
     @abstractmethod
     def handle_request(self, **kwargs) -> Optional[Any]:
         """
@@ -34,6 +38,13 @@ class Endpoint(object):
         """
         return self.Response
 
+    @property
+    def view_args_schema(self) -> Optional[Type[Any]]:
+        """
+        Variables passed in the URL path. eg. /api/v1/users/<user_id>
+        """
+        return self.View_args
+
     @cached_property
     def requires_context(self) -> bool:
         """
@@ -49,3 +60,12 @@ class Endpoint(object):
         """
         return (self.request_schema is not None
                 and 'request' in getfullargspec(self.handle_request)[0])
+
+    @cached_property
+    def should_parse_view_args(self) -> bool:
+        """
+        Returns True if handle_request() requires an instance of self.View_args
+        passed as argument.
+        """
+        return (self.view_args_schema is not None
+                and 'view_args' in getfullargspec(self.handle_request)[0])
