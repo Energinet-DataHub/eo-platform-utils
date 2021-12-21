@@ -24,8 +24,9 @@ psycopg2 = "*"
 sqlalchemy = "*"
 alembic = "*"
 requests = "*"
-pycryptodome = "*"
-openapi-specgen = "*"
+#pycryptodome = "*"
+apispec = "*"
+dataclasses-jsonschema = "*"
 
 [scripts]
 lint-flake8 = "flake8"

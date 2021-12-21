@@ -50,35 +50,21 @@ class Application(object):
     @classmethod
     def create(
             cls,
-            *args,
-            endpoints: Iterable[Tuple[str, str, Endpoint]] = (),
             health_check_path: Optional[str] = None,
             docs_path: Optional[str] = None,
             **kwargs,
     ) -> 'Application':
         """
-        Create a new instance of an Application
+        Create a new instance of an Application. Optionally adds health-
+        check and/or docs endpoints using the provided path. Providing
+        None to any of those values disables those endpoints.
+
+        :param health_check_path: Relative path for health check endpoint
+        :param docs_path: Relative path for docs endpoint
+        :param kwargs: *args for __init__()
+        :returns: A new instance of Application
         """
-
-        app = cls(*args, **kwargs)
-
-        # Add endpoints
-        for e in endpoints:
-            assert 3 <= len(e) <= 4
-
-            method, path, endpoint = e[:3]
-
-            if len(e) == 4:
-                guards = e[3]
-            else:
-                guards = []
-
-            app.add_endpoint(
-                method=method,
-                path=path,
-                endpoint=endpoint,
-                guards=guards,
-            )
+        app = cls(**kwargs)
 
         if health_check_path:
             app.add_health_check_endpoint(health_check_path)
@@ -107,15 +93,6 @@ class Application(object):
         TODO
         """
         return self._flask_app.test_client()
-
-    # @property
-    # def endpoints(self) -> Iterable[Tuple[str, Endpoint]]:
-    #     """
-    #     TODO
-    #     """
-    #     yield from self._flask_app.view_functions.items()
-    #
-    #     return self._flask_app.test_client()
 
     def add_endpoint(
             self,
@@ -191,9 +168,7 @@ class Application(object):
         self.add_endpoint(
             method='GET',
             path=specs_path,
-            endpoint=OpenApiSpecs(
-                app=self,
-            ),
+            endpoint=OpenApiSpecs(app=self),
         )
 
     def run_debug(self, host: str, port: int):

@@ -1,11 +1,7 @@
-from openapi_specgen import (
-    OpenApi,
-    OpenApiParam,
-    OpenApiPath,
-    OpenApiResponse,
-)
+from typing import Dict, Any
 
 from ..endpoint import Endpoint
+from ..openapi import generate_api_specs
 
 
 SWAGGER_HTML = """
@@ -74,104 +70,8 @@ class OpenApiSpecs(Endpoint):
         """
         self.app = app
 
-    def handle_request(self):
-        paths = []
-
-        for e in self.app.endpoints:
-            response = OpenApiResponse(
-                descr='Response description',
-                data_type=e.endpoint.Response,
-            )
-
-            path = OpenApiPath(
-                path=e.path,
-                method=e.method,
-                responses=[response],
-                params=[sample_param],
-            )
-
-            paths.append(path)
-
-        sample_response = OpenApiResponse('Response description', data_type=World)
-        sample_param = OpenApiParam('param_name', 'query', data_type=str)
-        sample_path = OpenApiPath('/api_path', 'get', [sample_response], [sample_param])
-
-        sample_api = OpenApi('Sample Api', [paths])
-
-        return sample_api.as_dict()
-
-        return {
-            "openapi": "3.0.2",
-            "info": {
-                "title": "Sample Api",
-                "version": "3.0.2"
-            },
-            "paths": {
-                "/api_path": {
-                    "get": {
-                        "description": "",
-                        "summary": "",
-                        "operationId": "[get]_/api_path",
-                        "responses": {
-                            "200": {
-                                "description": "Response description",
-                                "content": {
-                                    "application/json": {
-                                        "schema": {
-                                            "$ref": "#/components/schemas/World"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "parameters": [
-                            {
-                                "required": True,
-                                "name": "param_name",
-                                "in": "query",
-                                "schema": {
-                                    "type": "string",
-                                    "title": "Param_Name"
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "components": {
-                "schemas": {
-                    "World": {
-                        "title": "World",
-                        "required": [
-                            "name",
-                            "age",
-                            "asd"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "age": {
-                                "type": "integer"
-                            },
-                            "asd": {
-                                "$ref": "#/components/schemas/Hello"
-                            }
-                        }
-                    },
-                    "Hello": {
-                        "title": "Hello",
-                        "required": [
-                            "foobar"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "foobar": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    def handle_request(self) -> Dict[str, Any]:
+        """
+        :returns: Open API specifications as raw JSON
+        """
+        return generate_api_specs(self.app)
