@@ -176,7 +176,7 @@ class RequestOrchestrator(object):
                 domain=cookie.domain,
                 secure=cookie.secure,
                 httponly=cookie.http_only,
-                samesite='Strict' if cookie.same_site else None,
+                samesite='Strict' if cookie.same_site else 'None',
             )
 
         return flask_response
