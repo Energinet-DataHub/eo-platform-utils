@@ -66,7 +66,8 @@ class TestTokenEncoder:
 
         # Decode token
         raw_decoded_token = jwt.decode(
-            encoded, "secret",
+            encoded,
+            "secret",
             algorithms=[TokenEncoder.HS256],
             options={"verify_signature": False}
         )
