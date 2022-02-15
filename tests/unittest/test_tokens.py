@@ -78,7 +78,7 @@ class TestTokenEncoder:
         new_encoded = jwt.encode(
             raw_decoded_token,
             "invalid-secret-key",
-            algorithm="HS256",
+            algorithm=TokenEncoder.HS256,
         )
 
         # -- Assert ----------------------------------------------------------
