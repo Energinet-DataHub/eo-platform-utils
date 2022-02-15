@@ -13,7 +13,7 @@ class Nested:
 
 
 @dataclass
-class Message1(Message):
+class MockMessage1(Message):
     something: str
     nested: Nested
 
@@ -24,13 +24,13 @@ class TestTokenEncoder:
 
         # -- Arrange ---------------------------------------------------------
 
-        obj = Message1(
+        obj = MockMessage1(
             something='something',
             nested=Nested(something='something nested'),
         )
 
         uut = TokenEncoder(
-            schema=Message1,
+            schema=MockMessage1,
             secret='123',
         )
 
@@ -41,7 +41,7 @@ class TestTokenEncoder:
 
         # -- Assert ----------------------------------------------------------
 
-        assert isinstance(decoded, Message1)
+        assert isinstance(decoded, MockMessage1)
         assert decoded != encoded
         assert decoded == obj
 
@@ -49,13 +49,13 @@ class TestTokenEncoder:
 
         # -- Arrange ---------------------------------------------------------
 
-        obj = Message1(
+        obj = MockMessage1(
             something='something',
             nested=Nested(something='something nested'),
         )
 
         uut = TokenEncoder(
-            schema=Message1,
+            schema=MockMessage1,
             secret='123',
             alg=TokenEncoder.HS256,
         )
