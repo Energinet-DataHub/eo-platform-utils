@@ -1,0 +1,72 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Pipenv Sync",
+            "detail": "Sync the local pipenv",
+            "type": "shell",
+            "command": "pipenv sync --dev"
+        },
+        {
+            "label": "Pipenv Update",
+            "detail": "Update pipenv dependencies",
+            "type": "shell",
+            "command": "pipenv update --dev"
+        },
+        {
+            "label": "pylint: whole project",
+            "type": "shell",
+            "command": "pipenv run pylint --msg-template \"{path}:{line}:{column}: {msg_id} {msg}\" ./tests/ ./src",
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "owner": "python",
+                "source": "pylint-whole-project",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^(.+):(\\d+):(\\d+): ((\\w)\\d+) (.+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "code": 4,
+                    "severity": 5,
+                    "message": 6
+                  }
+            }
+        },
+        {
+            "label": "flake8-whole-project",
+            "type": "shell",
+            "command": "flake8 .",
+            "presentation": {
+              "echo": true,
+              "reveal": "never",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": false,
+              "clear": true,
+            },
+            "problemMatcher": {
+              "owner": "flake8",
+              "source": "flake8-whole-project",
+              "fileLocation": ["relative", "${workspaceFolder}"],
+              "pattern": {
+                "regexp": "^(.+):(\\d+):(\\d+): ((\\w)\\d+) (.+)$",
+                "file": 1,
+                "line": 2,
+                "column": 3,
+                "code": 4,
+                "severity": 5,
+                "message": 6
+              }
+            }
+          }
+    ]
+}
