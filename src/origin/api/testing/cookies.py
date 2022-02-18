@@ -76,7 +76,7 @@ class CookieTester(object):
         assert self.cookies[name]['version'] == \
                (version if version is not None else '')
         assert self.cookies[name]['samesite'] == \
-               ('Strict' if same_site else '')
+               ('Strict' if same_site else 'None')
 
         return self
 
