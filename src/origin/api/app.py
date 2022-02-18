@@ -1,6 +1,7 @@
 import logging
-from flask import Flask
-from flask.testing import FlaskClient
+import uvicorn
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from functools import cached_property
 from typing import List, Iterable, Tuple, Any, Optional
 
@@ -20,7 +21,7 @@ class Application(object):
         self.secret = secret
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
-        return self._flask_app(*args, **kwargs)
+        return self._fastapi_app(*args, **kwargs)
 
     @classmethod
     def create(
@@ -65,25 +66,25 @@ class Application(object):
         return app
 
     @cached_property
-    def _flask_app(self) -> Flask:
+    def _fastapi_app(self) -> FastAPI:
         """
         TODO
         """
-        return Flask(self.name)
+        return FastAPI(self.name)
 
     @property
-    def wsgi_app(self) -> Flask:
+    def wsgi_app(self) -> FastAPI:
         """
         TODO
         """
-        return self._flask_app
+        return self._fastapi_app
 
     @property
-    def test_client(self) -> FlaskClient:
+    def test_client(self) -> TestClient:
         """
         TODO
         """
-        return self._flask_app.test_client()
+        return self._fastapi_app.test_client()
 
     def add_endpoint(
             self,
@@ -101,9 +102,10 @@ class Application(object):
             data_provider = JsonBodyProvider()
         else:
             raise RuntimeError(
-                'Unsupported HTTP method for endpoints: %s' % method)
+                f'Unsupported HTTP method for endpoints: {method}'
+                )
 
-        self._flask_app.add_url_rule(
+        self._fastapi_app.add_api_route(
             rule=path,
             endpoint=path,
             methods=[method],
@@ -119,9 +121,9 @@ class Application(object):
         """
         TODO
         """
-        self._flask_app.logger.setLevel(logging.DEBUG)
-        self._flask_app.run(
+        uvicorn.Config.configure_logging(logging.DEBUG)
+        uvicorn.run(
             host=host,
             port=port,
-            debug=True,
+            debug=True
         )
