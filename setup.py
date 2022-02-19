@@ -115,7 +115,7 @@ setuptools.setup(
         'wrapt',
         'pyjwt[crypto]',
         'kafka-python',
-        'Flask',
+        'fastapi',
         'serpyco',
         'rapidjson',
         'psycopg2',

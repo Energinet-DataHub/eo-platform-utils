@@ -1,4 +1,5 @@
-from flask.testing import FlaskClient
+from fastapi.testclient import TestClient as fastapiClient
+
 
 from origin.api import Application, HttpResponse
 
@@ -10,7 +11,7 @@ class TestHeaders:
     def test__endpoint_returns_redirect(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO

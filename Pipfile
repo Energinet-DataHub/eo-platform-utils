@@ -17,7 +17,6 @@ twine = "*"
 wrapt = "*"
 pyjwt = { version = "*", extras = [ "crypto" ] }
 kafka-python = "*"
-Flask = "2.0.1"
 serpyco = "*"
 rapidjson = "*"
 psycopg2 = "*"

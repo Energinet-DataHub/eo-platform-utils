@@ -1,4 +1,4 @@
-from flask.testing import FlaskClient
+from fastapi.testclient import TestClient as fastapiClient
 
 from origin.api import Application
 from origin.models.auth import InternalToken
@@ -16,7 +16,7 @@ class TestContext:
     def test__no_token_provided__should_return_null(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO
@@ -42,7 +42,7 @@ class TestContext:
     def test__invalid_token_provided__should_return_null(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO
@@ -71,7 +71,7 @@ class TestContext:
     def test__valid_token_provided__should_return_token_as_json(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
             valid_token: InternalToken,
             valid_token_encoded: str,
     ):
