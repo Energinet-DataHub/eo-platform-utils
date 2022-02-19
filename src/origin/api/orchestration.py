@@ -1,18 +1,19 @@
+"""Modules."""
 from dataclasses import is_dataclass
-
-import flask
-import serpyco
-import rapidjson
 from abc import abstractmethod
 from functools import cached_property
 from typing import List, Dict, Any, Optional, Type
+
+import fastapi
+import serpyco
+import rapidjson
 
 from origin.tokens import TokenEncoder
 from origin.serialize import simple_serializer
 from origin.models.auth import InternalToken
 
 from .context import Context
-from .flask import FlaskContext
+from .fastapi import FastapiContext
 from .endpoint import Endpoint
 from .guards import EndpointGuard, bouncer
 from .responses import HttpResponse, BadRequest
@@ -41,13 +42,13 @@ class JsonBodyProvider(RequestDataProvider):
         """
         TODO
         """
-        if not flask.request.data:
+        if not fastapi.requests.Request.body:
             return None
 
         try:
-            return rapidjson.loads(flask.request.data.decode('utf8'))
+            return rapidjson.loads(fastapi.requests.Request.body.decode("utf8"))
         except rapidjson.JSONDecodeError:
-            raise BadRequest('Invalid JSON body provided')
+            raise BadRequest('Invalid JSON body provided') from rapidjson.JSONDecodeError
 
 
 class QueryStringProvider(RequestDataProvider):
@@ -58,7 +59,7 @@ class QueryStringProvider(RequestDataProvider):
         """
         TODO
         """
-        return dict(flask.request.args)
+        return dict(fastapi.requests.Request.body.args)
 
 
 # -- Orchestrator ------------------------------------------------------------
@@ -68,8 +69,8 @@ class RequestOrchestrator(object):
     """
     Orchestrates handling of HTTP requests on behalf of an endpoint.
 
-    Behaves as a Flask endpoint, ie. it is callable without taking any
-    parameters, so it plugs into Flask seamlessly.
+    Behaves as a fastapi endpoint, ie. it is callable without taking any
+    parameters, so it plugs into fastapi seamlessly.
     """
     def __init__(
             self,
@@ -83,17 +84,16 @@ class RequestOrchestrator(object):
         self.secret = secret
         self.guards = guards
 
-    def __call__(self) -> flask.Response:
+    def __call__(self) -> fastapi.requests.Request.body:
         """
-        Invoked by Flask to handle a HTTP request.
+        Invoked by fastapi to handle a HTTP request.
         """
         try:
             return self._invoke_endpoint()
-        except HttpResponse as e:
-            return self._handle_http_error(e)
-        except Exception as e:
-            raise
-            return self._handle_exception(e)
+        except HttpResponse as err:
+            return self._handle_http_error(err)
+        except Exception as err:
+            raise Exception from err
 
     @cached_property
     def _internal_token_encoder(self) -> TokenEncoder[InternalToken]:
@@ -109,11 +109,11 @@ class RequestOrchestrator(object):
         """
         Creates a new request context.
         """
-        return FlaskContext(
+        return FastapiContext(
             token_encoder=self._internal_token_encoder,
         )
 
-    def _invoke_endpoint(self) -> flask.Response:
+    def _invoke_endpoint(self) -> fastapi.requests.Request.body:
         """
         TODO
         """
@@ -158,9 +158,9 @@ class RequestOrchestrator(object):
             # TODO Handle this
             raise RuntimeError('ENDPOINT RETURNED INVALID RESPONSE?!?!?')
 
-        # -- Create Flask response -------------------------------------------
+        # -- Create fastapi response -------------------------------------------
 
-        flask_response = flask.Response(
+        fastapi_response = fastapi.responses.JSONResponse(
             status=response.status,
             mimetype=response.actual_mimetype,
             headers=response.actual_headers,
@@ -168,7 +168,7 @@ class RequestOrchestrator(object):
         )
 
         for cookie in response.cookies:
-            flask_response.set_cookie(
+            fastapi_response.set_cookie(
                 key=cookie.name,
                 value=cookie.value,
                 expires=cookie.expires,
@@ -179,24 +179,24 @@ class RequestOrchestrator(object):
                 samesite='Strict' if cookie.same_site else 'None',
             )
 
-        return flask_response
+        return fastapi_response
 
-    def _handle_http_error(self, e: HttpResponse) -> flask.Response:
+    def _handle_http_error(self, e: HttpResponse) -> fastapi.responses.JSONResponse:
         """
         TODO
         """
-        return flask.Response(
+        return fastapi.responses.JSONResponse(
             status=e.status,
             response=e.body,
-            mimetype='text/html',  # TODO
+            mimetype='text/html',  
             headers=e.headers,
         )
 
-    def _handle_exception(self, e: Exception) -> flask.Response:
+    def _handle_exception(self, err: Exception) -> fastapi.responses.JSONResponse:
         """
         TODO
         """
-        return flask.Response(
+        return fastapi.responses.JSONResponse(
             status=500,
             response='Internal Server Error',
             mimetype='text/html',
@@ -215,11 +215,11 @@ class RequestOrchestrator(object):
                 data=data,
                 schema=schema,
             )
-        except serpyco.exception.ValidationError as e:
+        except serpyco.exception.ValidationError as err:
             # JSON schema validation failed for request data
             # TODO Parse ValidationError to something useful
             # TODO Format body properly
-            raise BadRequest(body=str(e))
+            raise BadRequest(body=str(err)) from serpyco.exception.ValidationError
 
     # def _parse_response_object(self, response: Any) -> str:
     #     """
