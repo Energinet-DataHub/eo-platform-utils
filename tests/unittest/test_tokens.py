@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 import jwt
 import pytest
+import json
+import base64
 
 from origin.bus import Message
 from origin.tokens import TokenEncoder
@@ -119,7 +121,8 @@ class TestTokenEncoder:
         # Add padding (required for base64)
         jwt_payload_encoded += "=" * ((4 - len(jwt_payload_encoded) % 4) % 4)
 
-        jwt_payload_decoded = base64.b64decode(jwt_payload_encoded).decode("utf-8")
+        jwt_payload_decoded = base64.b64decode(jwt_payload_encoded) \
+            .decode("utf-8")
 
         # Load and modify json
         json_object = json.loads(jwt_payload_decoded)
@@ -136,9 +139,9 @@ class TestTokenEncoder:
 
         # Assemble token with original header and signature.
         modified_token = '.'.join([
-                jwt_splitted[0],
-                modified_payload_encoded,
-                jwt_splitted[2]
+            jwt_splitted[0],
+            modified_payload_encoded,
+            jwt_splitted[2]
         ])
 
         # -- Assert ----------------------------------------------------------
