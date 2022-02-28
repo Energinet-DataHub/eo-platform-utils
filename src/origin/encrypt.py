@@ -8,8 +8,10 @@ _BLOCK_SIZE = 16
 
 
 def _pad(s: str) -> str:
-    return (s + (_BLOCK_SIZE - len(s) % _BLOCK_SIZE)
-            * chr(_BLOCK_SIZE - len(s) % _BLOCK_SIZE))
+    return (
+        s + (_BLOCK_SIZE - len(s) % _BLOCK_SIZE)
+        * chr(_BLOCK_SIZE - len(s) % _BLOCK_SIZE)
+    )
 
 
 def _unpad(s: bytes) -> bytes:
