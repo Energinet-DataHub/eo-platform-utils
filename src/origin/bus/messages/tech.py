@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from origin.bus import Message
-from origin.models.tech import Technology, TechnologyCodes
+from src.origin.bus import Message
+from src.origin.models.tech import Technology, TechnologyCodes
 
 
 @dataclass

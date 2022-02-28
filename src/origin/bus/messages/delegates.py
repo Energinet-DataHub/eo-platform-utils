@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from origin.bus import Message
-from origin.models.delegates import MeteringPointDelegate
+from src.origin.bus import Message
+from src.origin.models.delegates import MeteringPointDelegate
 
 
 @dataclass

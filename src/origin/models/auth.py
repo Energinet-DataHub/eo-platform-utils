@@ -2,7 +2,7 @@ from typing import List
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
-from origin.serialize import Serializable
+from src.origin.serialize import Serializable
 
 
 @dataclass

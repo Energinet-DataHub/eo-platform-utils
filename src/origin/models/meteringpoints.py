@@ -1,8 +1,8 @@
 from typing import Optional
 from dataclasses import dataclass, field
 
-from origin.serialize import Serializable
-from origin.models.tech import Technology
+from src.origin.serialize import Serializable
+from src.origin.models.tech import Technology
 
 from .common import EnergyDirection, Address
 

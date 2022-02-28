@@ -1,4 +1,4 @@
-from origin.bus import message_registry
+from src.origin.bus import message_registry
 
 from .users import (
     UserOnboarded,

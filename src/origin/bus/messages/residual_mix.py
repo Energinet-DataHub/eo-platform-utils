@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from origin.bus import Message
-from origin.models.residual_mix import \
+from src.origin.bus import Message
+from src.origin.models.residual_mix import \
     ResidualMixEmissions, ResidualMixTechnologyDistribution
 
 

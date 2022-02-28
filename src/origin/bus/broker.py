@@ -2,7 +2,7 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List, Iterable, Callable, Any, Union, Tuple, Dict
 
-from origin.serialize import Serializable
+from src.origin.serialize import Serializable
 
 
 @dataclass

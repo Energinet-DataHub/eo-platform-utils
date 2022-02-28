@@ -24,7 +24,7 @@ sqlalchemy = "*"
 alembic = "*"
 requests = "*"
 pycryptodome = "*"
-fastapi = "2.0.1"
+fastapi = "0.74.1"
 uvicorn = {extras = ["standard"]}
 
 [scripts]

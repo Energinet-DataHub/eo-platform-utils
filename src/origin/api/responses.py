@@ -3,7 +3,7 @@ from functools import cached_property
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Optional, Union, TypeVar, Generic, Tuple
 
-from origin.serialize import json_serializer
+from src.origin.serialize import json_serializer
 
 from .cookies import Cookie
 

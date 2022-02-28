@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Optional, Generic, TypeVar, List
 
-from origin.serialize import Serializable
+from src.origin.serialize import Serializable
 
 
 # -- Data objects ------------------------------------------------------------

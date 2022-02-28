@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import orm, exc
 
-from origin.sql import SqlQuery
+from src.origin.sql import SqlQuery
 
 from .db import db
 from .models import DbTestModel

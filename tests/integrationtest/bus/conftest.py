@@ -8,8 +8,8 @@ import pytest
 from uuid import uuid4
 from testcontainers.core.container import DockerContainer
 
-from origin.models.tech import Technology, TechnologyType
-from origin.bus import (
+from src.origin.models.tech import Technology, TechnologyType
+from src.origin.bus import (
     MessageBroker,
     Message,
     messages as m,

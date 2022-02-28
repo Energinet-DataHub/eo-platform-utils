@@ -2,8 +2,8 @@ from typing import List
 from datetime import datetime
 from dataclasses import dataclass
 
-from origin.serialize import Serializable
-from origin.models.tech import TechnologyType
+from src.origin.serialize import Serializable
+from src.origin.models.tech import TechnologyType
 
 from .emissions import EmissionValues
 

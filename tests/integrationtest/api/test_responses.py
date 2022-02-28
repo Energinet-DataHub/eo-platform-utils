@@ -1,6 +1,6 @@
 import pytest
 
-from origin.api import (
+from src.origin.api import (
     BadRequest,
     MovedPermanently,
     TemporaryRedirect,

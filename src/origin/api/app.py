@@ -1,6 +1,7 @@
 import logging
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse 
 from fastapi.testclient import TestClient
 from functools import cached_property
 from typing import List, Iterable, Tuple, Any, Optional
@@ -54,6 +55,9 @@ class Application(object):
                 endpoint=endpoint,
                 guards=guards,
             )
+        
+        """
+        This has to be discussed
 
         # Add health check endpoint
         if health_check_path:
@@ -62,6 +66,7 @@ class Application(object):
                 path=health_check_path,
                 endpoint=HealthCheck(),
             )
+        """
 
         return app
 
@@ -70,7 +75,7 @@ class Application(object):
         """
         TODO
         """
-        return FastAPI(self.name)
+        return FastAPI()
 
     @property
     def wsgi_app(self) -> FastAPI:
@@ -84,7 +89,7 @@ class Application(object):
         """
         TODO
         """
-        return self._fastapi_app.test_client()
+        return TestClient(app=self._fastapi_app)
 
     def add_endpoint(
             self,
@@ -104,12 +109,12 @@ class Application(object):
             raise RuntimeError(
                 f'Unsupported HTTP method for endpoints: {method}'
                 )
-
+        
         self._fastapi_app.add_api_route(
-            rule=path,
-            endpoint=path,
+            path=path,
+            endpoint=endpoint,
             methods=[method],
-            view_func=RequestOrchestrator(
+            response_class=RequestOrchestrator(
                 endpoint=endpoint,
                 data=data_provider,
                 secret=self.secret,

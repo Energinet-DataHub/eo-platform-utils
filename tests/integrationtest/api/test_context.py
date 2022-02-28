@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient as fastapiClient
 
-from origin.api import Application
-from origin.models.auth import InternalToken
+from src.origin.api import Application
+from src.origin.models.auth import InternalToken
 
 from .endpoints import (
     EndpointRequiresContextReturnsToken,
@@ -31,13 +31,13 @@ class TestContext:
         )
 
         # -- Act -------------------------------------------------------------
-
-        r = client.post('/something')
+    
+        _r = client.post('/something')
 
         # -- Assert ----------------------------------------------------------
 
-        assert r.status_code == 200
-        assert r.json == {'token': None}
+        assert _r.status_code == 200
+        assert _r.json == {'token': None}
 
     def test__invalid_token_provided__should_return_null(
             self,

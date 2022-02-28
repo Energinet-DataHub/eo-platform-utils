@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from origin.bus import Message
+from src.origin.bus import Message
 
 
 @dataclass

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from origin.api import Endpoint, Context
-from origin.models.auth import InternalToken
+from src.origin.api import Endpoint, Context
+from src.origin.models.auth import InternalToken
 
 
 class EmptyEndpoint(Endpoint):

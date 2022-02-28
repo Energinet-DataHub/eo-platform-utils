@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from origin.serialize import Serializable
+from src.origin.serialize import Serializable
 
 
 @dataclass

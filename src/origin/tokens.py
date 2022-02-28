@@ -1,7 +1,7 @@
 import jwt
 from typing import Generic, TypeVar, Type
 
-from origin.serialize import simple_serializer
+from src.origin.serialize import simple_serializer
 
 
 TToken = TypeVar('TToken')

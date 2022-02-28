@@ -3,14 +3,13 @@ from uuid import uuid4
 import pytest
 from datetime import datetime
 from itertools import product
-from flask.testing import FlaskClient
+from fastapi.testclient import TestClient as fastapiClient
 from typing import Dict, Iterable, Any
 
-from origin.api.testing import CookieTester
-from origin.api import Application, HttpResponse, Cookie
+from src.origin.api.testing import CookieTester
+from src.origin.api import Application, HttpResponse, Cookie
 
 from .endpoints import EndpointReturnsGeneric
-
 
 def get_cookie_combinations() -> Iterable[Dict[str, Any]]:
     """
@@ -46,7 +45,7 @@ class TestCookies:
             self,
             cookie_kwargs: Dict[str, Any],
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO
@@ -78,7 +77,7 @@ class TestCookies:
     def test__set_multiple_cookies__should_set_all_cookies_correctly(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO

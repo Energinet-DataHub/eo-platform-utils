@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from origin.bus import Message
-from origin.models.common import DateTimeRange
-from origin.models.measurements import Measurement
+from src.origin.bus import Message
+from src.origin.models.common import DateTimeRange
+from src.origin.models.measurements import Measurement
 
 
 @dataclass

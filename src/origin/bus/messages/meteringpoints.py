@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import Dict, Any, Optional
 
-from origin.bus import Message
-from origin.models.common import Address
-from origin.models.tech import TechnologyCodes
-from origin.models.meteringpoints import MeteringPoint
+from src.origin.bus import Message
+from src.origin.models.common import Address
+from src.origin.models.tech import TechnologyCodes
+from src.origin.models.meteringpoints import MeteringPoint
 
 
 @dataclass

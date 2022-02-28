@@ -1,8 +1,8 @@
 import pytest
 from dataclasses import dataclass
 
-from origin.bus import Message
-from origin.serialize import \
+from src.origin.bus import Message
+from src.origin.serialize import \
     Serializer, simple_serializer, json_serializer
 
 

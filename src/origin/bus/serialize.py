@@ -3,7 +3,7 @@ from datetime import datetime
 from dataclasses import dataclass
 from typing import Generic, TypeVar, Union, Dict, Any, Optional
 
-from origin.serialize import json_serializer, simple_serializer
+from src.origin.serialize import json_serializer, simple_serializer
 
 from .broker import Message
 from .registry import MessageRegistry

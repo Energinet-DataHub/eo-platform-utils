@@ -1,6 +1,6 @@
 import urllib.parse as urlparse
 
-from origin.tools import url_append
+from src.origin.tools import url_append
 
 
 def test__url_append__add_query_params__should_format_url_correctly():  # noqa: E501

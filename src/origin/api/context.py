@@ -3,9 +3,9 @@ from abc import abstractmethod
 from typing import Dict, Optional
 from functools import cached_property
 
-from origin.tokens import TokenEncoder
-from origin.models.auth import InternalToken
-from origin.auth import TOKEN_HEADER_NAME, TOKEN_COOKIE_NAME
+from src.origin.tokens import TokenEncoder
+from src.origin.models.auth import InternalToken
+from src.origin.auth import TOKEN_HEADER_NAME, TOKEN_COOKIE_NAME
 
 from .responses import Unauthorized
 

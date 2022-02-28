@@ -2,8 +2,8 @@ from typing import List, Any, Iterable, Dict
 from functools import cached_property
 from kafka import KafkaProducer, KafkaConsumer
 
-from origin.bus.serialize import MessageSerializer
-from origin.bus.broker import MessageBroker, Message, TTopicList
+from src.origin.bus.serialize import MessageSerializer
+from src.origin.bus.broker import MessageBroker, Message, TTopicList
 
 
 class KafkaMessageBroker(MessageBroker):

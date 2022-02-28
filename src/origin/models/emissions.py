@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict, Union
 
-from origin.arithmetic import ArithmeticDict
+from src.origin.arithmetic import ArithmeticDict
 
 
 TEmissionValue = Union[int, float]

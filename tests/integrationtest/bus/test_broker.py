@@ -1,4 +1,4 @@
-from origin.bus import MessageBroker, Message
+from src.origin.bus import MessageBroker, Message
 
 
 class TestMessageBroker:

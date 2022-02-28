@@ -8,9 +8,9 @@ import fastapi
 import serpyco
 import rapidjson
 
-from origin.tokens import TokenEncoder
-from origin.serialize import simple_serializer
-from origin.models.auth import InternalToken
+from src.origin.tokens import TokenEncoder
+from src.origin.serialize import simple_serializer
+from src.origin.models.auth import InternalToken
 
 from .context import Context
 from .fastapi import FastapiContext

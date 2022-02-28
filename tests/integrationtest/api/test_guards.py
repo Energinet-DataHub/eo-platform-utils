@@ -2,9 +2,10 @@ from typing import List
 from uuid import uuid4
 
 import pytest
-from flask.testing import FlaskClient
+from fastapi.testclient import TestClient as fastapiClient
 
-from origin.api import (
+
+from src.origin.api import (
     Application,
     EndpointGuard,
     TokenGuard,
@@ -27,7 +28,7 @@ class TestGuards:
             self,
             guard: EndpointGuard,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO
@@ -58,7 +59,7 @@ class TestGuards:
             self,
             guard: EndpointGuard,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
     ):
         """
         TODO
@@ -92,7 +93,7 @@ class TestGuards:
             self,
             guard: EndpointGuard,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
             valid_token_encoded: str,
     ):
         """
@@ -122,7 +123,7 @@ class TestGuards:
     def test__token_missing_required_scope__should_return_status_401(
             self,
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
             valid_token_encoded: str,
     ):
         """
@@ -163,7 +164,7 @@ class TestGuards:
             self,
             guards: List[EndpointGuard],
             app: Application,
-            client: FlaskClient,
+            client: fastapiClient,
             valid_token_encoded: str,
     ):
         """

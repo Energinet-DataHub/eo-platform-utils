@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient as fastapiClient
 
 
-from origin.api import Application, HttpResponse
+from src.origin.api import Application, HttpResponse
 
 from .endpoints import EndpointReturnsGeneric
 
