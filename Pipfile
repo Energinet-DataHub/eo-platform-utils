@@ -11,6 +11,10 @@ pytest-depends = "*"
 iterators = "*"
 testcontainers = "*"
 flake8 = "*"
+flake8-docstrings = "*"
+pylint = "*"
+pydocstyle = "*"
+pycodestyle = "*"
 twine = "*"
 
 [packages]
