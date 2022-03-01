@@ -17,8 +17,8 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  helm_check_version:
-    name: Helm chart check version
+  package_check_version:
+    name: Package check version
     uses: Energinet-DataHub/.github/.github/workflows/version-increment-check.yaml@main
     with:
       yaml_file: META.yaml
