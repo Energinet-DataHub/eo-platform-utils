@@ -36,10 +36,6 @@ jobs:
         run: |
           pipenv install --deploy --dev
 
-      - name: Install dependencies
-        run: |
-          pip install pyyaml
-
       - name: Build tarball
         run: python setup.py sdist
 
@@ -48,5 +44,5 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_SECRET }}
-          # TODO: For testing
+          # For testing
           repository_url: https://test.pypi.org/legacy/
