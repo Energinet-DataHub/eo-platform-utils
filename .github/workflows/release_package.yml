@@ -35,6 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           pipenv install --deploy --dev
+          pip install pyyaml
 
       - name: Build tarball
         run: python setup.py sdist
