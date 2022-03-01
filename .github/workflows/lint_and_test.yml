@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   # build:
@@ -115,6 +118,13 @@ jobs:
   #     - name: Running integrationtest
   #       run: |
   #         pipenv run integrationtest
+
+  # py_validate:
+  #   name: Validate python
+  #   uses: Energinet-DataHub/.github/.github/workflows/python-pipenv-validate.yaml@main
+  #   with:
+  #     python_version: 3.8
+  #     ignore_lint_error: true
 
   publish:
     name: publish
