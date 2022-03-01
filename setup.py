@@ -4,6 +4,7 @@ Example setup.py from https://github.com/activescott/python-package-example/blob
 # Always prefer setuptools over distutils
 import os
 import setuptools
+import yaml
 from distutils.command.sdist import sdist
 
 
@@ -48,16 +49,20 @@ class sdist_hg(sdist):
 
 here = os.path.abspath(os.path.dirname(__file__))
 
+# def __read_meta(fn):
+#     with open(os.path.join(here, 'meta', fn)) as f:
+#         return f.read().strip()
 
-def __read_meta(fn):
-    with open(os.path.join(here, 'meta', fn)) as f:
-        return f.read().strip()
 
+# name = __read_meta('PACKAGE_NAME')
+# version = __read_meta('PACKAGE_VERSION')
+# python_requires = __read_meta('PYTHON_VERSION')
+with open("META.yaml") as f:
+    data = yaml.load(f, Loader=yaml.Loader)
 
-name = __read_meta('PACKAGE_NAME')
-version = __read_meta('PACKAGE_VERSION')
-python_requires = __read_meta('PYTHON_VERSION')
-
+name = data['package']['name']
+version = data['package']['version']
+python_requires = data['python']['version']
 
 setuptools.setup(
     name=name,

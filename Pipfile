@@ -12,6 +12,7 @@ iterators = "*"
 testcontainers = "*"
 flake8 = "*"
 twine = "*"
+pyyaml = "*"
 
 [packages]
 wrapt = "*"
