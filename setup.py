@@ -31,7 +31,7 @@ class sdist_hg(sdist):  # noqa
                 prefix = ''
             else:
                 prefix = '.'
-            self.distribution.metadata.version += f'{prefix}{self.build}'
+            self.distribution.metadata.version += f'{self.build}'
             print(self.distribution.metadata.version)
         sdist.run(self)
 
