@@ -3,9 +3,10 @@ Example setup.py from https://github.com/activescott/python-package-example/blob
 """
 # Always prefer setuptools over distutils
 import os
+from distutils.command.sdist import sdist
+
 import setuptools
 import yaml
-from distutils.command.sdist import sdist
 
 
 class sdist_hg(sdist):  # noqa
