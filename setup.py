@@ -8,7 +8,7 @@ import yaml
 from distutils.command.sdist import sdist
 
 
-class sdist_hg(sdist):
+class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
