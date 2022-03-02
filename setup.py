@@ -12,7 +12,7 @@ class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
-    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html
+    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html  # noqa
     """
 
     user_options = sdist.user_options + [
@@ -27,10 +27,6 @@ class sdist_hg(sdist):  # noqa
 
     def run(self):
         if self.build:
-            if self.build.startswith('+'):
-                prefix = ''
-            else:
-                prefix = '.'
             self.distribution.metadata.version += f'{self.build}'
             print(self.distribution.metadata.version)
         sdist.run(self)
