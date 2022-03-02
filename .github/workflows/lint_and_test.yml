@@ -154,6 +154,12 @@ jobs:
           pipenv install --deploy --dev
           pip install pyyaml
 
+      - name: print context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }
+        run: |
+          echo "$GITHUB_CONTEXT"
+
       - name: Build prod tarball
         if: github.event_name == 'push' && github.ref_name == 'main'
         run: python setup.py sdist
