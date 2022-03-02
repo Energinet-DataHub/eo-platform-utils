@@ -166,7 +166,7 @@ jobs:
 
       - name: Build dev tarball
         if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.base_ref == 'main'
-        run: python setup.py sdist --build=-pr.${{ github.event.pull_request.number }}-$(git rev-parse --short ${{ github.sha }})
+        run: python setup.py sdist --build=-pr.${{ github.event.pull_request.number }}-${{ github.run_number }}
 
 
       - name: Publish distribution to PyPI
