@@ -42,7 +42,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build]
 
     steps:
     - uses: actions/checkout@v2
@@ -67,8 +67,8 @@ jobs:
 
   unittest:
     name: Unittest
-    needs: lint
     runs-on: ubuntu-latest
+    needs: [build]
 
     steps:
       - uses: actions/checkout@v2
@@ -94,8 +94,8 @@ jobs:
 
   integrationtest:
     name: Integrationtest
-    needs: unittest
     runs-on: ubuntu-latest
+    needs: [build]
 
     steps:
       - uses: actions/checkout@v2
