@@ -1,5 +1,4 @@
-name: Lint and test
-
+name: Lint and release
 env:
   python-version: 3.8
 
