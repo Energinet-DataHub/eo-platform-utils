@@ -8,9 +8,11 @@ import yaml
 from distutils.command.sdist import sdist
 
 
-class sdist_hg(sdist):
-    """Add git short commit hash to version.
-    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html  # noqa: E501
+class sdist_hg(sdist):  # noqa
+    """
+    Add git short commit hash to version.
+
+    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html
     """
 
     user_options = sdist.user_options + [
@@ -29,7 +31,7 @@ class sdist_hg(sdist):
                 prefix = ''
             else:
                 prefix = '.'
-            self.distribution.metadata.version += f'{prefix}{self.build}'
+            self.distribution.metadata.version += f'{self.build}'
             print(self.distribution.metadata.version)
         sdist.run(self)
 

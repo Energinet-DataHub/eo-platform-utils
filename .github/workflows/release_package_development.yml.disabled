@@ -36,8 +36,13 @@ jobs:
         run: |
           pipenv install --deploy --dev
 
-      - name: Build tarball
-        run: python setup.py sdist --build=dev${{ github.run_number }}
+      - name: Build prod tarball
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        run: python setup.py sdist
+
+      - name: Build dev tarball
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.ref_name == 'main'
+        run: python setup.py sdist --build=-pr.${{ github.event.pull_request.number }}-$(git rev-parse --short ${{ github.sha }})
 
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@v1.4.2

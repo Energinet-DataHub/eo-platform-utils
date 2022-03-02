@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   # build:
@@ -116,6 +119,13 @@ jobs:
   #       run: |
   #         pipenv run integrationtest
 
+  # py_validate:
+  #   name: Validate python
+  #   uses: Energinet-DataHub/.github/.github/workflows/python-pipenv-validate.yaml@main
+  #   with:
+  #     python_version: 3.8
+  #     ignore_lint_error: true
+
   publish:
     name: publish
     runs-on: ubuntu-latest
@@ -142,9 +152,22 @@ jobs:
       - name: Install dependencies
         run: |
           pipenv install --deploy --dev
+          pip install pyyaml
 
-      - name: Build tarball
-        run: python setup.py sdist --build=dev${{ github.run_number }}
+      - name: print context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Build prod tarball
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        run: python setup.py sdist
+
+      - name: Build dev tarball
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.base_ref == 'main'
+        run: python setup.py sdist --build=.dev${{ github.run_number }}
+
 
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@v1.4.2
