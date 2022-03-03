@@ -8,6 +8,8 @@ def assert_base_url(
         check_path: bool = True,
 ):
     """
+    Assert to test the base url.
+
     Asserts that a given [absolute] URL has the expected base URL,
     ie. the protocol and domain parts.
 
@@ -25,6 +27,7 @@ def assert_base_url(
     :param expected_base_url: The base-URL to match
     :param check_path: Whether or not the assert on the path also
     """
+
     url_parsed = urlparse(url)
     expected_url_parsed = urlparse(expected_base_url)
 
@@ -44,6 +47,8 @@ def assert_query_parameter(
         value: Optional[str] = None,
 ):
     """
+    Assert to test the query parameters.
+
     Asserts that a given [absolute] URL has the expected query parameter
     present. Optionally asserts the value of the parameter, otherwise only
     assert the existence of the parameter.
@@ -62,6 +67,7 @@ def assert_query_parameter(
     :param name: Name of the query parameter
     :param value: Value of the query parameter to match, or None
     """
+
     url_parsed = urlparse(url)
     query_parsed = parse_qs(url_parsed.query)
 
