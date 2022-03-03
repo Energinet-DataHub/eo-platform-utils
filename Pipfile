@@ -16,7 +16,11 @@ pylint = "*"
 pydocstyle = "*"
 pycodestyle = "*"
 twine = "*"
+<<<<<<< HEAD
 pyyaml = "*"
+=======
+mock = "*"
+>>>>>>> e91303577fa8b12dbe4cf2e29ce5c244b56eddf0
 
 [packages]
 wrapt = "*"
