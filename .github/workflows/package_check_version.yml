@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: Will be enabled META.yaml exists in main branch
 
 name: Package Version Check
 on:
@@ -21,7 +20,6 @@ on:
 jobs:
   package_check_version:
     name: Package check version
-    continue-on-error: true
     uses: Energinet-DataHub/.github/.github/workflows/version-increment-check.yaml@main
     with:
       yaml_file: META.yaml
