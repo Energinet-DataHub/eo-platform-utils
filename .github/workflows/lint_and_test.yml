@@ -119,18 +119,12 @@ jobs:
         run: |
           pipenv run integrationtest
 
-  # py_validate:
-  #   name: Validate python
-  #   uses: Energinet-DataHub/.github/.github/workflows/python-pipenv-validate.yaml@main
-  #   with:
-  #     python_version: 3.8
-  #     ignore_lint_error: true
+
 
   publish:
     name: publish
     runs-on: ubuntu-latest
     needs: [build, lint, unittest, integrationtest]
-    # needs: [py_validate]
 
     steps:
       - uses: actions/checkout@v2
@@ -169,5 +163,6 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_SECRET }}
-          # TODO: For testing
+          # When testing eg. forked repo, you can choose to upload to a test
+          # Repository instead of the official one.
           # repository_url: https://test.pypi.org/legacy/
