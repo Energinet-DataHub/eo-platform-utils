@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from mock import Mock
 from dataclasses import dataclass
 
 from origin.bus.dispatcher import MessageDispatcher

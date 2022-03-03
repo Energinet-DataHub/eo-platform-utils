@@ -3,7 +3,7 @@ conftest.py according to pytest docs:
 https://docs.pytest.org/en/2.7.3/plugins.html?highlight=re#conftest-py-plugins
 """
 import pytest
-from unittest.mock import patch
+from mock import patch
 from testcontainers.postgres import PostgresContainer
 
 from origin.sql import POSTGRES_VERSION, SqlEngine

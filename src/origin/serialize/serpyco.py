@@ -22,16 +22,12 @@ def _get_serializer(schema: Type[TSerializable]) -> serpyco.Serializer:
 
 
 class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
-    """
-    Serialize and deserialize to and from simple Python types (dictionary).
-    """
+    """Serialize/deserialize to and from simple Python types (dictionary)."""
     def serialize(
             self, obj: TSerializable,
             schema: Optional[Type[TSerializable]] = None,
     ) -> Dict[str, Any]:
-        """
-        Serializes object to Python.
-        """
+        """Serializes object to Python."""
         if schema is None:
             schema = obj.__class__
         return _get_serializer(schema).dump(obj)
