@@ -3,13 +3,17 @@ Example setup.py from https://github.com/activescott/python-package-example/blob
 """
 # Always prefer setuptools over distutils
 import os
-import setuptools
 from distutils.command.sdist import sdist
 
+import setuptools
+import yaml
 
-class sdist_hg(sdist):
-    """Add git short commit hash to version.
-    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html  # noqa: E501
+
+class sdist_hg(sdist):  # noqa
+    """
+    Add git short commit hash to version.
+
+    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html # noqa: E501
     """
 
     user_options = sdist.user_options + [
@@ -48,16 +52,12 @@ class sdist_hg(sdist):
 
 here = os.path.abspath(os.path.dirname(__file__))
 
+with open("META.yaml", 'r', encoding='UTF-8') as f:
+    data = yaml.load(f, Loader=yaml.Loader)
 
-def __read_meta(fn):
-    with open(os.path.join(here, 'meta', fn)) as f:
-        return f.read().strip()
-
-
-name = __read_meta('PACKAGE_NAME')
-version = __read_meta('PACKAGE_VERSION')
-python_requires = __read_meta('PYTHON_VERSION')
-
+name = data['package']['name']
+version = data['package']['version']
+python_requires = data['python']['version']
 
 setuptools.setup(
     name=name,
