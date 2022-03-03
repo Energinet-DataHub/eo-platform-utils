@@ -1,0 +1,6 @@
+package:
+  name: origin_platform_utils
+  version: 0.6.2
+
+python:
+  version: 3.8
