@@ -21,6 +21,7 @@ on:
 jobs:
   package_check_version:
     name: Package check version
+    continue-on-error: true
     uses: Energinet-DataHub/.github/.github/workflows/version-increment-check.yaml@main
     with:
       yaml_file: META.yaml
