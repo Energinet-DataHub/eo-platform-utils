@@ -16,6 +16,7 @@ pylint = "*"
 pydocstyle = "*"
 pycodestyle = "*"
 twine = "*"
+mock = "*"
 
 [packages]
 wrapt = "*"

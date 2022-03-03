@@ -20,12 +20,12 @@
     },
     // Set *default* container specific settings.json values on container create.
     "settings": {
-        "python.pythonPath": "/home/vscode/.local/share/virtualenvs/eo-auth-imobv-mS/bin/python",
-        "python.defaultInterpreterPath": "/home/vscode/.local/share/virtualenvs/eo-auth-imobv-mS/bin/python",
+        "python.pythonPath": "/home/vscode/.local/share/virtualenvs/eo-platform-utils-24jLSBGX/bin/python",
+        "python.defaultInterpreterPath": "/home/vscode/.local/share/virtualenvs/eo-platform-utils-24jLSBGX/bin/python",
         // Linting and intellisense
         "python.analysis.extraPaths": [
-            "/workspaces/eo-auth",
-            "/workspaces/eo-auth/src",
+            "/workspaces/eo-platform-utils",
+            "/workspaces/eo-platform-utils/src",
         ],
         "python.languageServer": "Pylance",
         "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",

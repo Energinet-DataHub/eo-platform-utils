@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "45496b6128ed4d2ae4ad9e07365bb169e395319d087e880471ff14eae53e8ae4"
+            "sha256": "bbef9755b313e80abad7b19e40d4a1381770145a4c5992205ebcf92e0056008f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -851,7 +851,7 @@
                 "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7",
                 "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"
             ],
-            "markers": "python_version < '4' and python_full_version >= '3.6.1'",
+            "markers": "python_version < '4.0' and python_full_version >= '3.6.1'",
             "version": "==5.10.1"
         },
         "iterators": {
@@ -927,6 +927,14 @@
                 "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"
             ],
             "version": "==0.6.1"
+        },
+        "mock": {
+            "hashes": [
+                "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62",
+                "sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc"
+            ],
+            "index": "pypi",
+            "version": "==4.0.3"
         },
         "networkx": {
             "hashes": [
