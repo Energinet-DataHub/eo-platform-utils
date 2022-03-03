@@ -13,7 +13,7 @@ class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
-    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html  # noqa
+    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html # noqa: E501
     """
 
     user_options = sdist.user_options + [
