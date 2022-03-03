@@ -5,9 +5,7 @@ from functools import cached_property
 
 
 class Endpoint(object):
-    """
-    Represents a single HTTP API endpoint.
-    """
+    """Represents a single HTTP API endpoint."""
 
     # Request and response schemas (dataclasses or None)
     Request = None
@@ -15,9 +13,8 @@ class Endpoint(object):
 
     @abstractmethod
     def handle_request(self, **kwargs) -> Optional[Any]:
-        """
-        Handle a HTTP request.
-        """
+        """Handle a HTTP request."""
+
         raise NotImplementedError
 
     @property
@@ -37,6 +34,8 @@ class Endpoint(object):
     @cached_property
     def requires_context(self) -> bool:
         """
+
+
         Returns True if handle_request() requires a Context passed as argument.
         """
         return 'context' in getfullargspec(self.handle_request)[0]

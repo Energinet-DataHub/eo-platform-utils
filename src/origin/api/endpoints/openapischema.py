@@ -9,4 +9,5 @@ class OpenApiSchema(Endpoint):
         self.app = app
 
     def handle_request(self):
+        """Handle request."""
         pass
