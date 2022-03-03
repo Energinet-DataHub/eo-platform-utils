@@ -19,22 +19,14 @@ class Endpoint(object):
 
     @property
     def request_schema(self) -> Optional[Type[Any]]:
-        """
-        TODO
-        """
-        return self.Request
+        """Handle a request schema."""
 
-    @property
-    def response_schema(self) -> Optional[Type[Any]]:
-        """
-        TODO
-        """
-        return self.Response
+        return self.Request
 
     @cached_property
     def requires_context(self) -> bool:
         """
-
+        Check if the handle_request() requires a Context.
 
         Returns True if handle_request() requires a Context passed as argument.
         """
@@ -43,6 +35,8 @@ class Endpoint(object):
     @cached_property
     def should_parse_request_data(self) -> bool:
         """
+        Check if the handle_request() requires an instance.
+
         Returns True if handle_request() requires an instance of self.Request
         passed as argument.
         """

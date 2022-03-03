@@ -13,9 +13,7 @@ TResponseModel = TypeVar('TResponseModel')
 
 @dataclass
 class HttpResponse(Generic[TResponseModel], Exception):
-    """
-    TODO
-    """
+    """Handle HTTP requests."""
 
     # HTTP Status Code
     status: int
@@ -42,9 +40,8 @@ class HttpResponse(Generic[TResponseModel], Exception):
 
     @cached_property
     def actual_headers(self) -> Dict[str, str]:
-        """
-        TODO
-        """
+        """Update the headers."""
+
         headers = {}
         headers.update(self.headers)
 
@@ -52,9 +49,8 @@ class HttpResponse(Generic[TResponseModel], Exception):
 
     @cached_property
     def actual_body(self) -> Optional[Union[str, bytes]]:
-        """
-        TODO
-        """
+        """Update the body."""
+
         if self.body is not None:
             return self.body
         elif self.json is not None:
@@ -66,9 +62,8 @@ class HttpResponse(Generic[TResponseModel], Exception):
 
     @cached_property
     def actual_mimetype(self) -> Optional[Union[str, bytes]]:
-        """
-        TODO
-        """
+        """Update the MIME type to identify the type of data."""
+
         if self.body is not None:
             return 'text/html'
         elif self.json is not None:
@@ -80,27 +75,24 @@ class HttpResponse(Generic[TResponseModel], Exception):
 
 
 class HttpError(HttpResponse):
-    """
-    TODO
-    """
+    """Class to handle http errors."""
+
     def __init__(self, msg: str, status: int, **kwargs):
         kwargs.setdefault('body', f'{status} {msg}')
         super(HttpError, self).__init__(status=status, **kwargs)
 
 
 class MovedPermanently(HttpResponse):
-    """
-    HTTP 301 Moved Permanently.
-    """
+    """HTTP 301 Moved Permanently."""
+
     def __init__(self, url, **kwargs):
         super(MovedPermanently, self).__init__(
             status=301, headers={'Location': url}, **kwargs)
 
 
 class TemporaryRedirect(HttpResponse):
-    """
-    HTTP 307 Temporary Redirect.
-    """
+    """HTTP 307 Temporary Redirect."""
+
     def __init__(self, url, **kwargs):
         super(TemporaryRedirect, self).__init__(
             status=307, headers={'Location': url}, **kwargs)
@@ -115,6 +107,7 @@ class BadRequest(HttpError):
 
     This response should be accompanied by the validation errors.
     """
+
     def __init__(self, **kwargs):
         super(BadRequest, self).__init__(
             status=400, msg='Bad Request', **kwargs)
@@ -129,6 +122,7 @@ class Unauthorized(HttpError):
 
     This is an indication that the client must acquire a new token.
     """
+
     def __init__(self, msg: str = 'Unauthorized', **kwargs):
         super(Unauthorized, self).__init__(
             status=401, msg=msg, **kwargs)
@@ -141,15 +135,15 @@ class Forbidden(HttpError):
     Returned by the API in case the client provides a token without
     the necessary scope(s).
     """
+
     def __init__(self, msg: str = 'Forbidden', **kwargs):
         super(Forbidden, self).__init__(
             status=403, msg=msg, **kwargs)
 
 
 class InternalServerError(HttpError):
-    """
-    HTTP 500 Internal Server Error.
-    """
+    """HTTP 500 Internal Server Error."""
+
     def __init__(self, msg: str = 'Internal Server Error', **kwargs):
         super(InternalServerError, self).__init__(
             status=500, msg=msg, **kwargs)

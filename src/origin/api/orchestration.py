@@ -1,3 +1,4 @@
+
 from dataclasses import is_dataclass
 
 import flask
@@ -22,28 +23,21 @@ from .responses import HttpResponse, BadRequest
 
 
 class RequestDataProvider(object):
-    """
-    Provides request parameters.
-    """
+    """Provides request parameters."""
+
     @abstractmethod
     def get(self) -> Optional[Dict[str, Any]]:
-        """
-        TODO
-        """
+        """TODO."""
         raise NotImplementedError
 
 
 class JsonBodyProvider(RequestDataProvider):
-    """
-    Reads request data from request body JSON.
-    """
+    """Reads request data from request body JSON."""
+
     def get(self) -> Optional[Dict[str, Any]]:
-        """
-        TODO
-        """
+        """TODO."""
         if not flask.request.data:
             return None
-
         try:
             return rapidjson.loads(flask.request.data.decode('utf8'))
         except rapidjson.JSONDecodeError:
@@ -51,18 +45,14 @@ class JsonBodyProvider(RequestDataProvider):
 
 
 class QueryStringProvider(RequestDataProvider):
-    """
-    Reads request data from query parameters.
-    """
+    """Reads request data from query parameters."""
+
     def get(self) -> Optional[Dict[str, Any]]:
-        """
-        TODO
-        """
+        """TODO."""
         return dict(flask.request.args)
 
 
 # -- Orchestrator ------------------------------------------------------------
-
 
 class RequestOrchestrator(object):
     """
@@ -71,6 +61,7 @@ class RequestOrchestrator(object):
     Behaves as a Flask endpoint, ie. it is callable without taking any
     parameters, so it plugs into Flask seamlessly.
     """
+
     def __init__(
             self,
             endpoint: Endpoint,
@@ -84,9 +75,7 @@ class RequestOrchestrator(object):
         self.guards = guards
 
     def __call__(self) -> flask.Response:
-        """
-        Invoked by Flask to handle a HTTP request.
-        """
+        """Flask invokes a handle for the HTTP request."""
         try:
             return self._invoke_endpoint()
         except HttpResponse as e:
@@ -97,26 +86,20 @@ class RequestOrchestrator(object):
 
     @cached_property
     def _internal_token_encoder(self) -> TokenEncoder[InternalToken]:
-        """
-        TODO
-        """
+        """Return InternalToken encoder with correct secret embedded."""
         return TokenEncoder(
             schema=InternalToken,
             secret=self.secret,
         )
 
     def _build_context(self) -> Context:
-        """
-        Creates a new request context.
-        """
+        """Build a new request context."""
         return FlaskContext(
             token_encoder=self._internal_token_encoder,
         )
 
     def _invoke_endpoint(self) -> flask.Response:
-        """
-        TODO
-        """
+        """Call the endpoint and make a flask response."""
         context = self._build_context()
 
         if self.guards:
@@ -182,9 +165,7 @@ class RequestOrchestrator(object):
         return flask_response
 
     def _handle_http_error(self, e: HttpResponse) -> flask.Response:
-        """
-        TODO
-        """
+        """Handle http errors."""
         return flask.Response(
             status=e.status,
             response=e.body,
@@ -193,9 +174,7 @@ class RequestOrchestrator(object):
         )
 
     def _handle_exception(self, e: Exception) -> flask.Response:
-        """
-        TODO
-        """
+        """Exception response with error code 500."""
         return flask.Response(
             status=500,
             response='Internal Server Error',
@@ -207,9 +186,7 @@ class RequestOrchestrator(object):
             data: Dict[str, Any],
             schema: Type[Any],
     ) -> Any:
-        """
-        TODO
-        """
+        """Deserialize the requested data."""
         try:
             return simple_serializer.deserialize(
                 data=data,
@@ -220,9 +197,3 @@ class RequestOrchestrator(object):
             # TODO Parse ValidationError to something useful
             # TODO Format body properly
             raise BadRequest(body=str(e))
-
-    # def _parse_response_object(self, response: Any) -> str:
-    #     """
-    #     TODO
-    #     """
-    #     return self.endpoint.response_serializer.dump_json(response)

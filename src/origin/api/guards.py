@@ -6,45 +6,31 @@ from .responses import Unauthorized
 
 
 class EndpointGuard(object):
+    """TODO."""
 
     @abstractmethod
     def validate(self, context: Context):
+        """TODO."""
         raise NotImplementedError
 
 
-# class ServiceGuard(EndpointGuard):
-#     """
-#     Allows only specific services to access this endpoint.
-#     """
-#     def __init__(self, *services: Service):
-#         self.services = services
-#
-#
-# class IssuerGuard(EndpointGuard):
-#     """
-#     Allows only specific issuers to access this endpoint.
-#     """
-#     def __init__(self, *services: Service):
-#         self.services = services
-
-
 class TokenGuard(EndpointGuard):
-    """
-    Only Allows requests with a valid token provided.
-    """
+    """Only Allows requests with a valid token provided."""
+
     def validate(self, context: Context):
+        """TODO."""
         if context.token is None:
             raise Unauthorized('Unauthorized')
 
 
 class ScopedGuard(EndpointGuard):
-    """
-    Only Allows requests with specific scopes granted.
-    """
+    """Only Allows requests with specific scopes granted."""
+
     def __init__(self, *scopes: str):
         self.scopes = scopes
 
     def validate(self, context: Context):
+        """TODO."""
         if context.token is None:
             raise Unauthorized('Unauthorized')
         for scope in self.scopes:
@@ -54,12 +40,14 @@ class ScopedGuard(EndpointGuard):
 
 
 class Bouncer(object):
+    """TODO."""
+
     def validate(self, context: Context, guards: List[EndpointGuard]):
+        """TODO."""
         for guard in guards:
             guard.validate(context)
 
 
 # -- Singletons --------------------------------------------------------------
-
 
 bouncer = Bouncer()

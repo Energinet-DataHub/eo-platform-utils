@@ -46,9 +46,7 @@ class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
 
 
 class SerpycoJsonSerializer(Serializer[bytes]):
-    """
-    Serialize and deserialize to and from JSON (encoded bytes).
-    """
+    """Serialize and deserialize to and from JSON (encoded bytes)."""
     def serialize(
             self,
             obj: TSerializable,
