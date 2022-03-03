@@ -48,7 +48,7 @@ class sdist_hg(sdist):  # noqa
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("META.yaml", encoding='UTF-8', 'r') as f:
+with open("META.yaml", 'r', encoding='UTF-8') as f:
     data = yaml.load(f, Loader=yaml.Loader)
 
 name = data['package']['name']
