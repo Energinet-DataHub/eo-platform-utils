@@ -3,9 +3,8 @@ from abc import abstractmethod
 
 
 class SqlQuery(object):
-    """
-    TODO
-    """
+    """TODO."""
+
     def __init__(self, session: orm.Session, q: orm.Query = None):
         """
         :param session:

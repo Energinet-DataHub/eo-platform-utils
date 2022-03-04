@@ -19,7 +19,7 @@ class EnergyDirection(Enum):
 
 @dataclass
 class Address(Serializable):
-    """TODO Which international standard does this convey to?"""
+    """TODO Which international standard does this convey to?."""
 
     street_code: Optional[str] = field(default=None)
     street_name: Optional[str] = field(default=None)
@@ -33,12 +33,12 @@ class Address(Serializable):
     location_description: Optional[str] = field(default=None)
 
     def __str__(self) -> str:
-        """Creates a string representation of the address."""
+        """Create a string representation of the address."""
 
         return self.format()
 
     def format(self, separator: str = '\n') -> str:
-        """Creates a string representation of the address."""
+        """Create a string representation of the address."""
 
         return separator.join(self.parts)
 
@@ -90,8 +90,10 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
 
     @property
     def asc(self) -> bool:
+        """TODO."""
         return self.order is Order.asc
 
     @property
     def desc(self) -> bool:
+        """TODO."""
         return self.order is Order.desc
