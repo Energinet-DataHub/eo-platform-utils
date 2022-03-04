@@ -7,15 +7,13 @@ from origin.models.residual_mix import \
 
 @dataclass
 class ResidualMixEmissionsUpdate(Message):
-    """
-    TODO
-    """
+    """TODO."""
+
     emissions: ResidualMixEmissions
 
 
 @dataclass
 class ResidualMixTechnologyDistributionUpdate(Message):
-    """
-    TODO
-    """
+    """TODO."""
+
     distributions: ResidualMixTechnologyDistribution

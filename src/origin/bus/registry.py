@@ -21,7 +21,7 @@ class MessageRegistry(Dict[str, Type[Message]]):
     @classmethod
     def from_message_types(cls, *types: Type[Message]) -> 'MessageRegistry':
         """
-        TODO
+        TODO.
 
         :param types:
         :return:
@@ -30,7 +30,7 @@ class MessageRegistry(Dict[str, Type[Message]]):
 
     def add(self, *message_types: Type[Message]):
         """
-        TODO
+        TODO.
 
         :param message_types:
         :return:
@@ -56,9 +56,8 @@ class MessageRegistry(Dict[str, Type[Message]]):
             return False
 
     def get(self, item: TDictItem) -> Optional[Message]:
-        """
-        TODO
-        """
+        """TODO."""
+
         if isinstance(item, str):
             return super(MessageRegistry, self).get(item)
         elif isclass(item):

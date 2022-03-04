@@ -6,15 +6,13 @@ from origin.models.tech import Technology, TechnologyCodes
 
 @dataclass
 class TechnologyUpdate(Message):
-    """
-    A Technology has been added or updated.
-    """
+    """A Technology has been added or updated."""
+
     technology: Technology
 
 
 @dataclass
 class TechnologyRemoved(Message):
-    """
-    TODO
-    """
+    """A Technology has been removed."""
+
     codes: TechnologyCodes
