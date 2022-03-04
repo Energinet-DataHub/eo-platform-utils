@@ -9,17 +9,14 @@ from .models import DbTestModel
 
 # -- Helpers -----------------------------------------------------------------
 
-
-class TestModelQuery(SqlQuery):
+class DbTestModelQuery(SqlQuery):
     """
     Query DbTestModel.
     """
     def _get_base_query(self) -> orm.Query:
         return self.session.query(DbTestModel)
 
-
 # -- Fixtures ----------------------------------------------------------------
-
 
 @pytest.fixture(scope='function')
 def seeded_session(session: db.Session):
@@ -61,7 +58,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 'FOO-BAR')
 
         count = query.count()
@@ -84,7 +81,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == value)
 
         count = query.count()
@@ -108,7 +105,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter_by(string_field='FOO-BAR')
 
         count = query.count()
@@ -131,7 +128,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter_by(string_field=value)
 
         count = query.count()
@@ -155,7 +152,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 1)
 
@@ -178,7 +175,7 @@ class TestQueries:
 
         # -- Act + Assert ----------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 9999)
 
@@ -199,7 +196,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 1)
 
@@ -222,7 +219,7 @@ class TestQueries:
 
         # -- Act -------------------------------------------------------------
 
-        query = TestModelQuery(seeded_session) \
+        query = DbTestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 9999)
 
