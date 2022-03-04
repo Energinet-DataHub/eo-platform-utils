@@ -11,18 +11,24 @@ from origin.tokens import TokenEncoder
 
 @dataclass
 class Nested:
+    """TODO."""
+
     something: str
 
 
 @dataclass
 class MockMessage(Message):
+    """TODO."""
+
     something: str
     nested: Nested
 
 
 class TestTokenEncoder:
+    """TODO."""
 
     def test__should_encode_and_decode_correctly(self):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -48,6 +54,7 @@ class TestTokenEncoder:
         assert decoded == obj
 
     def test__encode_with_invalid_secret__should_fail_to_decode(self):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

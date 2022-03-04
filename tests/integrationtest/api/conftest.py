@@ -1,5 +1,5 @@
 """
-conftest.py according to pytest docs:
+conftest.py according to pytest docs.
 https://docs.pytest.org/en/2.7.3/plugins.html?highlight=re#conftest-py-plugins
 """
 import pytest
@@ -12,9 +12,8 @@ from origin.tokens import TokenEncoder
 
 @pytest.fixture(scope='function')
 def app(secret: str):
-    """
-    TODO
-    """
+    """TODO."""
+
     yield Application.create(
         name='Test API',
         secret=secret,
@@ -24,25 +23,22 @@ def app(secret: str):
 
 @pytest.fixture(scope='function')
 def client(app: Application):
-    """
-    TODO
-    """
+    """TODO."""
+
     yield app.test_client
 
 
 @pytest.fixture(scope='function')
 def secret():
-    """
-    TODO
-    """
+    """TODO."""
+
     yield 'something secret'
 
 
 @pytest.fixture(scope='function')
 def token_encoder(secret: str):
-    """
-    TODO
-    """
+    """TODO."""
+
     yield TokenEncoder(
         schema=InternalToken,
         secret=secret,
@@ -51,9 +47,8 @@ def token_encoder(secret: str):
 
 @pytest.fixture(scope='function')
 def valid_token():
-    """
-    TODO
-    """
+    """TODO."""
+
     yield InternalToken(
         issued=datetime.now(tz=timezone.utc),
         expires=datetime.now(tz=timezone.utc) + timedelta(days=1),
@@ -68,7 +63,6 @@ def valid_token_encoded(
         valid_token: InternalToken,
         token_encoder: TokenEncoder[InternalToken],
 ):
-    """
-    TODO
-    """
+    """TODO."""
+
     yield token_encoder.encode(valid_token)

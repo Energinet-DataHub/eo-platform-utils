@@ -5,9 +5,7 @@ from functools import cached_property
 
 
 class SqlEngine(object):
-    """
-    TODO
-    """
+    """TODO."""
 
     # Shortcut/alias
     Session = orm.Session
@@ -22,9 +20,8 @@ class SqlEngine(object):
 
     @property
     def settings(self) -> Dict[str, Any]:
-        """
-        TODO
-        """
+        """TODO."""
+
         return {
             'echo': False,
             'pool_pre_ping': True,
@@ -33,9 +30,8 @@ class SqlEngine(object):
 
     @property
     def engine(self) -> engine.Engine:
-        """
-        TODO
-        """
+        """TODO."""
+
         if self.uri != self._uri:
             self._uri = self.uri
             self._engine = engine.create_engine(self.uri, **self.settings)
@@ -43,9 +39,8 @@ class SqlEngine(object):
 
     @property
     def session_class(self) -> orm.scoped_session:
-        """
-        TODO
-        """
+        """TODO."""
+
         orm.configure_mappers()
         factory = orm.sessionmaker(bind=self.engine, expire_on_commit=False)
         session_class = orm.scoped_session(factory)
@@ -53,16 +48,14 @@ class SqlEngine(object):
 
     @cached_property
     def registry(self) -> orm.registry:
-        """
-        TODO
-        """
+        """TODO."""
+
         return orm.registry()
 
     @cached_property
     def ModelBase(self) -> orm.declarative_base:
-        """
-        TODO
-        """
+        """TODO."""
+
         return self.registry.generate_base()
 
     def make_session(self) -> orm.Session:
@@ -74,13 +67,14 @@ class SqlEngine(object):
         return self.session_class()
 
     def apply_schema(self):
-        """
-        TODO
-        """
+        """TODO."""
+
         self.ModelBase.metadata.create_all(self.engine)
 
     def session(self):
         """
+        TODO.
+
         Function decorator which injects a "session" named parameter
         if it doesn't already exists
         """
@@ -99,6 +93,8 @@ class SqlEngine(object):
 
     def atomic(self):
         """
+        TODO.
+
         Function decorator which injects a "session" named parameter
         if it doesn't already exists, and wraps the function in an
         atomic transaction.

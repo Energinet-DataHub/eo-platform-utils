@@ -7,27 +7,34 @@ class SqlQuery(object):
 
     def __init__(self, session: orm.Session, q: orm.Query = None):
         """
+        TODO.
         :param session:
         :param q:
         """
+
         self.session = session
         self.q = q or self._get_base_query()
 
     @abstractmethod
     def _get_base_query(self) -> orm.Query:
-        """
-        TODO Describe with example
-        """
+        """TODO Describe with example."""
+
         raise NotImplementedError
 
     def __iter__(self):
+        """TODO."""
+
         return iter(self.q)
 
     def __getattr__(self, name):
+        """TODO."""
+
         return getattr(self.q, name)
 
     def filter(self, *filters):
         """
+        TODO.
+
         TODO Describe with example
 
         Example usage::
@@ -41,6 +48,8 @@ class SqlQuery(object):
 
     def filter_by(self, **filters):
         """
+        TODO.
+
         TODO Describe with example
 
         Example usage::
@@ -99,17 +108,19 @@ class SqlQuery(object):
 
     def get(self, field):
         """
-        Returns value for the field from the first result.
+        TODO.
 
         TODO Example usage
 
         :param field:
-        :return:
+        :return: value for the field from the first result.
         """
         return self.only(field).scalar()
 
     def exists(self):
         """
+        TODO.
+
         :return: True if result count is >= 1
         """
         return self.count() > 0

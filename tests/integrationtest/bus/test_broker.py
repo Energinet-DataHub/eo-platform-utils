@@ -2,9 +2,7 @@ from origin.bus import MessageBroker, Message
 
 
 class TestMessageBroker:
-    """
-    TODO
-    """
+    """TODO."""
 
     # -- poll() --------------------------------------------------------------
 
@@ -15,9 +13,7 @@ class TestMessageBroker:
             msg2: Message,
             msg3: Message,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -43,9 +39,7 @@ class TestMessageBroker:
             msg2: Message,
             msg3: Message,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -72,9 +66,7 @@ class TestMessageBroker:
             msg2: Message,
             msg3: Message,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -98,9 +90,7 @@ class TestMessageBroker:
             msg2: Message,
             msg3: Message,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 

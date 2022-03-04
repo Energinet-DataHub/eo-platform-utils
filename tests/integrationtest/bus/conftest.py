@@ -1,5 +1,5 @@
 """
-conftest.py according to pytest docs:
+conftest.py according to pytest docs.
 https://docs.pytest.org/en/2.7.3/plugins.html?highlight=re#conftest-py-plugins
 """
 import time
@@ -22,9 +22,8 @@ from origin.bus import (
 
 @pytest.fixture(scope='function')
 def kafka_container():
-    """
-    TODO
-    """
+    """TODO."""
+
     kafka_docker = DockerContainer('landoop/fast-data-dev:latest')
     kafka_docker.env.update({'ADV_HOST': 'localhost'})
     kafka_docker.ports.update({
@@ -48,25 +47,22 @@ def kafka_container():
 
 @pytest.fixture(scope='function')
 def broker(kafka_container: DockerContainer) -> MessageBroker:
-    """
-    TODO
-    """
+    """TODO."""
+
     return _create_test_broker(kafka_container)
 
 
 @pytest.fixture(scope='function')
 def broker2(kafka_container: DockerContainer) -> MessageBroker:
-    """
-    TODO
-    """
+    """TODO."""
+
     return _create_test_broker(kafka_container)
 
 
 @pytest.fixture(scope='function')
 def msg1() -> Message:
-    """
-    TODO
-    """
+    """TODO."""
+
     return m.TechnologyUpdate(
         technology=Technology(
             tech_code=str(uuid4()),
@@ -78,9 +74,8 @@ def msg1() -> Message:
 
 @pytest.fixture(scope='function')
 def msg2() -> Message:
-    """
-    TODO
-    """
+    """TODO."""
+
     return m.TechnologyUpdate(
         technology=Technology(
             tech_code=str(uuid4()),
@@ -92,9 +87,8 @@ def msg2() -> Message:
 
 @pytest.fixture(scope='function')
 def msg3() -> Message:
-    """
-    TODO
-    """
+    """TODO."""
+
     return m.TechnologyUpdate(
         technology=Technology(
             tech_code=str(uuid4()),
@@ -108,9 +102,8 @@ def msg3() -> Message:
 
 
 def _create_test_broker(kafka_container: DockerContainer) -> MessageBroker:
-    """
-    Creates a new message broker instance with a unique Consumer Group ID.
-    """
+    """Create a new message broker instance with a unique Consumer Group ID."""
+
     host = kafka_container.get_container_host_ip()
     port = kafka_container.get_exposed_port(9092)
     server = f'{host}:{port}'

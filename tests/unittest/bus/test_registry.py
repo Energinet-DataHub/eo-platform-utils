@@ -23,7 +23,7 @@ class TestMessageRegistry:
     """Class to test the message registry."""
 
     def test__from_message_types__items_added_to_registry(self):
-        """Tests if """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -37,6 +37,7 @@ class TestMessageRegistry:
 
     def test__add__items_added_to_registry(self):
         """TODO."""
+
         # -- Arrange ---------------------------------------------------------
 
         uut = MessageRegistry()
