@@ -11,6 +11,8 @@ MeasurementType = EnergyDirection
 
 @dataclass
 class Measurement(Serializable):
+    """TODO."""
+
     id: str
     gsrn: str
     amount: int

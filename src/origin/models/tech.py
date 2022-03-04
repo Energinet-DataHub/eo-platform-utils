@@ -5,9 +5,8 @@ from origin.serialize import Serializable
 
 
 class TechnologyType(Enum):
-    """
-    System-wide labels of known technologies.
-    """
+    """System-wide labels of known technologies."""
+
     coal = 'coal'
     nuclear = 'nuclear'
     solar = 'solar'
@@ -16,9 +15,8 @@ class TechnologyType(Enum):
 
 @dataclass
 class TechnologyCodes(Serializable):
-    """
-    TODO
-    """
+    """TODO."""
+
     tech_code: str
     fuel_code: str
 
@@ -26,9 +24,12 @@ class TechnologyCodes(Serializable):
 @dataclass
 class Technology(Serializable):
     """
+    Technology description from the standard EECS Rules Fact Sheet 5.
+
     A technology described by the standard described in the
     EECS Rules Fact Sheet 5: TYPES OF ENERGY INPUTS AND TECHNOLOGIES
     """
+
     tech_code: str
     fuel_code: str
     type: TechnologyType

@@ -8,9 +8,8 @@ TEmissionValue = Union[int, float]
 
 
 class EmissionLabel(Enum):
-    """
-    System-wide labels of known emission types.
-    """
+    """System-wide labels of known emission types."""
+
     CO2 = 'CO2'
     SO2 = 'SO2'
 
@@ -21,4 +20,5 @@ class EmissionValues(ArithmeticDict, Dict[EmissionLabel, TEmissionValue]):
 
     Units of values depends on the context of their use (gram, gram/Wh, etc).
     """
+
     pass
