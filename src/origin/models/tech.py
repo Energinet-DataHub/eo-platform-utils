@@ -7,10 +7,10 @@ from origin.serialize import Serializable
 class TechnologyType(Enum):
     """System-wide labels of known technologies."""
 
-    coal = 'coal'
-    nuclear = 'nuclear'
-    solar = 'solar'
-    wind = 'wind'
+    COAL = 'coal'
+    NUCLEAR = 'nuclear'
+    SOLAR = 'solar'
+    WIND = 'wind'
 
 
 @dataclass

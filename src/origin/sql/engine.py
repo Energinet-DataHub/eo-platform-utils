@@ -80,7 +80,7 @@ class SqlEngine(object):
         """
         @decorator
         def session_decorator(wrapped, instance, args, kwargs):
-
+            # pylint: disable=unused-argument
             session = kwargs.setdefault(
                 'session', self.make_session())
 
@@ -101,7 +101,7 @@ class SqlEngine(object):
         """
         @decorator
         def atomic_wrapper(wrapped, instance, args, kwargs):
-
+            # pylint: disable=unused-argument
             session: orm.Session = kwargs.setdefault(
                 'session', self.make_session())
 

@@ -13,13 +13,13 @@ from origin.serialize import Serializable
 class EnergyDirection(Enum):
     """TODO."""
 
-    production = 'production'  # E18
-    consumption = 'consumption'  # E17
+    PRODUCTION = 'production'
+    CONSUMPTION = 'consumption'
 
 
 @dataclass
 class Address(Serializable):
-    """TODO Which international standard does this convey to?."""
+    """TODO Which international standard does this adhere to?."""
 
     street_code: Optional[str] = field(default=None)
     street_name: Optional[str] = field(default=None)
@@ -77,8 +77,8 @@ TOrderKey = TypeVar('TOrderKey', bound=Enum)
 class Order(Enum):
     """TODO."""
 
-    asc = 'asc'
-    desc = 'desc'
+    ASC = 'asc'
+    DESC = 'desc'
 
 
 @dataclass
@@ -86,14 +86,16 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
     """Ordering of query results."""
 
     key: Optional[TOrderKey] = field(default=None)
-    order: Order = field(default=Order.asc)
+    order: Order = field(default=Order.ASC)
 
     @property
     def asc(self) -> bool:
         """TODO."""
-        return self.order is Order.asc
+
+        return self.order is Order.ASC
 
     @property
     def desc(self) -> bool:
         """TODO."""
-        return self.order is Order.desc
+
+        return self.order is Order.DESC

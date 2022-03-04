@@ -76,6 +76,6 @@ class ImportMeteringPoints(Message):
 
     # Pre-defined param keys:
     GSRN = 'GSRN'
-    WEB_ACCESS_CODE = 'WEB_ACCESS_CODE'
+    WEB_ACCESS_CODE = 'WEB_ACCESS_CODE'  # pylint: disable=C0103
     CVR = 'CVR'
     CPR = 'CPR'

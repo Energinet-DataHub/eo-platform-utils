@@ -5,15 +5,15 @@ from abc import abstractmethod
 class SqlQuery(object):
     """TODO."""
 
-    def __init__(self, session: orm.Session, q: orm.Query = None):
+    def __init__(self, session: orm.Session, query: orm.Query = None):
         """
         TODO.
         :param session:
-        :param q:
+        :param query:
         """
 
         self.session = session
-        self.q = q or self._get_base_query()
+        self.query = query or self._get_base_query()
 
     @abstractmethod
     def _get_base_query(self) -> orm.Query:
@@ -24,12 +24,12 @@ class SqlQuery(object):
     def __iter__(self):
         """TODO."""
 
-        return iter(self.q)
+        return iter(self.query)
 
     def __getattr__(self, name):
         """TODO."""
 
-        return getattr(self.q, name)
+        return getattr(self.query, name)
 
     def filter(self, *filters):
         """
@@ -44,7 +44,7 @@ class SqlQuery(object):
         :param filters:
         :return:
         """
-        return self.__class__(self.session, self.q.filter(*filters))
+        return self.__class__(self.session, self.query.filter(*filters))
 
     def filter_by(self, **filters):
         """
@@ -59,39 +59,7 @@ class SqlQuery(object):
         :param filters:
         :return:
         """
-        return self.__class__(self.session, self.q.filter_by(**filters))
-
-    # def unique_join(self, *props, **kwargs):
-    #     if props[0] in [c.entity for c in self.q._join_entities]:
-    #         return self
-    #
-    #     return self.__class__(self.session, self.q.join(
-    #         *props, **kwargs
-    #     ))
-    #
-    # def lazy_load(self, field):
-    #     return self.__class__(self.session, self.q.options(
-    #         orm.lazyload(field)
-    #     ))
-    #
-    # def eager_load(self, path, *fields):
-    #     if isinstance(path, (list, tuple)):
-    #         join = orm.joinedload(*path)
-    #     else:
-    #         join = orm.joinedload(path)
-    #
-    #     if fields:
-    #         join = join.load_only(*fields)
-    #
-    #     return self.__class__(self.session, self.q.options(join))
-    #
-    # def eage_load_path(self, *path):
-    #     join = rjoinedload(*path)
-    #     if fields:
-    #         join = join.load_only(*fields)
-    #     return self.__class__(self.session, self.q.options(
-    #         join
-    #     ))
+        return self.__class__(self.session, self.query.filter_by(**filters))
 
     def only(self, *fields):
         """
@@ -102,7 +70,7 @@ class SqlQuery(object):
         :param fields:
         :return:
         """
-        return self.__class__(self.session, self.q.options(
+        return self.__class__(self.session, self.query.options(
             orm.load_only(*fields)
         ))
 
