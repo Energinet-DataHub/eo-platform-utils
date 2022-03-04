@@ -12,9 +12,8 @@ except ImportError:
 
 @lru_cache
 def _get_serializer(schema: Type[TSerializable]) -> serpyco.Serializer:
-    """
-    TODO
-    """
+    """TODO."""
+
     return serpyco.Serializer(schema, strict=True)
 
 
@@ -23,11 +22,13 @@ def _get_serializer(schema: Type[TSerializable]) -> serpyco.Serializer:
 
 class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
     """Serialize/deserialize to and from simple Python types (dictionary)."""
+
     def serialize(
             self, obj: TSerializable,
             schema: Optional[Type[TSerializable]] = None,
     ) -> Dict[str, Any]:
-        """Serializes object to Python."""
+        """Serialize object to Python."""
+
         if schema is None:
             schema = obj.__class__
         return _get_serializer(schema).dump(obj)
@@ -38,23 +39,22 @@ class SerpycoSimpleSerializer(Serializer[Dict[str, Any]]):
             schema: Type[TSerializable],
             validate: bool = True,
     ) -> TSerializable:
-        """
-        Deserialize JSON data to instance of type "cls".
-        """
+        """Deserialize JSON data to instance of type "cls"."""
+
         return _get_serializer(schema) \
             .load(data, validate=validate)
 
 
 class SerpycoJsonSerializer(Serializer[bytes]):
     """Serialize and deserialize to and from JSON (encoded bytes)."""
+
     def serialize(
             self,
             obj: TSerializable,
             schema: Optional[Type[TSerializable]] = None,
     ) -> bytes:
-        """
-        Serializes object to JSON.
-        """
+        """Serialize object to JSON."""
+
         if schema is None:
             schema = obj.__class__
         return _get_serializer(schema).dump_json(obj).encode()
@@ -65,8 +65,7 @@ class SerpycoJsonSerializer(Serializer[bytes]):
             schema: Type[TSerializable],
             validate: bool = True,
     ) -> TSerializable:
-        """
-        Deserialize JSON data to instance of type "cls".
-        """
+        """Deserialize JSON data to instance of type "cls"."""
+
         return _get_serializer(schema) \
             .load_json(data.decode('utf8'), validate=validate)
