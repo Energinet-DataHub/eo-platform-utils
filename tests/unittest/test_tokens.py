@@ -22,7 +22,6 @@ class MockMessage(Message):
 
 class TestTokenEncoder:
 
-    @pytest.mark.unittest
     def test__should_encode_and_decode_correctly(self):
 
         # -- Arrange ---------------------------------------------------------

@@ -41,7 +41,6 @@ def get_cookie_combinations() -> Iterable[Dict[str, Any]]:
 
 class TestCookies:
 
-    @pytest.mark.integrationtest
     @pytest.mark.parametrize('cookie_kwargs', get_cookie_combinations())
     def test__set_one_cookie__should_set_cookie_correctly(
             self,
