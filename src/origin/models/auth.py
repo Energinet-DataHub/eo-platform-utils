@@ -7,7 +7,7 @@ from origin.serialize import Serializable
 
 @dataclass
 class InternalToken(Serializable):
-    """TODO."""
+    """Class to store the parameters for the internal token."""
 
     issued: datetime
     expires: datetime

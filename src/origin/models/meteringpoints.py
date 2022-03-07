@@ -12,7 +12,7 @@ MeteringPointType = EnergyDirection
 
 @dataclass
 class MeteringPoint(Serializable):
-    """TODO."""
+    """Class to store the parameters for the metering point."""
 
     gsrn: str
     type: Optional[MeteringPointType] = field(default=None)

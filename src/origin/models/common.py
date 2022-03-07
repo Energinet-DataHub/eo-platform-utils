@@ -11,7 +11,7 @@ from origin.serialize import Serializable
 
 
 class EnergyDirection(Enum):
-    """TODO."""
+    """Enumeration to bound the constant values to the symbolic name."""
 
     PRODUCTION = 'production'
     CONSUMPTION = 'consumption'
@@ -19,7 +19,12 @@ class EnergyDirection(Enum):
 
 @dataclass
 class Address(Serializable):
-    """TODO Which international standard does this adhere to?."""
+    """
+    Class to store the parameters the address parameters.
+
+    International standard for addresses in Denmark
+    https://danmarksadresser.dk/adressedata/standarder-for-adresser
+    """
 
     street_code: Optional[str] = field(default=None)
     street_name: Optional[str] = field(default=None)
@@ -44,7 +49,7 @@ class Address(Serializable):
 
     @property
     def parts(self) -> List[str]:
-        """TODO."""
+        """Create a empty string for the representation of the address."""
 
         return []
 
@@ -75,7 +80,7 @@ TOrderKey = TypeVar('TOrderKey', bound=Enum)
 
 
 class Order(Enum):
-    """TODO."""
+    """Enumeration to bound the constant values to the symbolic name."""
 
     ASC = 'asc'
     DESC = 'desc'
@@ -90,12 +95,12 @@ class ResultOrdering(Serializable, Generic[TOrderKey]):
 
     @property
     def asc(self) -> bool:
-        """TODO."""
+        """Ordering of the ASC result."""
 
         return self.order is Order.ASC
 
     @property
     def desc(self) -> bool:
-        """TODO."""
+        """Ordering of the DESC result."""
 
         return self.order is Order.DESC

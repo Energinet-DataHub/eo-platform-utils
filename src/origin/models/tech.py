@@ -15,7 +15,12 @@ class TechnologyType(Enum):
 
 @dataclass
 class TechnologyCodes(Serializable):
-    """TODO."""
+    """
+    Technology Code and Fuel Source Code for Electricity Production.
+
+    Codes are described in the standard EECS Rules Fact Sheet 5: TYPES OF
+    ENERGY INPUTS AND TECHNOLOGIES.
+    """
 
     tech_code: str
     fuel_code: str
@@ -26,8 +31,8 @@ class Technology(Serializable):
     """
     Technology description from the standard EECS Rules Fact Sheet 5.
 
-    A technology described by the standard described in the
-    EECS Rules Fact Sheet 5: TYPES OF ENERGY INPUTS AND TECHNOLOGIES
+    A technology described by the standard described in the EECS Rules Fact
+    Sheet 5: TYPES OF ENERGY INPUTS AND TECHNOLOGIES.
     """
 
     tech_code: str

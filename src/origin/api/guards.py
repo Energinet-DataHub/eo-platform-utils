@@ -6,11 +6,11 @@ from .responses import Unauthorized
 
 
 class EndpointGuard(object):
-    """TODO."""
+    """Only Allows requests with a valid endpoint provided."""
 
     @abstractmethod
     def validate(self, context: Context):
-        """TODO."""
+        """Validate the endpoint."""
         raise NotImplementedError
 
 
@@ -18,7 +18,7 @@ class TokenGuard(EndpointGuard):
     """Only Allows requests with a valid token provided."""
 
     def validate(self, context: Context):
-        """TODO."""
+        """Validate the token."""
         if context.token is None:
             raise Unauthorized('Unauthorized')
 
@@ -30,7 +30,7 @@ class ScopedGuard(EndpointGuard):
         self.scopes = scopes
 
     def validate(self, context: Context):
-        """TODO."""
+        """Validate the scope."""
         if context.token is None:
             raise Unauthorized('Unauthorized')
         for scope in self.scopes:
@@ -40,10 +40,10 @@ class ScopedGuard(EndpointGuard):
 
 
 class Bouncer(object):
-    """TODO."""
+    """Class Bouncer to validate the context and the endpoints."""
 
     def validate(self, context: Context, guards: List[EndpointGuard]):
-        """TODO."""
+        """Validate the bouncer."""
         for guard in guards:
             guard.validate(context)
 
