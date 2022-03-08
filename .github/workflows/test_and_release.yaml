@@ -1,0 +1,42 @@
+name: Test and release
+env:
+  python-version: 3.8
+
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  py_validate:
+    name: Validate python
+    uses: Energinet-DataHub/.github/.github/workflows/python-pipenv-validate.yaml@main
+    with:
+      python_version: 3.8
+
+  publish_dev:
+    name: Build and publish pre-release
+    needs: [py_validate]
+    if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.base_ref == 'main'
+    uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@main
+    with:
+      PYTHON_VERSION: 3.8
+      BUILD_NUMBER: dev${{ github.run_number }}
+    secrets:
+      PYPI_API_TOKEN: ${{ secrets.PYPI_SECRET }}
+
+  publish_prod:
+    name: Build and publish release
+    needs: [py_validate]
+    if: github.event_name == 'push' && github.ref_name == 'main'
+    uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@main
+    with:
+      PYTHON_VERSION: 3.8
+    secrets:
+      PYPI_API_TOKEN: ${{ secrets.PYPI_SECRET }}

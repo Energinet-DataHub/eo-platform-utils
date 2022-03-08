@@ -14,13 +14,11 @@ class Endpoint(object):
     @abstractmethod
     def handle_request(self, **kwargs) -> Optional[Any]:
         """Handle a HTTP request."""
-
         raise NotImplementedError
 
     @property
     def request_schema(self) -> Optional[Type[Any]]:
         """Handle a request schema."""
-
         return self.Request
 
     @cached_property

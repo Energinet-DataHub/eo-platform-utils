@@ -35,6 +35,9 @@ pycryptodome = "*"
 
 [scripts]
 lint-flake8 = "flake8"
+lint-pylint = "pylint ."
+lint-pycodestyle = "pycodestyle ."
+lint-all = "bash -c './scripts/lint.sh'"
 unittest= "pytest tests/unittest"
 integrationtest= "pytest tests/integrationtest"
 build= "python setup.py sdist"
