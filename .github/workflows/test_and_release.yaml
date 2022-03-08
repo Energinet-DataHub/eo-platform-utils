@@ -19,7 +19,6 @@ jobs:
     uses: Energinet-DataHub/.github/.github/workflows/python-pipenv-validate.yaml@main
     with:
       python_version: 3.8
-      ignore_lint_error: true
 
   publish_dev:
     name: Build and publish pre-release
