@@ -1,4 +1,3 @@
-from ast import Str
 from dataclasses import is_dataclass
 
 import flask
@@ -130,6 +129,7 @@ class FastAPIEndpointWrapper(object):
         return wrapped_func
 
     def _invoke_endpoint(self, *args, **kwargs):
+
         return_value = self.endpoint.handle_request(*args, **kwargs)
 
         response = self.construct_response(return_value)

@@ -172,6 +172,7 @@ class TestEndpointResponse:
         """
         TODO
         """
+        from fastapi import  Request as FastAPIRequest
         class TestEndpoint(Endpoint):
             """Endpoint to get the user's (actor's) profile."""
 
@@ -191,6 +192,7 @@ class TestEndpointResponse:
             def handle_request(
                     self,
                     request: Request,
+                    fast_request: FastAPIRequest,
             ) -> Response:
                 """
                 Handle HTTP request.
