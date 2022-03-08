@@ -19,8 +19,6 @@ from typing import List, Optional
 from origin.api import Endpoint, Context
 
 
-
-
 class TestEndpointResponse:
     """Testing different responses data types."""
 

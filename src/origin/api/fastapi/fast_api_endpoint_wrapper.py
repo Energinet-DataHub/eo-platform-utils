@@ -1,28 +1,22 @@
-from dataclasses import is_dataclass
-
-import flask
-import serpyco
-import rapidjson
-from abc import abstractmethod
-from functools import cached_property
-from typing import Callable, List, Dict, Any, Optional, Type
-
-from origin.tokens import TokenEncoder
-from origin.serialize import simple_serializer
-from origin.models.auth import InternalToken
-from fastapi.responses import Response as FastApiResponse
-from .context import Context
-from .flask import FlaskContext
-from .endpoint import Endpoint
-from .guards import EndpointGuard, bouncer
-from .responses import HttpResponse, BadRequest
+# Standard Library
 import asyncio
-from functools import (
-    cached_property,
-    partial,
-    wraps,
+from abc import abstractmethod
+from dataclasses import is_dataclass
+from functools import partial, wraps
+from typing import Any, Dict, List, Optional
+
+# Third party
+import flask
+import rapidjson
+from fastapi.responses import (
+    Response as FastApiResponse,
 )
-from inspect import signature
+
+# Local
+from ..endpoint import Endpoint
+from ..guards import EndpointGuard
+from ..responses import BadRequest, HttpResponse
+
 
 def async_wrap(func):
     @wraps(func)
@@ -32,6 +26,7 @@ def async_wrap(func):
         pfunc = partial(func, *args, **kwargs)
         return await loop.run_in_executor(executor, pfunc)
     return run
+
 
 class RequestDataProvider(object):
     """
@@ -49,6 +44,7 @@ class JsonBodyProvider(RequestDataProvider):
     """
     Reads request data from request body JSON.
     """
+
     def get(self) -> Optional[Dict[str, Any]]:
         """
         TODO
@@ -60,6 +56,7 @@ class JsonBodyProvider(RequestDataProvider):
             return rapidjson.loads(flask.request.data.decode('utf8'))
         except rapidjson.JSONDecodeError:
             raise BadRequest('Invalid JSON body provided')
+
 
 class FastAPIEndpointWrapper(object):
 
@@ -119,7 +116,6 @@ class FastAPIEndpointWrapper(object):
             return self._handle_http_error(e)
         except Exception as e:
             return self._handle_exception(e)
-
 
     def get_wrapped_endpoint(self):
         @wraps(self.endpoint.handle_request)

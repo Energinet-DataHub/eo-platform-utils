@@ -12,11 +12,11 @@ from origin.tokens import TokenEncoder
 from origin.serialize import simple_serializer
 from origin.models.auth import InternalToken
 
-from .context import Context
-from .flask import FlaskContext
-from .endpoint import Endpoint
-from .guards import EndpointGuard, bouncer
-from .responses import HttpResponse, BadRequest
+from ..context import Context
+from . import FlaskContext
+from ..endpoint import Endpoint
+from ..guards import EndpointGuard, bouncer
+from ..responses import HttpResponse, BadRequest
 
 
 # -- Request data ------------------------------------------------------------
