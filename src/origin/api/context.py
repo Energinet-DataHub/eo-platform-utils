@@ -14,7 +14,7 @@ class Context(object):
     """
     Context for a single incoming HTTP request.
 
-    An instance is create for each HTTP request, and dies when the request
+    An instance is created for each HTTP request, and dies when the request
     if out of scope again.
     """
 
@@ -22,25 +22,20 @@ class Context(object):
     TOKEN_PATTERN = re.compile(r'^Bearer:\s*(.+)$', re.IGNORECASE)
 
     def __init__(self, token_encoder: TokenEncoder[InternalToken]):
-        """
-        :param token_encoder: Internal token encoder
-        """
         self.token_encoder = token_encoder
 
     @property
     @abstractmethod
     def headers(self) -> Dict[str, str]:
-        """
-        :returns: HTTP request headers
-        """
+        """HTTP request headers."""
+
         raise NotImplementedError
 
     @property
     @abstractmethod
     def cookies(self) -> Dict[str, str]:
-        """
-        :returns: HTTP request cookies
-        """
+        """HTTP request cookies."""
+
         raise NotImplementedError
 
     # -- Tokens --------------------------------------------------------------
@@ -48,7 +43,7 @@ class Context(object):
     @property
     def opaque_token(self) -> Optional[str]:
         """
-        Returns value for the opaque token provided by the client in a cookie.
+        Extract value for the opaque token provided by the client in a cookie.
 
         :returns: Opaque token or None
         """
@@ -57,6 +52,8 @@ class Context(object):
     @property
     def internal_token_encoded(self) -> Optional[str]:
         """
+        Translate the opaque token to an internal token.
+
         Returns value for the raw, encoded internal token. The opaque token
         (provided by the client in a cookie) is translated to an internal
         token by the API gateway and passed on as a header.
@@ -72,9 +69,8 @@ class Context(object):
 
     @cached_property
     def token(self) -> Optional[InternalToken]:
-        """
-        Parses token into an OpaqueToken.
-        """
+        """Decompose token into an OpaqueToken."""
+
         if self.internal_token_encoded is None:
             return None
 
@@ -93,32 +89,27 @@ class Context(object):
 
     @property
     def is_authorized(self) -> bool:
-        """
-        Check whether or not the client provided a valid token.
-        """
+        """Check whether or not the client provided a valid token."""
         return self.token is not None
 
     def has_scope(self, scope: str) -> bool:
-        """
-        TODO
-        """
+        """Extract the scope from the token."""
+
         if self.token:
             return scope in self.token.scope
         return False
 
     def get_token(self, required=True) -> Optional[InternalToken]:
-        """
-        TODO
-        """
+        """Check if token exists."""
+
         if self.token:
             return self.token
         elif required:
             raise Unauthorized('')  # TODO Error message
 
     def get_subject(self, required=True) -> Optional[str]:
-        """
-        TODO
-        """
+        """Extract subject name from the token."""
+
         if self.token:
             return self.token.subject
         elif required:

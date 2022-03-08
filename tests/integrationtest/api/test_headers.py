@@ -6,6 +6,7 @@ from .endpoints import EndpointReturnsGeneric
 
 
 class TestHeaders:
+    """TODO."""
 
     def test__endpoint_returns_redirect(
             self,
@@ -13,7 +14,7 @@ class TestHeaders:
             client: FlaskClient,
     ):
         """
-        TODO
+        TODO.
 
         :param app:
         :param client:

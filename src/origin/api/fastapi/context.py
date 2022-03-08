@@ -13,6 +13,8 @@ class FastAPIContext(Context):
     @cached_property
     def headers(self) -> Dict[str, str]:
         """
+        Handle the header.
+
         :returns: HTTP request headers
         """
         return dict(request.headers)
@@ -20,6 +22,8 @@ class FastAPIContext(Context):
     @cached_property
     def cookies(self) -> Dict[str, str]:
         """
+        Handle the cookie.
+
         :returns: HTTP request cookies
         """
         return request.cookies

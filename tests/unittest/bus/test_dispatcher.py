@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from mock import Mock
 from dataclasses import dataclass
 
 from origin.bus.dispatcher import MessageDispatcher
@@ -8,17 +8,23 @@ from origin.bus import Message
 
 @dataclass
 class Message1(Message):
+    """TODO."""
+
     something: str
 
 
 @dataclass
 class Message2(Message):
+    """TODO."""
+
     something: str
 
 
 class TestMessageSerializer:
+    """TODO."""
 
     def test__handler_exists_for_type__should_invoke_handler(self):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -42,6 +48,7 @@ class TestMessageSerializer:
         handler2.assert_not_called()
 
     def test__handler_does_not_exist_for_type__should_not_invoke_handler(self):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

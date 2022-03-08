@@ -6,10 +6,13 @@ from dataclasses import dataclass, field
 @dataclass
 class Cookie:
     """
+    Defines a cookie to be sent along with the rest of the HTTP headers.
+
     TODO Test this
 
     https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
     """
+
     name: str
     value: str
     http_only: bool = field(default=False)

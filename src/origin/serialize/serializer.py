@@ -9,6 +9,7 @@ class Serializable:
     Base class for dataclasses that can be serialized and deserialized.
     Subclasses must be defined as dataclasses.
     """
+
     pass
 
 
@@ -17,9 +18,7 @@ TSerialized = TypeVar('TSerialized')
 
 
 class Serializer(Generic[TSerialized]):
-    """
-    An interface for serializing and deserializing dataclasses.
-    """
+    """An interface for serializing and deserializing dataclasses."""
 
     @abstractmethod
     def serialize(
@@ -27,9 +26,8 @@ class Serializer(Generic[TSerialized]):
             obj: TSerializable,
             schema: Optional[Type[TSerializable]] = None,
     ) -> TSerialized:
-        """
-        Serialize an object.
-        """
+        """Serialize an object."""
+
         raise NotImplementedError
 
     @abstractmethod
@@ -39,7 +37,6 @@ class Serializer(Generic[TSerialized]):
             schema: Type[TSerializable],
             validate: bool = True,
     ) -> TSerializable:
-        """
-        Deserialize an object.
-        """
+        """Deserialize an object."""
+
         raise NotImplementedError

@@ -7,9 +7,8 @@ from origin.serialize import Serializable
 
 @dataclass
 class InternalToken(Serializable):
-    """
-    TODO
-    """
+    """Class to store the parameters for the internal token."""
+
     issued: datetime
     expires: datetime
 
@@ -26,6 +25,8 @@ class InternalToken(Serializable):
     @property
     def is_valid(self) -> bool:
         """
+        Check if token is valid.
+
         A token is valid only if its issued before now, and expires
         after now.
         """

@@ -48,13 +48,17 @@ def async_wrap(func):
 
 class Application(object):
     """
-    TODO
+    Create a new instance of the application and adds all the endpoints to it.
+
+    :return: The Application instance.
     """
+
     def __init__(self, name: str, secret: str):
         self.name = name
         self.secret = secret
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        """TODO."""
         return self._flask_app(*args, **kwargs)
 
     @classmethod
@@ -65,9 +69,7 @@ class Application(object):
             health_check_path: Optional[str] = None,
             **kwargs,
     ) -> 'Application':
-        """
-        Create a new instance of an Application
-        """
+        """Create a new instance of an Application."""
 
         app = cls(*args, **kwargs)
 
@@ -101,24 +103,19 @@ class Application(object):
 
     @cached_property
     def _fast_api_app(self) -> FastAPI:
-        """
-        TODO
-        """
+        """FastAPI application instance."""
         return FastAPI()
 
     @property
     def wsgi_app(self) -> FastAPI:
-        """
-        TODO
-        """
+        """Web Server Gateway Interface application instance."""
         return self._fast_api_app
 
     @property
     def test_client(self) -> FlaskClient:
-        """
-        TODO
-        """
+        """Test client application instance."""
         return TestClient(self._fast_api_app)
+
 
     def add_endpoint(
             self,
@@ -127,9 +124,8 @@ class Application(object):
             endpoint: Endpoint,
             guards: List[EndpointGuard] = None,
     ):
-        """
-        TODO
-        """
+        """Add endpoints to the application."""
+
         if method == 'GET':
             data_provider = QueryStringProvider()
         elif method == 'POST':
@@ -169,12 +165,5 @@ class Application(object):
         # )
 
     def run_debug(self, host: str, port: int):
-        """
-        TODO
-        """
+        """Debug function for the Flask application."""
         # self._fast_api_app.logger.setLevel(logging.DEBUG)
-        self._fast_api_app.run(
-            host=host,
-            port=port,
-            debug=True,
-        )

@@ -8,25 +8,32 @@ from origin.serialize import \
 
 @dataclass
 class Nested:
+    """TODO."""
+
     something: str
 
 
 @dataclass
 class Message1(Message):
+    """TODO."""
+
     something: str
     nested: Nested
 
 
 class TestSerializer:
+    """TODO."""
 
     @pytest.mark.parametrize('uut', [
         simple_serializer,
         json_serializer,
     ])
     def test__should_serialize_and_deserialize_correctly(
+
             self,
             uut: Serializer,
     ):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

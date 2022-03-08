@@ -11,9 +11,8 @@ from .models import DbTestModel
 
 
 class TestModelQuery(SqlQuery):
-    """
-    Query DbTestModel.
-    """
+    """Query DbTestModel."""
+
     def _get_base_query(self) -> orm.Query:
         return self.session.query(DbTestModel)
 
@@ -23,9 +22,8 @@ class TestModelQuery(SqlQuery):
 
 @pytest.fixture(scope='function')
 def seeded_session(session: db.Session):
-    """
-    TODO
-    """
+    """TODO."""
+
     session.begin()
 
     try:
@@ -45,9 +43,7 @@ def seeded_session(session: db.Session):
 
 
 class TestQueries:
-    """
-    TODO
-    """
+    """TODO."""
 
     # -- filter() ------------------------------------------------------------
 
@@ -55,9 +51,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -78,9 +72,7 @@ class TestQueries:
             value: str,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -102,9 +94,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -125,9 +115,7 @@ class TestQueries:
             value: str,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -149,9 +137,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -172,9 +158,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act + Assert ----------------------------------------------------
 
@@ -193,9 +177,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -216,9 +198,7 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 

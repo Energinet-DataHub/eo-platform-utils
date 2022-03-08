@@ -17,6 +17,8 @@ pydocstyle = "*"
 pycodestyle = "*"
 twine = "*"
 pyyaml = "*"
+mock = "*"
+
 
 [packages]
 wrapt = "*"

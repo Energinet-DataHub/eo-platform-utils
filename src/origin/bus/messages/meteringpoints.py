@@ -15,6 +15,7 @@ class MeteringPointUpdate(Message):
     A MeteringPoint has either been added to the system,
     or an existing MeteringPoint has had its details updated.
     """
+
     meteringpoint: MeteringPoint
 
 
@@ -26,6 +27,7 @@ class MeteringPointRemoved(Message):
     A MeteringPoint has been remove from the system.
     # TODO Advice to perform Clean-up?
     """
+
     gsrn: str
 
 
@@ -39,6 +41,7 @@ class MeteringPointTechnologyUpdate(Message):
     Providing None value for 'codes' indicates that services should
     reset/forget existing technology codes.
     """
+
     gsrn: str
     codes: Optional[TechnologyCodes]
 
@@ -53,6 +56,7 @@ class MeteringPointAddressUpdate(Message):
     Providing None value for 'address' indicates that services should
     reset/forget existing address.
     """
+
     gsrn: str
     address: Optional[Address]
 
@@ -66,11 +70,12 @@ class ImportMeteringPoints(Message):
 
     TODO Describe more
     """
+
     subject: str
     params: Dict[str, Any]
 
     # Pre-defined param keys:
     GSRN = 'GSRN'
-    WEB_ACCESS_CODE = 'WEB_ACCESS_CODE'
+    WEB_ACCESS_CODE = 'WEB_ACCESS_CODE'  # pylint: disable=C0103
     CVR = 'CVR'
     CPR = 'CPR'

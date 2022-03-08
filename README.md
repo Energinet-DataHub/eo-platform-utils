@@ -5,7 +5,6 @@ Protocol Descriptions
 https://grpc.io/docs/protoc-installation/
 
 
-
 # Installation and running locally (for development)
 
 The following sections describes how to install and run the project locally for development and debugging.
@@ -72,7 +71,7 @@ Steps to uploading package manually.
 
 Commands to run:
 
-    pipenv sync -d 
+    pipenv sync -d
     pipenv run build
     python run upload
 

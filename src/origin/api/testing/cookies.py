@@ -10,17 +10,15 @@ class CookieTester(object):
 
     TODO Test this class.
     """
+
     def __init__(self, headers: Headers):
-        """
-        :param headers:
-        """
         self.cookies = SimpleCookie('\r\n'.join(headers.get_all('Set-Cookie')))
 
     def assert_has_cookies(self, *names: str) -> 'CookieTester':
         """
         Assert that exactly the specified cookies were set.
 
-        :param names:
+        :param names: Name of the cookie to put opaque token in
         """
         assert tuple(self.cookies.keys()) == names
 
@@ -43,18 +41,19 @@ class CookieTester(object):
         """
         Assert content of a cookie.
 
-        :param name:
-        :param value:
-        :param expires:
-        :param path:
-        :param comment:
-        :param domain:
-        :param max_age:
-        :param secure:
-        :param http_only:
-        :param version:
-        :param same_site:
-        :return:
+        :param name: Name of the header to put opaque token (Bearer) in
+        :param value: Opaque token
+        :param expires: The tokens expire time.
+        :param path: The path to set token cookie on
+        :param comment: Commen for the cookie
+        :param domain: The domain to set cookie on (Bearer token)
+        :param max_age: Expire time of cookie
+        :param secure: Secret used to sign internal token
+        :param http_only: Whether the token cookie should be set as a HttpOnly
+            cookie
+        :param version: Cookie version
+        :param same_site: Whether the token cookie should be set as a SameSite
+            cookie
         """
         if value is not None:
             assert self.cookies[name].value == value
@@ -81,7 +80,6 @@ class CookieTester(object):
         return self
 
     def get_value(self, name: str) -> Optional[str]:
-        """
-        Get value of a cookie.
-        """
+        """Get value of a cookie."""
+
         return self.cookies[name].value

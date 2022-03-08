@@ -1,6 +1,6 @@
 import pytest
 from dataclasses import dataclass
-from unittest.mock import MagicMock, patch
+from mock import MagicMock, patch
 
 from origin.bus import Message
 from origin.bus.serialize import MessageSerializer
@@ -8,18 +8,29 @@ from origin.bus.serialize import MessageSerializer
 
 @dataclass
 class Nested:
+    """Class to store the parameter for a nested message."""
+
     something: str
 
 
 @dataclass
 class Message1(Message):
+    """Class to store the parameters for the message."""
+
     something: str
     nested: Nested
 
 
 class TestMessageSerializer:
+    """Class to test the serialize and deserialize functions."""
 
     def test__should_serialize_and_deserialize_correctly(self):
+        """
+        Tests if the serialize and deserialize functions work correctly.
+
+        If the message is serialized and deserialized correctly, the test will
+        pass.
+        """
 
         # -- Arrange ---------------------------------------------------------
 
@@ -46,7 +57,11 @@ class TestMessageSerializer:
         assert deserialized != serialized
 
     def test__serialize__message_not_in_registry__should_raise_serialize_error(self):  # noqa: E501
+        """
+        Tests if the serialize function raises error.
 
+        If the message is not in the registry an error should be raised.
+        """
         # -- Arrange ---------------------------------------------------------
 
         obj = Message1(
@@ -69,6 +84,11 @@ class TestMessageSerializer:
             self,
             json_serializer_mock,
     ):
+        """
+        Tests if the deserialize function raises error.
+
+        If the message is not in the registry an error should be raised.
+        """
 
         # -- Arrange ---------------------------------------------------------
 
