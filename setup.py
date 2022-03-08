@@ -152,8 +152,6 @@ setuptools.setup(
 
     include_package_data=True,
     package_data={'': [
-        'meta/*',
-        # 'static/*',
-        # 'static/model-template/*',
+        'META.yaml',
     ]},
 )
