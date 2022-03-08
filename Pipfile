@@ -30,6 +30,7 @@ sqlalchemy = "*"
 alembic = "*"
 requests = "*"
 pycryptodome = "*"
+fastapi = "*"
 
 [scripts]
 lint-flake8 = "flake8"

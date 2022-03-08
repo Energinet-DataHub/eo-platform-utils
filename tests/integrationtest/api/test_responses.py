@@ -1,3 +1,4 @@
+
 import pytest
 
 from origin.api import (
@@ -12,6 +13,12 @@ from .endpoints import (
     EndpointReturnsResponseModel,
     EndpointWithRequestAndResponseModels,
 )
+
+from dataclasses import dataclass, field
+from typing import List, Optional
+from origin.api import Endpoint, Context
+
+
 
 
 class TestEndpointResponse:
@@ -65,7 +72,7 @@ class TestEndpointResponse:
 
         # -- Assert ----------------------------------------------------------
 
-        assert r.get_data(as_text=True) == response_body
+        assert r.text == response_body
         assert r.headers['Content-Type'] == 'text/html; charset=utf-8'
 
     def test__endpoint_returns_dict__should_return_dict_as_body(
@@ -99,7 +106,132 @@ class TestEndpointResponse:
 
         # -- Assert ----------------------------------------------------------
 
-        assert r.json == response_data
+        assert r.json() == response_data
+        assert r.headers['Content-Type'] == 'application/json'
+
+    def test__fast_api_return_correct(
+            self,
+            app,
+            client,
+    ):
+        """
+        TODO
+        """
+        class TestEndpoint(Endpoint):
+            """Endpoint to get the user's (actor's) profile."""
+
+            @dataclass
+            class Response:
+                """Response containing UserProfile on success."""
+                success: bool
+                msg: str
+
+            def handle_request(
+                    self,
+                    # context: Context
+            ) -> Response:
+                """
+                Handle HTTP request.
+
+                :param context: Context for a single HTTP request.
+                :return: The response with the user profile
+                """
+                return self.Response(
+                    success=True,
+                    msg="something"
+                )
+
+
+        # -- Arrange ---------------------------------------------------------
+
+        response_data = {
+            'success': True,
+            'msg': "something",
+        }
+
+        app.add_endpoint(
+            method='POST',
+            path='/something',
+            endpoint=TestEndpoint(),
+        )
+
+        # -- Act -------------------------------------------------------------
+
+        r = client.post('/something')
+
+        # -- Assert ----------------------------------------------------------
+
+        assert r.json() == response_data
+        assert r.headers['Content-Type'] == 'application/json'
+
+    def test__fast_api__with_query_parms(
+            self,
+            app,
+            client,
+    ):
+        """
+        TODO
+        """
+        class TestEndpoint(Endpoint):
+            """Endpoint to get the user's (actor's) profile."""
+
+            @dataclass
+            class Response:
+                """Response containing UserProfile on success."""
+                success: bool
+                parm1: str
+                parm2: str
+
+            @dataclass
+            class Request:
+                """Response containing UserProfile on success."""
+                parm1: str
+                parm2: str
+
+            def handle_request(
+                    self,
+                    request: Request,
+            ) -> Response:
+                """
+                Handle HTTP request.
+
+                :param context: Context for a single HTTP request.
+                :return: The response with the user profile
+                """
+                return self.Response(
+                    success=True,
+                    parm1=request.parm1,
+                    parm2=request.parm2,
+                )
+
+        # -- Arrange ---------------------------------------------------------
+        response_data = {
+            'success': True,
+            'parm1': "test1",
+            'parm2': "test2",
+        }
+
+        request_data = {
+            'parm1': "test1",
+            'parm2': "test2",
+        }
+
+        app.add_endpoint(
+            method='POST',
+            path='/something',
+            endpoint=TestEndpoint(),
+        )
+
+        # -- Act -------------------------------------------------------------
+
+        r = client.post(
+            url='/something',
+            json=request_data,
+        )
+
+        # -- Assert ----------------------------------------------------------
+
+        assert r.json() == response_data
         assert r.headers['Content-Type'] == 'application/json'
 
     @pytest.mark.parametrize('status_code, obj', [
@@ -180,7 +312,7 @@ class TestEndpointResponse:
         # -- Assert ----------------------------------------------------------
 
         assert r.headers['Content-Type'] == 'application/json'
-        assert r.json == {
+        assert r.json() == {
             'success': True,
             'something': 'something',
         }
@@ -202,14 +334,14 @@ class TestEndpointResponse:
         # -- Act -------------------------------------------------------------
 
         r = client.post(
-            path='/something',
+            url='/something',
             json={'something': 'Hello world'},
         )
 
         # -- Assert ----------------------------------------------------------
 
         assert r.headers['Content-Type'] == 'application/json'
-        assert r.json == {
+        assert r.json() == {
             'success': True,
             'something': 'Hello world',
         }
