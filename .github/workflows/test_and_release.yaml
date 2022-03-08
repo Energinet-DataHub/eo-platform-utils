@@ -25,18 +25,18 @@ jobs:
     name: Build and publish development
     if: github.event_name == 'push' && github.ref_name == 'main'
     uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@feature/pypi-package-publish
-    with:
-      PYTHON_VERSION: 3.8
-      PYPI_API_TOKEN: test
+    # with:
+    #   PYTHON_VERSION: 3.8
+    #   PYPI_API_TOKEN: test
 
   build_and_publish_prod:
     name: Build and publish development
     if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.base_ref == 'main'
     uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@feature/pypi-package-publish
-    with:
-      PYTHON_VERSION: 3.8
-      BUILD_NUMBER: dev${{ github.run_number }}
-      PYPI_API_TOKEN: test
+    # with:
+    #   PYTHON_VERSION: 3.8
+    #   BUILD_NUMBER: dev${{ github.run_number }}
+    #   PYPI_API_TOKEN: test
 
 
 
