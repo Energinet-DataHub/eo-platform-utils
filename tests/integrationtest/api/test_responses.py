@@ -15,17 +15,13 @@ from .endpoints import (
 
 
 class TestEndpointResponse:
-    """
-    Testing different responses data types.
-    """
+    """Testing different responses data types."""
 
     def test__health_check__should_return_status_200(
             self,
             client,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
@@ -47,9 +43,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -73,9 +67,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -114,9 +106,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -139,9 +129,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -164,6 +152,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -190,6 +179,7 @@ class TestEndpointResponse:
             app,
             client,
     ):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -216,6 +206,7 @@ class TestEndpointResponse:
 
 
 class TestEndpointRedirect:
+    """TODO."""
 
     @pytest.mark.parametrize('status_code, response', [
         (301, MovedPermanently('http://something.com/')),
@@ -228,6 +219,7 @@ class TestEndpointRedirect:
             app,
             client,
     ):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -257,6 +249,7 @@ class TestEndpointRedirect:
             app,
             client,
     ):
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

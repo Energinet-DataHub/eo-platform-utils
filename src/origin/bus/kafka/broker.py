@@ -7,9 +7,8 @@ from origin.bus.broker import MessageBroker, Message, TTopicList
 
 
 class KafkaMessageBroker(MessageBroker):
-    """
-    Implementation of Kafka as message bus.
-    """
+    """Implementation of Kafka as message bus."""
+
     def __init__(
             self,
             group: str,
@@ -22,20 +21,16 @@ class KafkaMessageBroker(MessageBroker):
 
     @cached_property
     def _kafka_producer(self) -> KafkaProducer:
-        """
-        TODO
-        """
+        """TODO."""
+
         return KafkaProducer(
             bootstrap_servers=self.servers,
             value_serializer=self.serializer.serialize,
-
         )
 
     @cached_property
     def _kafka_consumer(self) -> KafkaConsumer:
-        """
-        TODO
-        """
+        """TODO."""
 
         return KafkaConsumer(
             bootstrap_servers=self.servers,
@@ -47,14 +42,18 @@ class KafkaMessageBroker(MessageBroker):
 
     def __iter__(self) -> Iterable[Message]:
         """
-        Returns an iterable of messages received in any
-        of the subscribed topics.
+        Send messages for any of the subscribed topics.
+
+        Returns an iterable of messages received in any of the subscribed
+        topics.
         """
+
         return (msg.value for msg in self._kafka_consumer)
 
     def poll(self, timeout: int = 0) -> Dict[str, List[Message]]:
         """
-        Polls the broker for at least one message with a timeout.
+        Poll at least one timeout message from the broker.
+
         Returns messages mapped by topic.
 
         :param timeout: Timeout in seconds
@@ -68,7 +67,8 @@ class KafkaMessageBroker(MessageBroker):
 
     def poll_list(self, timeout: int = 0) -> List[Message]:
         """
-        Polls the broker for at least one message with a timeout.
+        Poll at least one timeout message from the broker.
+
         Returns a list of messages from any topics subscribed to.
 
         :param timeout: Timeout in seconds
@@ -87,24 +87,12 @@ class KafkaMessageBroker(MessageBroker):
 
         :param topics: The topics to subscribe to
         """
+
         self._kafka_consumer.subscribe(topics)
 
     def publish(self, topic: str, msg: Any, block=True, timeout=10):
-        """
-        TODO
-        """
+        """Publish a topic."""
+
         print('PUBLISH: %s' % msg)
         self._kafka_producer.send(topic=topic, value=msg)
         self._kafka_producer.flush()
-
-        # future = self._kafka_producer.send(
-        #     topic=topic,
-        #     value=msg,
-        # )
-        #
-        # if block:
-        #     try:
-        #         record_metadata = future.get(timeout=timeout)
-        #     except KafkaError as e:
-        #         # Decide what to do if produce request failed...
-        #         raise self.PublishError(str(e))

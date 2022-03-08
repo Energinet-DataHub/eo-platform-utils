@@ -1,6 +1,4 @@
-"""
-Global topics on the message bus.
-"""
+"""Global topics on the message bus."""
 
 AUTH = 'EO-AUTH'
 CERTS = 'EO-CERTS'

@@ -9,8 +9,10 @@ def url_append(
     path_extra: Optional[str] = None,
 ) -> str:
     """
-    Provided an URL, this function adds (or overwrites) one or more
-    query parameters and/or path, and returns the updated URL.
+    Change the provided URL, add or overwrite.
+
+    Provided a URL, this function adds (or overwrites) one or more query
+    parameters and/or path, and returns the updated URL.
 
     :param url: The URL to add query parameters to
     :param query_extra: The query parameters to add

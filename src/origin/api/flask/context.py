@@ -6,13 +6,13 @@ from origin.api.context import Context
 
 
 class FlaskContext(Context):
-    """
-    Flask-specific context.
-    """
+    """Flask-specific context."""
 
     @cached_property
     def headers(self) -> Dict[str, str]:
         """
+        Handle the header.
+
         :returns: HTTP request headers
         """
         return dict(request.headers)
@@ -20,6 +20,8 @@ class FlaskContext(Context):
     @cached_property
     def cookies(self) -> Dict[str, str]:
         """
+        Handle the cookie.
+
         :returns: HTTP request cookies
         """
         return request.cookies

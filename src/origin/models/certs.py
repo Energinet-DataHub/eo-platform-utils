@@ -6,9 +6,8 @@ from origin.serialize import Serializable
 
 @dataclass
 class GranularCertificate(Serializable):
-    """
-    A single Granular Certificate.
-    """
+    """A single Granular Certificate."""
+
     id: str
     issued: datetime
     expires: datetime

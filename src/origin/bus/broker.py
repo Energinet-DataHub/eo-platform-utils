@@ -9,8 +9,10 @@ from origin.serialize import Serializable
 class Message(Serializable):
     """
     Base-class for messages that can be sent on the bus.
+
     Inherited classes must remember to use the @dataclass decorator.
     """
+
     pass
 
 
@@ -22,34 +24,36 @@ TMessageHandler = Callable[[Message], None]
 
 class MessageBroker(object):
     """
-    Abstract base-class for publishing and consuming messages
-    on the message-bus.
+    Abstract base-class for publishing and consuming messages.
+
+    Messages on the message-bus.
     """
 
     class PublishError(Exception):
-        """
-        TODO
-        """
+        """Publish error."""
+
         pass
 
     class DispatchError(Exception):
-        """
-        TODO
-        """
+        """Dispatch  error."""
+
         pass
 
     @abstractmethod
     def __iter__(self) -> Iterable[Message]:
         """
-        Returns an iterable of messages received in any
-        of the subscribed topics.
+        Receive messages for any of the subscribed topics.
+
+        Returns an iterable of messages received in any of the subscribed
+        topics.
         """
         raise NotImplementedError
 
     @abstractmethod
     def poll(self, timeout: int = 0) -> Dict[str, List[Message]]:
         """
-        Polls the broker for at least one message with a timeout.
+        Poll at least one timeout message from the broker.
+
         Returns messages mapped by topic.
 
         :param timeout: Timeout in seconds
@@ -59,7 +63,8 @@ class MessageBroker(object):
     @abstractmethod
     def poll_list(self, timeout: int = 0) -> List[Message]:
         """
-        Polls the broker for at least one message with a timeout.
+        Poll at least one timeout message from the broker.
+
         Returns a list of messages from any topics subscribed to.
 
         :param timeout: Timeout in seconds
@@ -77,8 +82,9 @@ class MessageBroker(object):
 
     def listen(self, topics: TTopicList, handler: TMessageHandler):
         """
-        Subscribed to the provided topics and invokes the handler
-        with each new message.
+        Subscription to the provided topics.
+
+        Invokes the handler with each new message.
         """
         self.subscribe(topics)
 

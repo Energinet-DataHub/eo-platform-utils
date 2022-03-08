@@ -9,20 +9,21 @@ from .models import DbTestModel
 
 # -- Helpers -----------------------------------------------------------------
 
-class DbTestModelQuery(SqlQuery):
-    """
-    Query DbTestModel.
-    """
+
+class TestModelQuery(SqlQuery):
+    """Query DbTestModel."""
+
     def _get_base_query(self) -> orm.Query:
         return self.session.query(DbTestModel)
 
+
 # -- Fixtures ----------------------------------------------------------------
+
 
 @pytest.fixture(scope='function')
 def seeded_session(session: db.Session):
-    """
-    TODO
-    """
+    """TODO."""
+
     session.begin()
 
     try:
@@ -42,9 +43,7 @@ def seeded_session(session: db.Session):
 
 
 class TestQueries:
-    """
-    TODO
-    """
+    """TODO."""
 
     # -- filter() ------------------------------------------------------------
 
@@ -52,13 +51,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 'FOO-BAR')
 
         count = query.count()
@@ -75,13 +72,11 @@ class TestQueries:
             value: str,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == value)
 
         count = query.count()
@@ -99,13 +94,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter_by(string_field='FOO-BAR')
 
         count = query.count()
@@ -122,13 +115,11 @@ class TestQueries:
             value: str,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter_by(string_field=value)
 
         count = query.count()
@@ -146,13 +137,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 1)
 
@@ -169,13 +158,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act + Assert ----------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 9999)
 
@@ -190,13 +177,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 1)
 
@@ -213,13 +198,11 @@ class TestQueries:
             self,
             seeded_session: db.Session,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Act -------------------------------------------------------------
 
-        query = DbTestModelQuery(seeded_session) \
+        query = TestModelQuery(seeded_session) \
             .filter(DbTestModel.string_field == 's1') \
             .filter(DbTestModel.integer_field == 9999)
 

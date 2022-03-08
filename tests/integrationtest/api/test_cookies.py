@@ -13,9 +13,7 @@ from .endpoints import EndpointReturnsGeneric
 
 
 def get_cookie_combinations() -> Iterable[Dict[str, Any]]:
-    """
-    TODO
-    """
+    """TODO."""
 
     combinations = product(
         (None, True, False),     # http_only
@@ -40,6 +38,7 @@ def get_cookie_combinations() -> Iterable[Dict[str, Any]]:
 
 
 class TestCookies:
+    """TODO."""
 
     @pytest.mark.parametrize('cookie_kwargs', get_cookie_combinations())
     def test__set_one_cookie__should_set_cookie_correctly(
@@ -48,9 +47,7 @@ class TestCookies:
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -80,9 +77,7 @@ class TestCookies:
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

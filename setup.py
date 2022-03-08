@@ -1,4 +1,5 @@
 """
+Setup file.
 Example setup.py from https://github.com/activescott/python-package-example/blob/master/package-project/src/setup.py.  # noqa: E501
 """
 # Always prefer setuptools over distutils
@@ -13,7 +14,11 @@ class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
-    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html # noqa: E501
+    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en
+    /latest/specification.html # noqa: E501
+
+    The code will automatically generate the right development version when
+    creating a source distribution.
     """
 
     user_options = sdist.user_options + [
@@ -22,11 +27,15 @@ class sdist_hg(sdist):  # noqa
     ]
 
     def initialize_options(self):
+        """TODO."""
+
         sdist.initialize_options(self)
         self.dev = None
         self.build = None
 
     def run(self):
+        """TODO."""
+
         if self.build:
             if self.build.startswith('+'):
                 prefix = ''
@@ -37,6 +46,8 @@ class sdist_hg(sdist):  # noqa
         sdist.run(self)
 
     def get_tip_revision(self):
+        """TODO."""
+
         import git
         repo = git.Repo()
         sha = repo.head.commit.hexsha
@@ -44,6 +55,8 @@ class sdist_hg(sdist):  # noqa
         return short_sha
 
     def get_timestamp(self):
+        """Time date stamp represented as string."""
+
         from datetime import datetime
         now = datetime.now()
         stamp = now.strftime("%Y%m%d%H%M%S")

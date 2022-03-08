@@ -8,32 +8,22 @@ TToken = TypeVar('TToken')
 
 
 class TokenEncoder(Generic[TToken]):
-    """
-    Generic helper-class to encode and decode dataclasses to and from JWT.
-    """
+    """Generic helper-class to encode/decode dataclasses to and from JWT."""
 
     class EncodeError(Exception):
-        """
-        Raised when encoding fails.
-        """
+        """Raised when encoding fails."""
+
         pass
 
     class DecodeError(Exception):
-        """
-        Raised when decoding fails.
-        """
+        """Raised when decoding fails."""
+
         pass
 
     HS256 = 'HS256'
     RS256 = 'RS256'
 
     def __init__(self, schema: Type[TToken], secret: str, alg: str = HS256):
-        """
-        TODO
-
-        :param schema:
-        :param secret:
-        """
         self.schema = schema
         self.secret = secret
         self.alg = alg
@@ -42,10 +32,10 @@ class TokenEncoder(Generic[TToken]):
 
     def encode(self, obj: TToken) -> str:
         """
-        TODO
+        Encode dataclasses to JWT.
 
-        :param obj:
-        :return:
+        :param obj: Token to be encoded
+        :return: Encoded jwt
         """
         payload = simple_serializer.serialize(
             obj=obj,
@@ -62,10 +52,10 @@ class TokenEncoder(Generic[TToken]):
 
     def decode(self, encoded_jwt: str) -> TToken:
         """
-        TODO
+        Decode dataclasses from JWT.
 
-        :param encoded_jwt:
-        :return:
+        :param encoded_jwt: Encoded token to be decoded
+        :return: Decoded JWT
         """
         try:
             payload = jwt.decode(

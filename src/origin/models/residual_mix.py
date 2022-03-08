@@ -14,8 +14,10 @@ from .emissions import EmissionValues
 @dataclass
 class ResidualMixEmissions(Serializable):
     """
-    Describes emissions in the general mix within a single
-    sector (pricing area), and in a specific time-frame.
+    Description of emissions.
+
+    Describes emissions in the general mix within a single sector (pricing
+    area), and in a specific time-frame.
     """
 
     # Sector where energy is consumed
@@ -36,10 +38,13 @@ class ResidualMixEmissions(Serializable):
 @dataclass
 class ResidualMixTechnology(Serializable):
     """
+    Part of the residual mix consumption.
+
     Describes a part of the residual mix consumption, specifically
     how large a percentage of the total energy consumed originates
     from a single type of technology.
     """
+
     technology: TechnologyType
     percent: float
     sector: str  # Sector where energy is produced
@@ -48,6 +53,8 @@ class ResidualMixTechnology(Serializable):
 @dataclass
 class ResidualMixTechnologyDistribution(Serializable):
     """
+    Distribution of technologies.
+
     Describes the distribution of technologies used to produce energy
     in the residual mix within a single sector (pricing area),
     and in a specific time-frame.
