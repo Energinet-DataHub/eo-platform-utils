@@ -12,6 +12,8 @@ message_registry = MessageRegistry()
 
 def get_default_broker(group: str, servers: List[str]) -> MessageBroker:
     """
+    Instance of the default message broker.
+
     Creates and returns an instance of the default message broker.
 
     :param group: Consumer group

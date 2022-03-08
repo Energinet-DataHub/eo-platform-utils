@@ -15,9 +15,7 @@ from .endpoints import EmptyEndpoint
 
 
 class TestGuards:
-    """
-    TODO
-    """
+    """TODO."""
 
     @pytest.mark.parametrize('guard', [
         TokenGuard(),
@@ -29,9 +27,7 @@ class TestGuards:
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -60,9 +56,7 @@ class TestGuards:
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -95,9 +89,7 @@ class TestGuards:
             client: FlaskClient,
             valid_token_encoded: str,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -125,9 +117,7 @@ class TestGuards:
             client: FlaskClient,
             valid_token_encoded: str,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -166,9 +156,7 @@ class TestGuards:
             client: FlaskClient,
             valid_token_encoded: str,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 

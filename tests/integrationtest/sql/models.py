@@ -4,6 +4,8 @@ from .db import db
 
 
 class DbTestModel(db.ModelBase):
+    """TODO."""
+
     __tablename__ = 'test'
 
     id = sa.Column(sa.Integer(), primary_key=True, index=True)

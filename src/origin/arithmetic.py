@@ -9,6 +9,8 @@ class ArithmeticDict(dict):
     """
 
     def __repr__(self):
+        """TODO."""
+
         return '%s<%s>' % (
             self.__class__.__name__,
             super(ArithmeticDict, self).__repr__(),
@@ -16,6 +18,7 @@ class ArithmeticDict(dict):
 
     def __add__(self, other):
         """
+        TODO.
         :param EmissionValues|int|float other:
         :rtype: EmissionValues
         """
@@ -23,6 +26,7 @@ class ArithmeticDict(dict):
 
     def __radd__(self, other):
         """
+        TODO.
         :param EmissionValues|int|float other:
         :rtype: EmissionValues
         """
@@ -30,6 +34,8 @@ class ArithmeticDict(dict):
 
     def __mul__(self, other):
         """
+         TODO.
+
         :param EmissionValues|int|float other:
         :rtype: EmissionValues
         """
@@ -37,6 +43,8 @@ class ArithmeticDict(dict):
 
     def __rmul__(self, other):
         """
+        TODO.
+
         :param EmissionValues|int|float other:
         :rtype: EmissionValues
         """
@@ -44,6 +52,8 @@ class ArithmeticDict(dict):
 
     def __truediv__(self, other):
         """
+        TODO.
+
         :param EmissionValues|int|float other:
         :rtype: EmissionValues
         """
@@ -51,6 +61,8 @@ class ArithmeticDict(dict):
 
     def __do_arithmetic(self, other, calc):
         """
+        TODO.
+
         :param EmissionValues|int|float other:
         :param function calc:
         :rtype: EmissionValues

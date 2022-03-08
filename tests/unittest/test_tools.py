@@ -4,6 +4,7 @@ from origin.tools import url_append
 
 
 def test__url_append__add_query_params__should_format_url_correctly():  # noqa: E501
+    """TODO."""
 
     # -- Arrange -------------------------------------------------------------
 
@@ -33,6 +34,7 @@ def test__url_append__add_query_params__should_format_url_correctly():  # noqa: 
 
 
 def test__url_append__add_path__should_format_url_correctly():
+    """TODO."""
 
     # -- Arrange -------------------------------------------------------------
 

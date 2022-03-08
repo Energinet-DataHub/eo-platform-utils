@@ -15,9 +15,8 @@ TSerializedMessage = Dict[str, Any]
 
 @dataclass
 class WrappedMessage(Message, Generic[TWrappedMessage]):
-    """
-    TODO
-    """
+    """Dataclass to wrap messages."""
+
     type: str
     time: datetime = field(default_factory=datetime.now)
     msg: Optional[Union[TWrappedMessage, TSerializedMessage]] = \
@@ -26,34 +25,28 @@ class WrappedMessage(Message, Generic[TWrappedMessage]):
 
 class MessageSerializer(object):
     """
-    A serializer specifically for serializing messages to
-    and from the event bus.
+    A serializer for serializing messages.
+
+    A serializer specifically for serializing messages to and from the
+    event bus.
     """
 
     class SerializeError(Exception):
-        """
-        TODO
-        """
+        """Serialization error."""
+
         pass
 
     class DeserializeError(Exception):
-        """
-        TODO
-        """
+        """Deserialization error."""
+
         pass
 
     def __init__(self, registry: MessageRegistry):
-        """
-        TODO
-
-        :param registry:
-        """
         self.registry = registry
 
     def serialize(self, msg: Message) -> bytes:
-        """
-        Wraps message appropriately and JSON serializes it.
-        """
+        """Wrap a message appropriately and JSON serializes it."""
+
         if msg not in self.registry:
             raise self.SerializeError((
                 f'Can not serialize of type "{msg.__class__.__name__}": '
@@ -71,9 +64,8 @@ class MessageSerializer(object):
         )
 
     def deserialize(self, data: bytes) -> Message:
-        """
-        Deserializes JSON bytestream into a message.
-        """
+        """Deserializes JSON bytestream into a message."""
+
         wrapped_msg = json_serializer.deserialize(
             data=data,
             schema=WrappedMessage[TSerializedMessage],

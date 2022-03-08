@@ -8,9 +8,7 @@ from origin.api.testing import (
 
 
 class TestAssertBaseUrl:
-    """
-    Tests assert_base_url()
-    """
+    """Tests assert_base_url()."""
 
     @pytest.mark.parametrize('check_path, url, expected_base_url', (
         (False, 'http://foobar.com', 'http://foobar.com'),
@@ -36,8 +34,8 @@ class TestAssertBaseUrl:
             expected_base_url: str,
     ):
         """
-        Only scheme and netloc should be identical. All other parts of
-        the URL should be ignored.
+        Only scheme and netloc should be identical.
+        All other parts of the URL should be ignored.
 
         :param check_path: Whether or not to assert on the path-part also
         :param url: The URL to test
@@ -64,7 +62,7 @@ class TestAssertBaseUrl:
             expected_base_url: str,
     ):
         """
-        Note: Trailing slash is part of the path
+        Note: Trailing slash is part of the path.
 
         :param check_path: Whether or not to assert on the path-part also
         :param url: The URL to test
@@ -79,9 +77,7 @@ class TestAssertBaseUrl:
 
 
 class TestAssertQueryParameter:
-    """
-    Tests assert_query_parameter()
-    """
+    """Tests assert_query_parameter()."""
 
     @pytest.mark.parametrize('url, name, value', (
         ('http://foobar.com?foo=bar', 'foo', None),

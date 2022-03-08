@@ -9,18 +9,14 @@ from .endpoints import (
 
 
 class TestContext:
-    """
-    TODO
-    """
+    """TODO."""
 
     def test__no_token_provided__should_return_null(
             self,
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -44,9 +40,7 @@ class TestContext:
             app: Application,
             client: FlaskClient,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
@@ -75,9 +69,7 @@ class TestContext:
             valid_token: InternalToken,
             valid_token_encoded: str,
     ):
-        """
-        TODO
-        """
+        """TODO."""
 
         # -- Arrange ---------------------------------------------------------
 
