@@ -27,7 +27,7 @@ jobs:
     uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@feature/pypi-package-publish
     with:
       PYTHON_VERSION: 3.8
-      PYPI_API_TOKEN: '' #${{ secrets.PYPI_SECRET }}
+      PYPI_API_TOKEN: 'test' #${{ secrets.PYPI_SECRET }}
 
   build_and_publish_prod:
     name: Build and publish development
@@ -36,4 +36,4 @@ jobs:
     with:
       PYTHON_VERSION: 3.8
       BUILD_NUMBER: dev${{ github.run_number }}
-      PYPI_API_TOKEN: ''
+      PYPI_API_TOKEN: 'test'
