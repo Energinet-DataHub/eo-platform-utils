@@ -27,7 +27,7 @@ class RequestDataProvider(object):
 
     @abstractmethod
     def get(self) -> Optional[Dict[str, Any]]:
-        """TODO."""
+        """Error if the request is bad."""
         raise NotImplementedError
 
 
@@ -35,7 +35,7 @@ class JsonBodyProvider(RequestDataProvider):
     """Reads request data from request body JSON."""
 
     def get(self) -> Optional[Dict[str, Any]]:
-        """TODO."""
+        """Get data from the request."""
         if not flask.request.data:
             return None
         try:
@@ -48,7 +48,7 @@ class QueryStringProvider(RequestDataProvider):
     """Reads request data from query parameters."""
 
     def get(self) -> Optional[Dict[str, Any]]:
-        """TODO."""
+        """Get data from the request."""
         return dict(flask.request.args)
 
 

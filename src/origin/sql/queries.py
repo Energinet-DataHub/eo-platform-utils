@@ -3,61 +3,48 @@ from abc import abstractmethod
 
 
 class SqlQuery(object):
-    """TODO."""
+    """ORM-level SQL construction class."""
 
     def __init__(self, session: orm.Session, query: orm.Query = None):
-        """
-        TODO.
-        :param session:
-        :param query:
-        """
-
         self.session = session
         self.query = query or self._get_base_query()
 
     @abstractmethod
     def _get_base_query(self) -> orm.Query:
-        """TODO Describe with example."""
-
+        """Handle the error if the Query is bad."""
         raise NotImplementedError
 
     def __iter__(self):
-        """TODO."""
+        """Iterate though the query."""
 
         return iter(self.query)
 
     def __getattr__(self, name):
-        """TODO."""
+        """Get the name attribute for the object."""
 
         return getattr(self.query, name)
 
     def filter(self, *filters):
         """
-        TODO.
-
-        TODO Describe with example
+        Apply the given filtering criterion (keyword) to a copy of the Query.
 
         Example usage::
-
             filter(Model.age==35, Model.country=='Denmark')
 
-        :param filters:
-        :return:
+        :param filters: filtering criterion
+        :return: Result of the filtering criterion
         """
         return self.__class__(self.session, self.query.filter(*filters))
 
     def filter_by(self, **filters):
         """
-        TODO.
-
-        TODO Describe with example
+        Apply the given filtering criteria (keywords) to a copy of the Query.
 
         Example usage::
-
             filter_by(age=35, country='Denmark')
 
-        :param filters:
-        :return:
+        :param filters: filtering criteria
+        :return: Result of the filtering criteria
         """
         return self.__class__(self.session, self.query.filter_by(**filters))
 

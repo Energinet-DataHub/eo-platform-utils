@@ -5,7 +5,7 @@ from functools import cached_property
 
 
 class SqlEngine(object):
-    """TODO."""
+    """Class to create the Sql Engine."""
 
     # Shortcut/alias
     Session = orm.Session
@@ -13,14 +13,12 @@ class SqlEngine(object):
     def __init__(self, uri: str, pool_size: int = 1):
         self.uri = uri
         self.pool_size = pool_size
-
-        #
         self._uri = None
         self._engine = None
 
     @property
     def settings(self) -> Dict[str, Any]:
-        """TODO."""
+        """Parameter settings for the Engine instance."""
 
         return {
             'echo': False,
@@ -30,7 +28,7 @@ class SqlEngine(object):
 
     @property
     def engine(self) -> engine.Engine:
-        """TODO."""
+        """Create a new Engine instance."""
 
         if self.uri != self._uri:
             self._uri = self.uri
@@ -39,7 +37,7 @@ class SqlEngine(object):
 
     @property
     def session_class(self) -> orm.scoped_session:
-        """TODO."""
+        """Create the session with the new Engine."""
 
         orm.configure_mappers()
         factory = orm.sessionmaker(bind=self.engine, expire_on_commit=False)
@@ -48,13 +46,18 @@ class SqlEngine(object):
 
     @cached_property
     def registry(self) -> orm.registry:
-        """TODO."""
+        """
+        Registry to maintaining a collection of mappings.
+
+        The registry serves as the basis for maintaining a collection of
+        mappings, and provides configurational hooks used to map classes.
+        """
 
         return orm.registry()
 
     @cached_property
     def ModelBase(self) -> orm.declarative_base:
-        """TODO."""
+        """Metaclass that produces appropriate Table objects."""
 
         return self.registry.generate_base()
 
@@ -67,16 +70,16 @@ class SqlEngine(object):
         return self.session_class()
 
     def apply_schema(self):
-        """TODO."""
+        """Create all tables stored in the metadata."""
 
         self.ModelBase.metadata.create_all(self.engine)
 
     def session(self):
         """
-        TODO.
+        Make a connection from an Engine that is associated with the Session.
 
         Function decorator which injects a "session" named parameter
-        if it doesn't already exists
+        if it doesn't already exists.
         """
         @decorator
         def session_decorator(wrapped, instance, args, kwargs):
@@ -93,11 +96,11 @@ class SqlEngine(object):
 
     def atomic(self):
         """
-        TODO.
+        Wrap the function in an atomic transaction.
 
-        Function decorator which injects a "session" named parameter
-        if it doesn't already exists, and wraps the function in an
-        atomic transaction.
+        The decorator which injects a "session" named parameter if it
+        doesn't  already exists, and wraps the function in an atomic
+        transaction.
         """
         @decorator
         def atomic_wrapper(wrapped, instance, args, kwargs):

@@ -12,7 +12,7 @@ except ImportError:
 
 @lru_cache
 def _get_serializer(schema: Type[TSerializable]) -> serpyco.Serializer:
-    """Get the serializer for dataclasses instances"""
+    """Get the serializer for dataclasses instances."""
 
     return serpyco.Serializer(schema, strict=True)
 

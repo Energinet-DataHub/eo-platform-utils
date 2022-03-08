@@ -14,7 +14,11 @@ class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
-    Based onhttps://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html # noqa: E501
+    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en
+    /latest/specification.html # noqa: E501
+
+    The code will automatically generate the right development version when
+    creating a source distribution.
     """
 
     user_options = sdist.user_options + [
@@ -51,7 +55,7 @@ class sdist_hg(sdist):  # noqa
         return short_sha
 
     def get_timestamp(self):
-        """TODO."""
+        """Time date stamp represented as string."""
 
         from datetime import datetime
         now = datetime.now()
