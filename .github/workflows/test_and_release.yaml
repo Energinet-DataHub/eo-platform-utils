@@ -24,7 +24,7 @@ jobs:
     name: Build and publish pre-release
     needs: [py_validate]
     if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.base_ref == 'main'
-    uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@feature/correct-published-dev-package-versions
+    uses: Energinet-DataHub/.github/.github/workflows/python-publish-pypi-package.yaml@main
     with:
       PYTHON_VERSION: 3.8
       BUILD_NUMBER: dev${{ github.run_number }}
