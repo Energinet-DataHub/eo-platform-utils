@@ -1,5 +1,2 @@
 [build-system]
-requires = [
-    "setuptools",
-    "pyyaml",
-]
+requires = ["wheel","setuptools","pyyaml"]
