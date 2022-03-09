@@ -1,1 +1,2 @@
-recursive-include meta *
+include META.yaml
+include pyproject.toml

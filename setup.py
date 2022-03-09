@@ -14,8 +14,7 @@ class sdist_hg(sdist):  # noqa
     """
     Add git short commit hash to version.
 
-    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en
-    /latest/specification.html # noqa: E501
+    Based on https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/specification.html # noqa: E501
 
     The code will automatically generate the right development version when
     creating a source distribution.
@@ -152,8 +151,6 @@ setuptools.setup(
 
     include_package_data=True,
     package_data={'': [
-        'meta/*',
-        # 'static/*',
-        # 'static/model-template/*',
+        'META.yaml',
     ]},
 )
