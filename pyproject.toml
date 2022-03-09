@@ -1,2 +1,5 @@
 [build-system]
-requires = [pyyaml]
+requires = [
+    "setuptools",
+    "pyyaml",
+]
