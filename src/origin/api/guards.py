@@ -22,7 +22,6 @@ class TokenGuard(EndpointGuard):
         if context.token is None:
             raise Unauthorized('Unauthorized')
 
-
 class ScopedGuard(EndpointGuard):
     """Only Allows requests with specific scopes granted."""
 

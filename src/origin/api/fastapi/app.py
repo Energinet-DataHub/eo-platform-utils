@@ -17,6 +17,49 @@ from typing import (
 from .fast_api_endpoint_wrapper import FastAPIEndpointWrapper
 # Third party
 from fastapi import FastAPI
+
+
+
+from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+
+@TokenGuard()
+def read_root(item_id: str, request: Request):
+    client_host = request.client.host
+    return {"client_host": client_host, "item_id": item_id}
+
+app.add_api_route(
+    path="/items/{item_id}",
+    methods=["get"],
+    endpoint=read_root,
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from fastapi.testclient import TestClient
 
 from flask.testing import FlaskClient
@@ -24,8 +67,7 @@ from flask.testing import FlaskClient
 # Local
 from origin.api.endpoint import Endpoint
 from origin.api.endpoints import HealthCheck
-from origin.api.guards import EndpointGuard
-
+from origin.api.guards import EndpointGuard, TokenGuard
 
 def async_wrap(func):
     @wraps(func)
@@ -65,22 +107,22 @@ class Application(object):
         app = cls(*args, **kwargs)
 
         # Add endpoints
-        # for e in endpoints:
-        #     assert 3 <= len(e) <= 4
+        for e in endpoints:
+            assert 3 <= len(e) <= 4
 
-        #     method, path, endpoint = e[:3]
+            method, path, endpoint = e[:3]
 
-        #     if len(e) == 4:
-        #         guards = e[3]
-        #     else:
-        #         guards = []
+            if len(e) == 4:
+                guards = e[3]
+            else:
+                guards = []
 
-        #     app.add_endpoint(
-        #         method=method,
-        #         path=path,
-        #         endpoint=endpoint,
-        #         guards=guards,
-        #     )
+            app.add_endpoint(
+                method=method,
+                path=path,
+                endpoint=endpoint,
+                guards=guards,
+            )
 
         # Add health check endpoint
         if health_check_path:

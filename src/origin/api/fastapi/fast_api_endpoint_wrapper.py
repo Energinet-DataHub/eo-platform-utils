@@ -4,6 +4,7 @@ from abc import abstractmethod
 from dataclasses import is_dataclass
 from functools import partial, wraps
 from typing import Any, Dict, List, Optional
+from fastapi import Request as FastAPI_request
 
 # Third party
 import flask
@@ -119,8 +120,19 @@ class FastAPIEndpointWrapper(object):
 
     def get_wrapped_endpoint(self):
         @wraps(self.endpoint.handle_request)
-        def wrapped_func(*args, **kwargs):
+        def wrapped_func(*args, **kwargs,):
             return self.handle_request(*args, **kwargs)
+
+        # t = FastAPI_request.__module__ + "." + FastAPI_request.__name__
+        # wrapped_func.__annotations__['new_request'] = FastAPI_request
+
+        # if 'return' in wrapped_func.__annotations__:
+        #     return_t = wrapped_func.__annotations__['return']
+
+        #     del wrapped_func.__annotations__['return']
+
+        #     wrapped_func.__annotations__['return'] = return_t
+
 
         return wrapped_func
 
