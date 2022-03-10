@@ -182,7 +182,7 @@ class TestEndpointResponse:
             def handle_request(
                     self,
                     request: Request,
-                    fast_request: FastAPIRequest,
+                    new_request: FastAPIRequest,
             ) -> Response:
                 """
                 Handle HTTP request.

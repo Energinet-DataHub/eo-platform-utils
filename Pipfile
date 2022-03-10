@@ -18,7 +18,7 @@ pycodestyle = "*"
 twine = "*"
 pyyaml = "*"
 mock = "*"
-
+ipykernel = "*"
 
 [packages]
 wrapt = "*"
@@ -33,6 +33,7 @@ alembic = "*"
 requests = "*"
 pycryptodome = "*"
 fastapi = "*"
+origin-platform-utils = "==0.6.5.dev32"
 
 [scripts]
 lint-flake8 = "flake8"
@@ -46,3 +47,6 @@ upload= "pipenv run python -m twine upload --repository-url https://upload.pypi.
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
