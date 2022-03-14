@@ -12,52 +12,12 @@ from typing import (
     Optional,
     Tuple,
 )
+import uvicorn
 
 
 from .fast_api_endpoint_wrapper import FastAPIEndpointWrapper
 # Third party
 from fastapi import FastAPI
-
-
-
-from fastapi import FastAPI, Request
-
-app = FastAPI()
-
-
-@TokenGuard()
-def read_root(item_id: str, request: Request):
-    client_host = request.client.host
-    return {"client_host": client_host, "item_id": item_id}
-
-app.add_api_route(
-    path="/items/{item_id}",
-    methods=["get"],
-    endpoint=read_root,
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 from fastapi.testclient import TestClient
@@ -67,7 +27,8 @@ from flask.testing import FlaskClient
 # Local
 from origin.api.endpoint import Endpoint
 from origin.api.endpoints import HealthCheck
-from origin.api.guards import EndpointGuard, TokenGuard
+from origin.api.guards import EndpointGuard
+
 
 def async_wrap(func):
     @wraps(func)
@@ -158,44 +119,14 @@ class Application(object):
     ):
         """Add endpoints to the application."""
 
-        # if method == 'GET':
-        #     data_provider = QueryStringProvider()
-        # elif method == 'POST':
-        #     data_provider = JsonBodyProvider()
-        # else:
-        #     raise RuntimeError(
-        #         'Unsupported HTTP method for endpoints: %s' % method)
-
-        endpoint_wrapper = FastAPIEndpointWrapper(
-            endpoint=endpoint,
-            secret="",
-            methods=[method],
-
-        )
-
-        wrapped_endpoint = endpoint_wrapper.get_wrapped_endpoint()
-
-        # wrapped_endpoint = async_wrap(endpoint)
-
         self._fast_api_app.add_api_route(
             path=path,
             methods=[method],
-            endpoint=wrapped_endpoint,
+            endpoint=endpoint.handle_request,
+            dependencies=endpoint.dependencies,
             response_model=endpoint.Response,
         )
 
-        # self._fast_api_app.add_url_rule(
-        #     rule=path,
-        #     endpoint=path,
-        #     methods=[method],
-        #     view_func=RequestOrchestrator(
-        #         endpoint=endpoint,
-        #         data=data_provider,
-        #         secret=self.secret,
-        #         guards=guards,
-        #     ),
-        # )
-
     def run_debug(self, host: str, port: int):
         """Debug function for the Flask application."""
-        # self._fast_api_app.logger.setLevel(logging.DEBUG)
+        raise NotImplementedError

@@ -1,5 +1,4 @@
 # Standard Library
-from functools import cached_property
 from typing import (
     Any,
     Iterable,
@@ -7,11 +6,6 @@ from typing import (
     Optional,
     Tuple,
 )
-
-# Third party
-from fastapi import FastAPI
-from flask.testing import FlaskClient
-
 # Local
 from .endpoint import Endpoint
 from .guards import EndpointGuard
@@ -43,21 +37,6 @@ class Application(object):
         """Create a new instance of an Application."""
         raise NotImplementedError
 
-    @cached_property
-    def _fast_api_app(self) -> FastAPI:
-        """FastAPI application instance."""
-        raise NotImplementedError
-
-    @property
-    def wsgi_app(self) -> FastAPI:
-        """Web Server Gateway Interface application instance."""
-        raise NotImplementedError
-
-    @property
-    def test_client(self) -> FlaskClient:
-        """Test client application instance."""
-        raise NotImplementedError
-
     def add_endpoint(
             self,
             method: str,
@@ -69,5 +48,9 @@ class Application(object):
         raise NotImplementedError
 
     def run_debug(self, host: str, port: int):
-        """Debug function for the Flask application."""
+        """Debug function for the application."""
+        raise NotImplementedError
+
+    def run(self, host: str, port: int):
+        """Run function for the application."""
         raise NotImplementedError

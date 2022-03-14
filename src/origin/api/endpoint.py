@@ -11,8 +11,10 @@ class Endpoint(object):
     Request = None
     Response = None
 
+    dependencies = []
+
     @abstractmethod
-    def handle_request(self, **kwargs) -> Optional[Any]:
+    async def handle_request(self, **kwargs) -> Optional[Any]:
         """Handle a HTTP request."""
 
         raise NotImplementedError

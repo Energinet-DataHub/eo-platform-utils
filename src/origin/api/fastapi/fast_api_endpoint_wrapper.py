@@ -123,17 +123,6 @@ class FastAPIEndpointWrapper(object):
         def wrapped_func(*args, **kwargs,):
             return self.handle_request(*args, **kwargs)
 
-        # t = FastAPI_request.__module__ + "." + FastAPI_request.__name__
-        # wrapped_func.__annotations__['new_request'] = FastAPI_request
-
-        # if 'return' in wrapped_func.__annotations__:
-        #     return_t = wrapped_func.__annotations__['return']
-
-        #     del wrapped_func.__annotations__['return']
-
-        #     wrapped_func.__annotations__['return'] = return_t
-
-
         return wrapped_func
 
     def _invoke_endpoint(self, *args, **kwargs):
