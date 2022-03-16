@@ -12,7 +12,6 @@ from typing import (
     Optional,
     Tuple,
 )
-import uvicorn
 
 
 from .fast_api_endpoint_wrapper import FastAPIEndpointWrapper
@@ -22,7 +21,6 @@ from fastapi import FastAPI
 
 from fastapi.testclient import TestClient
 
-from flask.testing import FlaskClient
 
 # Local
 from origin.api.endpoint import Endpoint
@@ -53,7 +51,7 @@ class Application(object):
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """TODO."""
-        return self._flask_app(*args, **kwargs)
+        return self._fast_api_app(*args, **kwargs)
 
     @classmethod
     def create(
@@ -106,7 +104,7 @@ class Application(object):
         return self._fast_api_app
 
     @property
-    def test_client(self) -> FlaskClient:
+    def test_client(self) -> TestClient:
         """Test client application instance."""
         return TestClient(self._fast_api_app)
 
@@ -119,14 +117,22 @@ class Application(object):
     ):
         """Add endpoints to the application."""
 
+        wrapper = FastAPIEndpointWrapper(
+            endpoint=Endpoint,
+            methods=[method],
+        )
+
+        wrapped_endpoint = wrapper.get_wrapped_endpoint()
+
         self._fast_api_app.add_api_route(
             path=path,
             methods=[method],
-            endpoint=endpoint.handle_request,
-            dependencies=endpoint.dependencies,
+            endpoint=wrapped_endpoint,
+            # dependencies=endpoint.dependencies,
             response_model=endpoint.Response,
         )
 
     def run_debug(self, host: str, port: int):
-        """Debug function for the Flask application."""
+        """Debug function for the FastAPI application."""
         raise NotImplementedError
+print('meh')

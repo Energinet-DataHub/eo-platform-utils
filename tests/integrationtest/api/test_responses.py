@@ -18,6 +18,8 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 from origin.api import Endpoint, Context
 
+from fastapi import Request as FastAPIRequest
+
 
 class TestEndpointResponse:
     """Testing different responses data types."""
@@ -131,7 +133,6 @@ class TestEndpointResponse:
                     msg="something"
                 )
 
-
         # -- Arrange ---------------------------------------------------------
 
         response_data = {
@@ -162,7 +163,7 @@ class TestEndpointResponse:
         """
         TODO
         """
-        from fastapi import  Request as FastAPIRequest
+
         class TestEndpoint(Endpoint):
             """Endpoint to get the user's (actor's) profile."""
 

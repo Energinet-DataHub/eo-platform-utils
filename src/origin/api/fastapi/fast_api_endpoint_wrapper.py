@@ -119,9 +119,36 @@ class FastAPIEndpointWrapper(object):
             return self._handle_exception(e)
 
     def get_wrapped_endpoint(self):
-        @wraps(self.endpoint.handle_request)
-        def wrapped_func(*args, **kwargs,):
+        # @wraps(self.endpoint.handle_request)
+        # def wrapped_func(*args, **kwargs,):
+        #     return self.handle_request(*args, **kwargs)
+
+        async def wrapped_func(request: FastAPI_request, *args, **kwargs):
+            print('teeeeeeeeeeeeeeeeeest', request.headers)
             return self.handle_request(*args, **kwargs)
+
+        # Fix signature of wrapped_func
+        import inspect
+        wrapped_func.__signature__ = inspect.Signature(
+            parameters=[
+                # Use all parameters from handler
+                *inspect.signature(
+                    self.endpoint.handle_request
+                ).parameters.values(),
+
+                # Skip *args and **kwargs from wrapped_func parameters:
+                *filter(
+                    lambda p: p.kind not in (
+                        inspect.Parameter.VAR_POSITIONAL,
+                        inspect.Parameter.VAR_KEYWORD
+                    ),
+                    inspect.signature(wrapped_func).parameters.values()
+                )
+            ],
+            return_annotation=inspect.signature(
+                self.endpoint.handle_request,
+            ).return_annotation,
+        )
 
         return wrapped_func
 
