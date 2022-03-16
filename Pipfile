@@ -33,7 +33,6 @@ alembic = "*"
 requests = "*"
 pycryptodome = "*"
 fastapi = "*"
-origin-platform-utils = "==0.6.5.dev32"
 uvicorn = "*"
 
 [scripts]
