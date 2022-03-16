@@ -123,8 +123,9 @@ class FastAPIEndpointWrapper(object):
         # def wrapped_func(*args, **kwargs,):
         #     return self.handle_request(*args, **kwargs)
 
-        async def wrapped_func(request: FastAPI_request, *args, **kwargs):
-            print('teeeeeeeeeeeeeeeeeest', request.headers)
+        async def wrapped_func(fastapi_request: FastAPI_request, *args,
+                               **kwargs):
+            print('teeeeeeeeeeeeeeeeeest', fastapi_request.headers)
             return self.handle_request(*args, **kwargs)
 
         # Fix signature of wrapped_func

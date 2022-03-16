@@ -182,8 +182,6 @@ class TestEndpointResponse:
 
             def handle_request(
                     self,
-                    request: Request,
-                    new_request: FastAPIRequest,
             ) -> Response:
                 """
                 Handle HTTP request.
@@ -193,8 +191,8 @@ class TestEndpointResponse:
                 """
                 return self.Response(
                     success=True,
-                    parm1=request.parm1,
-                    parm2=request.parm2,
+                    parm1='test1',
+                    parm2='test2',
                 )
 
         # -- Arrange ---------------------------------------------------------
