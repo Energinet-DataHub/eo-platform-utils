@@ -118,8 +118,9 @@ class Application(object):
         """Add endpoints to the application."""
 
         wrapper = FastAPIEndpointWrapper(
-            endpoint=Endpoint,
+            endpoint=endpoint,
             methods=[method],
+            secret='secret',
         )
 
         wrapped_endpoint = wrapper.get_wrapped_endpoint()
